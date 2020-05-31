@@ -7,6 +7,29 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="3*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0">
+            <Label Content="Konfiguracja połączenia" HorizontalAlignment="Center"/>
+            <Button Content="Konfiguruj" Command="{Binding UpdateFormView}" CommandParameter="Connection"/>
+
+            <Separator Margin="0,10,0,10" Height="0"/>
+
+            <Label Content="Edytowanie" HorizontalAlignment="Center"/>
+            <Button Content="Dodaj zawody" Command="{Binding UpdateFormView}" CommandParameter="Competitions"/>
+            <Button Content="Dodaj trasy" Command="{Binding UpdateFormView}" CommandParameter="Stages"/>
+            <Button Content="Dodaj zawodników" Command="{Binding UpdateFormView}" CommandParameter="Shooters"/>
+            <Button Content="Dodaj przebieg" Command="{Binding UpdateFormView}" CommandParameter="Score"/>
+
+            <Separator Margin="0,10,0,10" Height="0"/>
+
+            <Label Content="Wyświetlanie" HorizontalAlignment="Center"/>
+            <Button Content="???" Command="" CommandParameter=""/>
+        </StackPanel>
         
+        <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding SelectedViewModel}"/>
     </Grid>
 </Window>
