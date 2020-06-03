@@ -12,8 +12,8 @@ using ProjektSemestrIV.Models;
 namespace ProjektSemestrIV.ViewModels {
     class EditShootersViewModel : BaseViewModel {
         public MainModel MainModel { get; private set; }
-        public EditShootersViewModel(MainModel mainModel) {
-            MainModel = mainModel;
+        public EditShootersViewModel() {
+            MainModel = new MainModel();
             Shooters = MainModel.GetAllShooters();
             AddShooter = new AddShooterCommand(this);
             ConfirmShooterEdit = new ConfirmShooterEditCommand(this);

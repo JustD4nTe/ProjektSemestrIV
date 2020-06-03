@@ -5,8 +5,6 @@ using System.Windows.Input;
 
 namespace ProjektSemestrIV.ViewModels {
     class MainViewModel : BaseViewModel {
-		public MainModel MainModel { get; private set; } = new MainModel();
-
 		private BaseViewModel selectedViewModel;
 		public BaseViewModel SelectedViewModel {
 			get { return selectedViewModel; }
