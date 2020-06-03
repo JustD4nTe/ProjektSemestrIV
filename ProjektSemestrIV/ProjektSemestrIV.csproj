@@ -76,9 +76,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\ConfirmDataCommand.cs" />
-    <Compile Include="Commands\UpdateFormViewCommand.cs" />
     <Compile Include="DAL\DatabaseConnection.cs" />
+    <Compile Include="DAL\Entities\Shooter.cs" />
+    <Compile Include="DAL\Repositories\ShooterRepository.cs" />
+    <Compile Include="Models\ShooterModel.cs" />
+    <Compile Include="ViewModels\EditShootersViewModel.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
     <Compile Include="DAL\Repositories\CompetitionsRepository.cs" />
     <Compile Include="Models\CompetitionModel.cs" />
@@ -90,6 +92,9 @@
     <Compile Include="ViewModels\ScoreViewModel.cs" />
     <Compile Include="ViewModels\ShootersViewModel.cs" />
     <Compile Include="ViewModels\StagesViewModel.cs" />
+    <Compile Include="Views\EditShootersView.xaml.cs">
+      <DependentUpon>EditShootersView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CompetitionsView.xaml.cs">
       <DependentUpon>CompetitionsView.xaml</DependentUpon>
     </Compile>
@@ -117,6 +122,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\EditShootersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CompetitionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
