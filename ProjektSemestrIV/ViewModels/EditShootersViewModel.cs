@@ -60,6 +60,8 @@ namespace ProjektSemestrIV.ViewModels {
                 return addShooter;
             }
         }
+        private Boolean CanExecuteAddShooter( object parameter )
+            => EditedItemIndex == -1;
         private void ExecuteAddShooter( object parameter ) {
             Shooter newShooter = new Shooter(Name, Surname);
             shooterModel.AddShooterToDatabase(newShooter);
@@ -67,14 +69,6 @@ namespace ProjektSemestrIV.ViewModels {
             Name = "";
             Surname = "";
             Shooters = shooterModel.GetAllShooters();
-        }
-        private Boolean CanExecuteAddShooter( object parameter ) {
-            if(EditedItemIndex == -1) {
-                return true;
-            }
-            else {
-                return false;
-            }
         }
 
 
@@ -88,14 +82,8 @@ namespace ProjektSemestrIV.ViewModels {
                 return confirmShooterEdit;
             }
         }
-        private Boolean CanExecuteConfirmShooterEdit( object parameter ) {
-            if(EditedItemIndex != -1) {
-                return true;
-            }
-            else {
-                return false;   
-            }
-        }
+        private Boolean CanExecuteConfirmShooterEdit( object parameter )
+            => EditedItemIndex != -1;
         private void ExecuteConfirmShooterEdit( object parameter ) {
             Shooter newShooter = new Shooter(Name, Surname);
             UInt32 id = Shooters[SelectedIndex].ID;
@@ -118,14 +106,8 @@ namespace ProjektSemestrIV.ViewModels {
                 return editShooter;
             }
         }
-        private Boolean CanExecuteEditShooter( object parameter ) {
-            if(SelectedIndex != -1) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
+        private Boolean CanExecuteEditShooter( object parameter )
+            => SelectedIndex != -1;
         private void ExecuteEditShooter( object parameter ) {
             Name = SelectedItem.Name;
             Surname = SelectedItem.Surname;
@@ -143,15 +125,8 @@ namespace ProjektSemestrIV.ViewModels {
                 return deleteShooter;
             }
         }
-        private Boolean CanExecuteDeleteShooter( object parameter ) {
-            if( (SelectedIndex != -1) &&
-                (SelectedIndex != EditedItemIndex)) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        }
+        private Boolean CanExecuteDeleteShooter( object parameter )
+            => (SelectedIndex != -1) && (SelectedIndex != EditedItemIndex);
         private void ExecuteDeleteShooter( object parameter ) {
             UInt32 id = SelectedItem.ID;
             shooterModel.DeleteShooterFromDatabase(id);
