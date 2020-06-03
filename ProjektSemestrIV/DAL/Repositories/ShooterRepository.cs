@@ -14,7 +14,6 @@ namespace ProjektSemestrIV.DAL.Repositories {
                 MySqlCommand command = new MySqlCommand($"INSERT INTO `Zawody`.`strzelec` (`imie`, `nazwisko`) VALUES {shooter.ToInsert()}", connection);
                 connection.Open();
                 if(command.ExecuteNonQuery() == 1) executed = true;
-                executed = true;
                 connection.Close();
             }
             return executed;
@@ -26,7 +25,6 @@ namespace ProjektSemestrIV.DAL.Repositories {
                 MySqlCommand command = new MySqlCommand($"UPDATE `Zawody`.`strzelec` SET `imie` = '{shooter.Name}', `nazwisko` = '{shooter.Surname}' WHERE (`id` = '{id}')", connection);
                 connection.Open();
                 if(command.ExecuteNonQuery() == 1) executed = true;
-                executed = true;
                 connection.Close();
             }
             return executed;
@@ -52,7 +50,6 @@ namespace ProjektSemestrIV.DAL.Repositories {
                 MySqlCommand command = new MySqlCommand($"DELETE FROM `Zawody`.`strzelec` WHERE (`id` = '{shooterID}')", connection);
                 connection.Open();
                 if(command.ExecuteNonQuery() == 1) executed = true;
-                executed = true;
                 connection.Close();
             }
             return executed;
