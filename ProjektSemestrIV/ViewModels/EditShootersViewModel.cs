@@ -10,10 +10,10 @@ using ProjektSemestrIV.Models;
 
 namespace ProjektSemestrIV.ViewModels {
     class EditShootersViewModel : BaseViewModel {
-        public ShooterModel ShooterModel { get; private set; }
+        private ShooterModel shooterModel;
         public EditShootersViewModel() {
-            ShooterModel = new ShooterModel();
-            Shooters = ShooterModel.GetAllShooters();
+            shooterModel = new ShooterModel();
+            Shooters = shooterModel.GetAllShooters();
             SelectedIndex = -1;
             EditedItemIndex = -1;
         }
@@ -62,11 +62,11 @@ namespace ProjektSemestrIV.ViewModels {
         }
         private void ExecuteAddShooter( object parameter ) {
             Shooter newShooter = new Shooter(Name, Surname);
-            ShooterModel.AddShooterToDatabase(newShooter);
+            shooterModel.AddShooterToDatabase(newShooter);
 
             Name = "";
             Surname = "";
-            Shooters = ShooterModel.GetAllShooters();
+            Shooters = shooterModel.GetAllShooters();
         }
         private Boolean CanExecuteAddShooter( object parameter ) {
             if(EditedItemIndex == -1) {
@@ -99,12 +99,12 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteConfirmShooterEdit( object parameter ) {
             Shooter newShooter = new Shooter(Name, Surname);
             UInt32 id = Shooters[SelectedIndex].ID;
-            ShooterModel.EditShooterInDatabase(newShooter, id);
+            shooterModel.EditShooterInDatabase(newShooter, id);
 
             Name = "";
             Surname = "";
             EditedItemIndex = -1;
-            Shooters = ShooterModel.GetAllShooters();
+            Shooters = shooterModel.GetAllShooters();
         }
 
 
@@ -154,8 +154,8 @@ namespace ProjektSemestrIV.ViewModels {
         }
         private void ExecuteDeleteShooter( object parameter ) {
             UInt32 id = SelectedItem.ID;
-            ShooterModel.DeleteShooterFromDatabase(id);
-            Shooters = ShooterModel.GetAllShooters();
+            shooterModel.DeleteShooterFromDatabase(id);
+            Shooters = shooterModel.GetAllShooters();
         }
     }
 }
