@@ -1,5 +1,4 @@
-﻿using ProjektSemestrIV.Commands;
-using ProjektSemestrIV.Models;
+﻿using ProjektSemestrIV.Models;
 using System;
 using System.Windows.Input;
 

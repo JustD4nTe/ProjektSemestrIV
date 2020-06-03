@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ProjektSemestrIV.Commands;
 
 namespace ProjektSemestrIV.ViewModels {
     class ConnectionViewModel : BaseViewModel {
