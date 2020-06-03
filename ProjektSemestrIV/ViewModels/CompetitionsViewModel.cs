@@ -13,7 +13,7 @@ namespace ProjektSemestrIV.ViewModels {
 
         private CompetitionModel model;    
 
-        public ObservableCollection<Competition> Competitions { get; set; } = null;
+        public ObservableCollection<Competition> Competitions { get; private set; }
 
         public CompetitionsViewModel()
         {
