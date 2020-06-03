@@ -33,27 +33,19 @@
             x:Name="TextBoxServerAddress" x:FieldModifier="private"
             Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
             Text="{
-            Binding Path=ServerAddress,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
-        }"/>
+                Binding ServerAddress,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged
+            }"/>
 
         <Label Grid.Row="2" Grid.Column="0" Content="Port"/>
         <TextBox
             x:Name="TextBoxPort" x:FieldModifier="private"
             Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
             Text="{
-            Binding Path=Port,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
+                Binding Port,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged
         }"/>
 
         <Label Grid.Row="3" Grid.Column="0" Content="Baza danych"/>
@@ -61,13 +53,9 @@
             x:Name="TextBoxDatabase" x:FieldModifier="private"
             Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
             Text="{
-            Binding Path=Database,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
+                Binding Database,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged
         }"/>
 
         <Label Grid.Row="4" Grid.Column="0" Content="Użytkownik"/>
@@ -75,13 +63,9 @@
             x:Name="TextBoxUser" x:FieldModifier="private"
             Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
             Text="{
-            Binding Path=User,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
+                Binding User,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged
         }"/>
 
         <Label Grid.Row="5" Grid.Column="0" Content="Hasło"/>
@@ -89,26 +73,16 @@
             x:Name="TextBoxPassword" x:FieldModifier="private"
             Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
             Text="{
-            Binding Path=Password,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
+                Binding Password,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged
         }"/>
 
         <Button
             x:Name="ButtonOK" x:FieldModifier="private"
             Grid.Row="7" Grid.Column="1" Content="OK" HorizontalAlignment="Left" Width="50"
-            Command="{
-            Binding Path=OK,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
-        }"/>
+            Command="{Binding ConfirmData, Mode=OneWay}"
+        />
+        
     </Grid>
 </UserControl>

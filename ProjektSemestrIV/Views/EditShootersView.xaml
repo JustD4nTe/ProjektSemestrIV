@@ -41,13 +41,9 @@
                 x:Name="TextBoxShooterName" x:FieldModifier="private"
                 Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
                 Text="{
-                    Binding Path=ShooterName,
+                    Binding Name,
                     Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged,
-                    RelativeSource={
-                        RelativeSource Mode=FindAncestor,
-                        AncestorType={x:Type UserControl}
-                    }
+                    UpdateSourceTrigger=PropertyChanged
                 }"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="Nazwisko"/>
@@ -55,40 +51,20 @@
                 x:Name="TextBoxShooterSurname" x:FieldModifier="private"
                 Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
                 Text="{
-                    Binding Path=ShooterSurname,
+                    Binding Surname,
                     Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged,
-                    RelativeSource={
-                        RelativeSource Mode=FindAncestor,
-                        AncestorType={x:Type UserControl}
-                    }
+                    UpdateSourceTrigger=PropertyChanged
                 }"/>
 
             <Button
                 x:Name="ButtonAdd" x:FieldModifier="private"
                 Grid.Row="3" Grid.Column="1" Content="Dodaj" HorizontalAlignment="Left" Width="50"
-                Command="{
-                    Binding Path=Add,
-                    Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged,
-                    RelativeSource={
-                        RelativeSource Mode=FindAncestor,
-                        AncestorType={x:Type UserControl}
-                    }
-                }"/>
+                Command="{Binding Add, Mode=OneWay}"/>
 
             <Button
                 x:Name="ButtonOK" x:FieldModifier="private"
                 Grid.Row="5" Grid.Column="1" Content="OK" HorizontalAlignment="Left" Width="50"
-                Command="{
-                    Binding Path=OK,
-                    Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged,
-                    RelativeSource={
-                        RelativeSource Mode=FindAncestor,
-                        AncestorType={x:Type UserControl}
-                    }
-                }"/>
+                Command="{Binding Path=OK, Mode=OneWay}"/>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="1">
@@ -103,35 +79,19 @@
             </Grid.RowDefinitions>
 
             <DataGrid 
-            x:Name="DataGridShooters" x:FieldModifier="private"
-            Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
-            ItemsSource="{
-            Binding Path=ItemsSource,
-                Mode=TwoWay,
-                UpdateSourceTrigger=PropertyChanged,
-                RelativeSource={
-                    RelativeSource Mode=FindAncestor,
-                    AncestorType={x:Type UserControl}
-                }
-            }"
-            SelectedItem="{
-            Binding Path=SelectedItem,
-                Mode=TwoWay,
-                UpdateSourceTrigger=PropertyChanged,
-                RelativeSource={
-                    RelativeSource Mode=FindAncestor,
-                    AncestorType={x:Type UserControl}
-                }
-            }"
-            SelectedIndex="{
-            Binding Path=SelectedIndex,
-                Mode=TwoWay,
-                UpdateSourceTrigger=PropertyChanged,
-                RelativeSource={
-                    RelativeSource Mode=FindAncestor,
-                    AncestorType={x:Type UserControl}
-                }
-            }">
+                x:Name="DataGridShooters" x:FieldModifier="private"
+                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
+                ItemsSource="{Binding Shooters, Mode=OneWay}"
+                SelectedItem="{
+                    Binding SelectedItem,
+                    Mode=OneWayToSource,
+                    UpdateSourceTrigger=PropertyChanged
+                }"
+                SelectedIndex="{
+                    Binding Path=SelectedIndex,
+                    Mode=OneWayToSource,
+                    UpdateSourceTrigger=PropertyChanged
+                }">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
@@ -143,28 +103,12 @@
             <Button
                 x:Name="ButtonEdit" x:FieldModifier="private"
                 Grid.Row="2" Grid.Column="0" Margin="10" Content="Edytuj" HorizontalAlignment="Center" Width="50"
-                Command="{
-                    Binding Path=Edit,
-                    Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged,
-                    RelativeSource={
-                        RelativeSource Mode=FindAncestor,
-                        AncestorType={x:Type UserControl}
-                    }
-                }"/>
+                Command="{Binding EditShooter, Mode=OneWay}"/>
 
             <Button
                 x:Name="ButtonDelete" x:FieldModifier="private"
                 Grid.Row="2" Grid.Column="1" Margin="10" Content="Usuń" HorizontalAlignment="Center" Width="50"
-                Command="{
-                    Binding Path=Delete,
-                    Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged,
-                    RelativeSource={
-                        RelativeSource Mode=FindAncestor,
-                        AncestorType={x:Type UserControl}
-                    }
-                }"/>
+                Command="{Binding DeleteShooter, Mode=OneWay}"/>
         </Grid>
     </Grid>
 </UserControl>
