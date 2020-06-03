@@ -81,10 +81,11 @@
     <Compile Include="DAL\DatabaseConnection.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
     <Compile Include="DAL\Repositories\CompetitionsRepository.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />
     <Compile Include="ViewModels\CompetitionsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\BaseClass\RelayCommand.cs" />
     <Compile Include="ViewModels\ScoreViewModel.cs" />
     <Compile Include="ViewModels\ShootersViewModel.cs" />
     <Compile Include="ViewModels\StagesViewModel.cs" />

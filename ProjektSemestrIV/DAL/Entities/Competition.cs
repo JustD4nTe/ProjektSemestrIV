@@ -34,14 +34,5 @@ namespace ProjektSemestrIV.DAL.Entities
         }
         #endregion
 
-        public string ToInsert()
-        {
-            return $"{Location} {StartDate} {EndDate}";
-        }
-
-        public override string ToString()
-        {
-            return $"{Id} {Location} {StartDate} {EndDate}";
-        }
     }
 }
