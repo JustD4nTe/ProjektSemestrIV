@@ -81,6 +81,7 @@
     <Compile Include="DAL\DatabaseConnection.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
     <Compile Include="DAL\Repositories\CompetitionsRepository.cs" />
+    <Compile Include="Models\CompetitionModel.cs" />
     <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />
     <Compile Include="ViewModels\CompetitionsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
@@ -164,8 +165,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
