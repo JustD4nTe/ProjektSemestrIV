@@ -76,12 +76,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\AddShooterCommand.cs" />
-    <Compile Include="Commands\ConfirmDataCommand.cs" />
-    <Compile Include="Commands\ConfirmShooterEditCommand.cs" />
-    <Compile Include="Commands\DeleteShooterCommand.cs" />
-    <Compile Include="Commands\EditShooterCommand.cs" />
-    <Compile Include="Commands\UpdateFormViewCommand.cs" />
     <Compile Include="DAL\DatabaseConnection.cs" />
     <Compile Include="DAL\Entities\Shooter.cs" />
     <Compile Include="DAL\Repositories\ShooterRepository.cs" />
