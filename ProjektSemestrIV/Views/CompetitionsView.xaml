@@ -7,7 +7,8 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              Background="White">
-    <Grid>
+    <StackPanel>
         <Label Content="CompetitionsView" FontSize="30"/>
-    </Grid>
+        <DataGrid x:Name="DataGridCompetitions" ItemsSource="{Binding Competitions}"/>
+    </StackPanel>
 </UserControl>
