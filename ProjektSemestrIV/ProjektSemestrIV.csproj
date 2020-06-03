@@ -76,9 +76,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\AddShooterCommand.cs" />
     <Compile Include="Commands\ConfirmDataCommand.cs" />
+    <Compile Include="Commands\ConfirmShooterEditCommand.cs" />
+    <Compile Include="Commands\DeleteShooterCommand.cs" />
+    <Compile Include="Commands\EditShooterCommand.cs" />
     <Compile Include="Commands\UpdateFormViewCommand.cs" />
     <Compile Include="DAL\DatabaseConnection.cs" />
+    <Compile Include="DAL\Entities\Shooter.cs" />
+    <Compile Include="DAL\Repositories\ShooterRepository.cs" />
+    <Compile Include="Models\MainModel.cs" />
+    <Compile Include="ViewModels\EditShootersViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\CompetitionsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
@@ -86,6 +94,9 @@
     <Compile Include="ViewModels\ScoreViewModel.cs" />
     <Compile Include="ViewModels\ShootersViewModel.cs" />
     <Compile Include="ViewModels\StagesViewModel.cs" />
+    <Compile Include="Views\EditShootersView.xaml.cs">
+      <DependentUpon>EditShootersView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CompetitionsView.xaml.cs">
       <DependentUpon>CompetitionsView.xaml</DependentUpon>
     </Compile>
@@ -113,6 +124,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\EditShootersView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\CompetitionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -161,10 +176,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DAL\Entities\" />
-    <Folder Include="DAL\Repositories\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

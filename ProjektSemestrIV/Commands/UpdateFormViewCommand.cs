@@ -24,6 +24,9 @@ namespace ProjektSemestrIV.Commands {
             if(parameter.ToString() == "Connection") {
                 mainViewModel.SelectedViewModel = new ConnectionViewModel();
             }
+            else if(parameter.ToString() == "EditShooters") {
+                mainViewModel.SelectedViewModel = new EditShootersViewModel(mainViewModel.MainModel);
+            }
             else if(parameter.ToString() == "Competitions") {
                 mainViewModel.SelectedViewModel = new CompetitionsViewModel();
             }

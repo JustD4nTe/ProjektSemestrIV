@@ -16,7 +16,21 @@
                 OK="{Binding ConfirmData}"
                 />
         </DataTemplate>
-        
+
+        <DataTemplate DataType="{x:Type viewmodels:EditShootersViewModel}">
+            <views:EditShootersView
+                ShooterName="{Binding Path=Name, Mode=TwoWay}"
+                ShooterSurname="{Binding Path=Surname, Mode=TwoWay}"
+                Add="{Binding AddShooter}"
+                OK="{Binding ConfirmShooterEdit}"
+                ItemsSource="{Binding Path=Shooters, Mode=OneWay}"
+                SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
+                SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}"
+                Edit="{Binding EditShooter}"
+                Delete="{Binding DeleteShooter}"
+                />
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type viewmodels:CompetitionsViewModel}">
             <views:CompetitionsView/>
         </DataTemplate>
