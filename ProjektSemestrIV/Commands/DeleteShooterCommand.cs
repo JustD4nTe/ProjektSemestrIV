@@ -30,7 +30,7 @@ namespace ProjektSemestrIV.Commands {
         }
 
         public void Execute( object parameter ) {
-            Int32 id = (Int32)editShooterViewModel.SelectedItem.ID;
+            UInt32 id = editShooterViewModel.SelectedItem.ID;
             editShooterViewModel.MainModel.DeleteShooterFromDatabase(id);
             editShooterViewModel.Shooters = editShooterViewModel.MainModel.GetAllShooters();
         }

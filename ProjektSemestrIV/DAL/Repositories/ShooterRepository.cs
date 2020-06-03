@@ -20,7 +20,7 @@ namespace ProjektSemestrIV.DAL.Repositories {
             return executed;
         }
 
-        public static bool EditShooterInDatabase( Shooter shooter, Int32 id ) {
+        public static bool EditShooterInDatabase( Shooter shooter, UInt32 id ) {
             Boolean executed = false;
             using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
                 MySqlCommand command = new MySqlCommand($"UPDATE `Zawody`.`strzelec` SET `imie` = '{shooter.Name}', `nazwisko` = '{shooter.Surname}' WHERE (`id` = '{id}')", connection);
@@ -46,7 +46,7 @@ namespace ProjektSemestrIV.DAL.Repositories {
             return shooters;
         }
 
-        public static Boolean DeleteShooterFromDatabase( Int32 shooterID ) {
+        public static Boolean DeleteShooterFromDatabase( UInt32 shooterID ) {
             Boolean executed = false;
             using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
                 MySqlCommand command = new MySqlCommand($"DELETE FROM `Zawody`.`strzelec` WHERE (`id` = '{shooterID}')", connection);

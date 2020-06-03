@@ -16,14 +16,14 @@ namespace ProjektSemestrIV.Models {
             return false;
         }
 
-        public Boolean DeleteShooterFromDatabase( Int32 shooterID ) {
+        public Boolean DeleteShooterFromDatabase( UInt32 shooterID ) {
             if(ShooterRepository.DeleteShooterFromDatabase(shooterID)) {
                 return true;
             }
             return false;
         }
 
-        public Boolean EditShooterInDatabase( Shooter shooter, Int32 id ) {
+        public Boolean EditShooterInDatabase( Shooter shooter, UInt32 id ) {
             if(ShooterRepository.EditShooterInDatabase(shooter, id)) {
                 return true;
             }

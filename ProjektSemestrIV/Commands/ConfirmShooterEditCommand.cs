@@ -31,7 +31,7 @@ namespace ProjektSemestrIV.Commands {
 
         public void Execute( object parameter ) {
             Shooter newShooter = new Shooter(editShooterViewModel.Name, editShooterViewModel.Surname);
-            Int32 id = (Int32)editShooterViewModel.Shooters[editShooterViewModel.SelectedIndex].ID;
+            UInt32 id = editShooterViewModel.Shooters[editShooterViewModel.SelectedIndex].ID;
             editShooterViewModel.MainModel.EditShooterInDatabase(newShooter, id);
 
             editShooterViewModel.Name = "";
