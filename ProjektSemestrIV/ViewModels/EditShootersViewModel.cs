@@ -11,10 +11,10 @@ using ProjektSemestrIV.Models;
 
 namespace ProjektSemestrIV.ViewModels {
     class EditShootersViewModel : BaseViewModel {
-        public MainModel MainModel { get; private set; }
+        public ShooterModel ShooterModel { get; private set; }
         public EditShootersViewModel() {
-            MainModel = new MainModel();
-            Shooters = MainModel.GetAllShooters();
+            ShooterModel = new ShooterModel();
+            Shooters = ShooterModel.GetAllShooters();
             AddShooter = new AddShooterCommand(this);
             ConfirmShooterEdit = new ConfirmShooterEditCommand(this);
             EditShooter = new EditShooterCommand(this);

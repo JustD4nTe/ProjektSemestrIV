@@ -31,8 +31,8 @@ namespace ProjektSemestrIV.Commands {
 
         public void Execute( object parameter ) {
             UInt32 id = editShooterViewModel.SelectedItem.ID;
-            editShooterViewModel.MainModel.DeleteShooterFromDatabase(id);
-            editShooterViewModel.Shooters = editShooterViewModel.MainModel.GetAllShooters();
+            editShooterViewModel.ShooterModel.DeleteShooterFromDatabase(id);
+            editShooterViewModel.Shooters = editShooterViewModel.ShooterModel.GetAllShooters();
         }
     }
 }

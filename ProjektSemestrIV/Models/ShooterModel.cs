@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.Models {
-    class MainModel {
+    class ShooterModel {
         public Boolean AddShooterToDatabase( Shooter shooter ) {
             if(ShooterRepository.AddShooterToDatabase(shooter)) {
                 return true;

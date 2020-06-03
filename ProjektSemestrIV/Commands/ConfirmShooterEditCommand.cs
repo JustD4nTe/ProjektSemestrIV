@@ -32,12 +32,12 @@ namespace ProjektSemestrIV.Commands {
         public void Execute( object parameter ) {
             Shooter newShooter = new Shooter(editShooterViewModel.Name, editShooterViewModel.Surname);
             UInt32 id = editShooterViewModel.Shooters[editShooterViewModel.SelectedIndex].ID;
-            editShooterViewModel.MainModel.EditShooterInDatabase(newShooter, id);
+            editShooterViewModel.ShooterModel.EditShooterInDatabase(newShooter, id);
 
             editShooterViewModel.Name = "";
             editShooterViewModel.Surname = "";
             editShooterViewModel.EditedItemIndex = -1;
-            editShooterViewModel.Shooters = editShooterViewModel.MainModel.GetAllShooters();
+            editShooterViewModel.Shooters = editShooterViewModel.ShooterModel.GetAllShooters();
         }
     }
 }

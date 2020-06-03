@@ -31,11 +31,11 @@ namespace ProjektSemestrIV.Commands {
 
         public void Execute( object parameter ) {
             Shooter newShooter = new Shooter(editShooterViewModel.Name, editShooterViewModel.Surname);
-            editShooterViewModel.MainModel.AddShooterToDatabase(newShooter);
+            editShooterViewModel.ShooterModel.AddShooterToDatabase(newShooter);
 
             editShooterViewModel.Name = "";
             editShooterViewModel.Surname = "";
-            editShooterViewModel.Shooters = editShooterViewModel.MainModel.GetAllShooters();
+            editShooterViewModel.Shooters = editShooterViewModel.ShooterModel.GetAllShooters();
         }
     }
 }
