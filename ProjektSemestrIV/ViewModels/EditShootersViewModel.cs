@@ -15,10 +15,6 @@ namespace ProjektSemestrIV.ViewModels {
         public EditShootersViewModel() {
             ShooterModel = new ShooterModel();
             Shooters = ShooterModel.GetAllShooters();
-            AddShooter = new AddShooterCommand(this);
-            ConfirmShooterEdit = new ConfirmShooterEditCommand(this);
-            EditShooter = new EditShooterCommand(this);
-            DeleteShooter = new DeleteShooterCommand(this);
             SelectedIndex = -1;
             EditedItemIndex = -1;
         }
@@ -53,9 +49,114 @@ namespace ProjektSemestrIV.ViewModels {
         public Shooter SelectedItem { get; set; }
         public Int32 SelectedIndex { get; set; }
         public Int32 EditedItemIndex { get; set; }
-        public ICommand AddShooter { get; set; }
-        public ICommand ConfirmShooterEdit { get; set; }
-        public ICommand EditShooter { get; set; }
-        public ICommand DeleteShooter { get; set; }
+
+
+        private ICommand addShooter = null;
+        public ICommand AddShooter {
+            get {
+                if(addShooter == null) {
+                    addShooter = new RelayCommand(ExecuteAddShooter, CanExecuteAddShooter);
+                }
+
+                return addShooter;
+            }
+        }
+        private void ExecuteAddShooter( object parameter ) {
+            Shooter newShooter = new Shooter(Name, Surname);
+            ShooterModel.AddShooterToDatabase(newShooter);
+
+            Name = "";
+            Surname = "";
+            Shooters = ShooterModel.GetAllShooters();
+        }
+        private Boolean CanExecuteAddShooter( object parameter ) {
+            if(EditedItemIndex == -1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+
+        private ICommand confirmShooterEdit = null;
+        public ICommand ConfirmShooterEdit {
+            get {
+                if(confirmShooterEdit == null) {
+                    confirmShooterEdit = new RelayCommand(ExecuteConfirmShooterEdit, CanExecuteConfirmShooterEdit);
+                }
+
+                return confirmShooterEdit;
+            }
+        }
+        private Boolean CanExecuteConfirmShooterEdit( object parameter ) {
+            if(EditedItemIndex != -1) {
+                return true;
+            }
+            else {
+                return false;   
+            }
+        }
+        private void ExecuteConfirmShooterEdit( object parameter ) {
+            Shooter newShooter = new Shooter(Name, Surname);
+            UInt32 id = Shooters[SelectedIndex].ID;
+            ShooterModel.EditShooterInDatabase(newShooter, id);
+
+            Name = "";
+            Surname = "";
+            EditedItemIndex = -1;
+            Shooters = ShooterModel.GetAllShooters();
+        }
+
+
+        private ICommand editShooter = null;
+        public ICommand EditShooter {
+            get {
+                if(editShooter == null) {
+                    editShooter = new RelayCommand(ExecuteEditShooter, CanExecuteEditShooter);
+                }
+
+                return editShooter;
+            }
+        }
+        private Boolean CanExecuteEditShooter( object parameter ) {
+            if(SelectedIndex != -1) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        private void ExecuteEditShooter( object parameter ) {
+            Name = SelectedItem.Name;
+            Surname = SelectedItem.Surname;
+            EditedItemIndex = SelectedIndex;
+        }
+
+
+        private ICommand deleteShooter = null;
+        public ICommand DeleteShooter {
+            get {
+                if(deleteShooter == null) {
+                    deleteShooter = new RelayCommand(ExecuteDeleteShooter, CanExecuteDeleteShooter);
+                }
+
+                return deleteShooter;
+            }
+        }
+        private Boolean CanExecuteDeleteShooter( object parameter ) {
+            if( (SelectedIndex != -1) &&
+                (SelectedIndex != EditedItemIndex)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        private void ExecuteDeleteShooter( object parameter ) {
+            UInt32 id = SelectedItem.ID;
+            ShooterModel.DeleteShooterFromDatabase(id);
+            Shooters = ShooterModel.GetAllShooters();
+        }
     }
 }

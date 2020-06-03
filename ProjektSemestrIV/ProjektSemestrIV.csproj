@@ -85,12 +85,13 @@
     <Compile Include="DAL\DatabaseConnection.cs" />
     <Compile Include="DAL\Entities\Shooter.cs" />
     <Compile Include="DAL\Repositories\ShooterRepository.cs" />
-    <Compile Include="Models\MainModel.cs" />
+    <Compile Include="Models\ShooterModel.cs" />
     <Compile Include="ViewModels\EditShootersViewModel.cs" />
-    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />
     <Compile Include="ViewModels\CompetitionsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\BaseClass\RelayCommand.cs" />
     <Compile Include="ViewModels\ScoreViewModel.cs" />
     <Compile Include="ViewModels\ShootersViewModel.cs" />
     <Compile Include="ViewModels\StagesViewModel.cs" />
