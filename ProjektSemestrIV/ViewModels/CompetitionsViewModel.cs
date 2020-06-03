@@ -1,5 +1,6 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Repositories;
+using ProjektSemestrIV.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,11 +10,16 @@ using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.ViewModels {
     class CompetitionsViewModel : BaseViewModel {
+
+        private CompetitionModel model;    
+
         public ObservableCollection<Competition> Competitions { get; set; } = null;
 
         public CompetitionsViewModel()
         {
-            Competitions = new ObservableCollection<Competition>(CompetitionsRepository.GetAllCompetitions());
+            model = new CompetitionModel();
+
+            Competitions = new ObservableCollection<Competition>(model.GetAllCompetitionsFromDB());
         }
     }
 }

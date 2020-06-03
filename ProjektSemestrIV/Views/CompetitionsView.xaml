@@ -9,6 +9,6 @@
              Background="White">
     <StackPanel>
         <Label Content="CompetitionsView" FontSize="30"/>
-        <ListView ItemsSource="{Binding Competitions}"/>
+        <DataGrid x:Name="DataGridCompetitions" ItemsSource="{Binding Competitions}"/>
     </StackPanel>
 </UserControl>
