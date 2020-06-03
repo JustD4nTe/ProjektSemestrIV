@@ -24,7 +24,7 @@ namespace ProjektSemestrIV.ViewModels {
                 return confirmData;
             }
         }
-        public void Execute( object parameter ) {
+        public void ExecuteConfirmData( object parameter ) {
             Properties.Settings.Default.ServerAddress = ServerAddress;
             Properties.Settings.Default.Port = Port;
             Properties.Settings.Default.Database = Database;
