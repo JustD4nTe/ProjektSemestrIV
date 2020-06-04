@@ -20,7 +20,7 @@
 
             <Label Content="Edytowanie" HorizontalAlignment="Center"/>
             <Button Content="Dodaj zawody" Command="{Binding UpdateFormView}" CommandParameter="Competitions"/>
-            <Button Content="Dodaj trasy" Command="{Binding UpdateFormView}" CommandParameter="Stages"/>
+            <Button Content="Edytuj trasy" Command="{Binding UpdateFormView}" CommandParameter="EditStages"/>
             <Button Content="Edytuj zawodników" Command="{Binding UpdateFormView}" CommandParameter="EditShooters"/>
             <Button Content="Dodaj przebieg" Command="{Binding UpdateFormView}" CommandParameter="Score"/>
 

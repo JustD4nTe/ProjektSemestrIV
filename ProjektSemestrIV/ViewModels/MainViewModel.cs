@@ -33,8 +33,8 @@ namespace ProjektSemestrIV.ViewModels {
             else if(parameter.ToString() == "Competitions") {
                 SelectedViewModel = new CompetitionsViewModel();
             }
-            else if(parameter.ToString() == "Stages") {
-                SelectedViewModel = new StagesViewModel();
+            else if(parameter.ToString() == "EditStages") {
+                SelectedViewModel = new EditStagesViewModel();
             }
             else if(parameter.ToString() == "Shooters") {
                 SelectedViewModel = new ShootersViewModel();
