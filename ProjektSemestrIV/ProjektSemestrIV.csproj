@@ -117,6 +117,7 @@
     </Compile>
     <Compile Include="Views\EditStagesView.xaml.cs">
       <DependentUpon>EditStagesView.xaml</DependentUpon>
+	</Compile>
     <Compile Include="Views\ShowShootersView.xaml.cs">
       <DependentUpon>ShowShootersView.xaml</DependentUpon>
     </Compile>
@@ -157,6 +158,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\EditStagesView.xaml">
+	<SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShowShootersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
