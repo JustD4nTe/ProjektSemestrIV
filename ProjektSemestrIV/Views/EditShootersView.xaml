@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"
              xmlns:local="clr-namespace:ProjektSemestrIV.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -19,7 +20,7 @@
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
-               Content="Edytowanie zawodników" FontSize="30"/>
+               Content="{Binding Source={x:Static resx:Resources.ShooterEditing}}" FontSize="30"/>
 
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
@@ -37,14 +38,14 @@
             </Grid.RowDefinitions>
 
 
-            <Label Grid.Row="0" Grid.Column="0" Content="Imię"/>
+            <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.ShooterName}}"/>
             <TextBox
                 Grid.Row="0" Grid.Column="1"
                 x:Name="TextBoxShooterName" x:FieldModifier="private"
                 VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
                 Text="{Binding Name, Mode=TwoWay}"/>
 
-            <Label Grid.Row="1" Grid.Column="0" Content="Nazwisko"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.ShooterSurname}}"/>
             <TextBox
                 Grid.Row="1" Grid.Column="1" 
                 x:Name="TextBoxShooterSurname" x:FieldModifier="private"
@@ -54,13 +55,13 @@
             <Button
                 Grid.Row="3" Grid.Column="1" 
                 x:Name="ButtonAdd" x:FieldModifier="private"
-                HorizontalAlignment="Left" Width="50" Content="Dodaj"
+                HorizontalAlignment="Left" Width="50" Content="{Binding Source={x:Static resx:Resources.Add}}"
                 Command="{Binding AddShooter, Mode=OneWay}"/>
 
             <Button
                 Grid.Row="5" Grid.Column="1"
                 x:Name="ButtonOK" x:FieldModifier="private"
-                HorizontalAlignment="Left" Width="50" Content="OK" 
+                HorizontalAlignment="Left" Width="50" Content="{Binding Source={x:Static resx:Resources.Ok}}" 
                 Command="{Binding ConfirmShooterEdit, Mode=OneWay}"/>
         </Grid>
 
@@ -84,22 +85,22 @@
                 SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
-                    <DataGridTextColumn Header="Imię" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Nazwisko" Binding="{Binding Surname}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Name}}" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Surname}}" Binding="{Binding Surname}"/>
                 </DataGrid.Columns>
             </DataGrid>
 
             <Button
                 Grid.Row="2" Grid.Column="0" 
                 x:Name="ButtonEdit" x:FieldModifier="private"
-                HorizontalAlignment="Center" Width="50" Margin="10" Content="Edytuj" 
+                HorizontalAlignment="Center" Width="50" Margin="10" Content="{Binding Source={x:Static resx:Resources.Edit}}" 
                 Command="{Binding EditShooter, Mode=OneWay}"/>
 
             <Button
                 Grid.Row="2" Grid.Column="1"
                 x:Name="ButtonDelete" x:FieldModifier="private"
-                HorizontalAlignment="Center" Width="50" Margin="10" Content="Usuń" 
+                HorizontalAlignment="Center" Width="50" Margin="10" Content="{Binding Source={x:Static resx:Resources.Delete}}" 
                 Command="{Binding DeleteShooter, Mode=OneWay}"/>
         </Grid>
     </Grid>

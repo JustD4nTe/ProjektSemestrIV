@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"
              xmlns:local="clr-namespace:ProjektSemestrIV.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -39,22 +40,22 @@
             </Grid.RowDefinitions>
 
 
-            <Label Grid.Row="0" Grid.Column="0" Content="ID zawodów"/>
+            <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.IdCompetition}}"/>
             <TextBox
                 Grid.Row="0" Grid.Column="1"
                 x:Name="TextBoxCompetitionID" x:FieldModifier="private"
                 VerticalAlignment="Center" HorizontalAlignment="Left" 
                 Width="100" IsEnabled="False"
                 Text="{Binding CompetitionID, Mode=OneWay}"/>
-            
-            <Label Grid.Row="1" Grid.Column="0" Content="Nazwa"/>
+
+            <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Name}}"/>
             <TextBox
                 Grid.Row="1" Grid.Column="1"
                 x:Name="TextBoxShooterName" x:FieldModifier="private"
                 VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
                 Text="{Binding Name, Mode=TwoWay}"/>
 
-            <Label Grid.Row="2" Grid.Column="0" Content="Zasady"/>
+            <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Rules}}"/>
             <TextBox
                 Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" 
                 x:Name="TextBoxRules" x:FieldModifier="private"
@@ -64,13 +65,13 @@
             <Button
                 Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2"
                 x:Name="ButtonAdd" x:FieldModifier="private"
-                HorizontalAlignment="Center" Width="50" Margin="10" Content="Dodaj"
+                HorizontalAlignment="Center" Width="50" Margin="10" Content="{Binding Source={x:Static resx:Resources.Add}}"
                 Command="{Binding AddStage, Mode=OneWay}"/>
 
             <Button
                 Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2"
                 x:Name="ButtonOK" x:FieldModifier="private"
-                HorizontalAlignment="Center" Width="50" Margin="10" Content="OK" 
+                HorizontalAlignment="Center" Width="50" Margin="10" Content="{Binding Source={x:Static resx:Resources.Ok}}" 
                 Command="{Binding ConfirmStageEdit, Mode=OneWay}"/>
         </Grid>
 
@@ -94,23 +95,23 @@
                 SelectedIndex="{Binding SelectedStageIndex, Mode=OneWayToSource}">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
-                    <DataGridTextColumn Header="ID zawodów" Binding="{Binding Competition_ID}"/>
-                    <DataGridTextColumn Header="Nazwa" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="Zasady" Binding="{Binding Rules}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.IdCompetition}}" Binding="{Binding Competition_ID}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Name}}" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Rules}}" Binding="{Binding Rules}"/>
                 </DataGrid.Columns>
             </DataGrid>
 
             <Button
                 Grid.Row="2" Grid.Column="0" 
                 x:Name="ButtonEditStage" x:FieldModifier="private"
-                HorizontalAlignment="Center" Width="50" Margin="10" Content="Edytuj" 
+                HorizontalAlignment="Center" Width="50" Margin="10" Content="{Binding Source={x:Static resx:Resources.Edit}}" 
                 Command="{Binding EditStage, Mode=OneWay}"/>
 
             <Button
                 Grid.Row="2" Grid.Column="1"
                 x:Name="ButtonDeleteStage" x:FieldModifier="private"
-                HorizontalAlignment="Center" Width="50" Margin="10" Content="Usuń" 
+                HorizontalAlignment="Center" Width="50" Margin="10" Content="{Binding Source={x:Static resx:Resources.Delete}}" 
                 Command="{Binding DeleteStage, Mode=OneWay}"/>
         </Grid>
 
@@ -135,10 +136,10 @@
                 SelectedItem="{Binding SelectedCompetition, Mode=OneWayToSource}">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="ID" Binding="{Binding Id}"/>
-                    <DataGridTextColumn Header="Miejsce" Binding="{Binding Location}"/>
-                    <DataGridTextColumn Header="Rozpoczęcie" Binding="{Binding StartDate}"/>
-                    <DataGridTextColumn Header="Rozpoczęcie" Binding="{Binding EndDate}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Location}}" Binding="{Binding Location}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StartDate}}" Binding="{Binding StartDate}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.EndDate}}" Binding="{Binding EndDate}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

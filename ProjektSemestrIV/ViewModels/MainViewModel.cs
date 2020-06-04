@@ -25,6 +25,7 @@ namespace ProjektSemestrIV.ViewModels {
         }
 
         public void ExecuteUpdateFormView( object parameter ) {
+            switch (parameter.ToString())
             {
                 case "Connection":
                     SelectedViewModel = new ConnectionViewModel();

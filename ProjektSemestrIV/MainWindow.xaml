@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"
         xmlns:local="clr-namespace:ProjektSemestrIV"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -14,22 +15,22 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0">
-            <Label Content="Konfiguracja połączenia" HorizontalAlignment="Center"/>
-            <Button Content="Konfiguruj" Command="{Binding UpdateFormView}" CommandParameter="Connection"/>
+            <Label Content="{Binding Source={x:Static resx:Resources.ConnectionConfiguration}}" HorizontalAlignment="Center"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.Configuration}}" Command="{Binding UpdateFormView}" CommandParameter="Connection"/>
 
             <Separator Margin="0,10,0,10" Height="0"/>
 
-            <Label Content="Edytowanie" HorizontalAlignment="Center"/>
-            <Button Content="Dodaj zawody" Command="{Binding UpdateFormView}" CommandParameter="Competitions"/>
-            <Button Content="Edytuj trasy" Command="{Binding UpdateFormView}" CommandParameter="EditStages"/>
-            <Button Content="Edytuj zawodników" Command="{Binding UpdateFormView}" CommandParameter="EditShooters"/>
-            <Button Content="Dodaj przebieg" Command="{Binding UpdateFormView}" CommandParameter="Score"/>
+            <Label Content="{Binding Source={x:Static resx:Resources.Edit}}" HorizontalAlignment="Center"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.AddCompetition}}" Command="{Binding UpdateFormView}" CommandParameter="Competitions"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.EditStage}}" Command="{Binding UpdateFormView}" CommandParameter="EditStages"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.EditShooter}}" Command="{Binding UpdateFormView}" CommandParameter="EditShooters"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.AddCourse}}" Command="{Binding UpdateFormView}" CommandParameter="Score"/>
 
             <Separator Margin="0,10,0,10" Height="0"/>
 
-            <Label Content="Wyświetlanie" HorizontalAlignment="Center"/>
-            <Button Content="Lista zawodów" Command="{Binding UpdateFormView}" CommandParameter="ShowCompetitions"/>
-            <Button Content="Lista zawodników" Command="{Binding UpdateFormView}" CommandParameter="ShowShooters"/>
+            <Label Content="{Binding Source={x:Static resx:Resources.View}}" HorizontalAlignment="Center"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.ListCompetition}}" Command="{Binding UpdateFormView}" CommandParameter="ShowCompetitions"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.ListShooters}}" Command="{Binding UpdateFormView}" CommandParameter="ShowShooters"/>
         </StackPanel>
         
         <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding SelectedViewModel}"/>
