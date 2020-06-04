@@ -42,6 +42,10 @@ namespace ProjektSemestrIV.ViewModels {
             else if(parameter.ToString() == "Score") {
                 SelectedViewModel = new ScoreViewModel();
             }
+            else if (parameter.ToString() == "ShowCompetitions")
+            {
+                SelectedViewModel = new ShowCompetitionsViewModel();
+            }
         }
     }
 }
