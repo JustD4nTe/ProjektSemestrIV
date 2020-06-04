@@ -18,14 +18,15 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Edytowanie zawodników" FontSize="30"/>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
+               Content="Edytowanie zawodników" FontSize="30"/>
 
         <Grid Grid.Row="1" Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
@@ -38,33 +39,29 @@
 
             <Label Grid.Row="0" Grid.Column="0" Content="Imię"/>
             <TextBox
+                Grid.Row="0" Grid.Column="1"
                 x:Name="TextBoxShooterName" x:FieldModifier="private"
-                Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
-                Text="{
-                    Binding Name,
-                    Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged
-                }"/>
+                VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
+                Text="{Binding Name, Mode=TwoWay}"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="Nazwisko"/>
             <TextBox
+                Grid.Row="1" Grid.Column="1" 
                 x:Name="TextBoxShooterSurname" x:FieldModifier="private"
-                Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
-                Text="{
-                    Binding Surname,
-                    Mode=TwoWay,
-                    UpdateSourceTrigger=PropertyChanged
-                }"/>
+                VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
+                Text="{Binding Surname, Mode=TwoWay}"/>
 
             <Button
+                Grid.Row="3" Grid.Column="1" 
                 x:Name="ButtonAdd" x:FieldModifier="private"
-                Grid.Row="3" Grid.Column="1" Content="Dodaj" HorizontalAlignment="Left" Width="50"
-                Command="{Binding Add, Mode=OneWay}"/>
+                HorizontalAlignment="Left" Width="50" Content="Dodaj"
+                Command="{Binding AddShooter, Mode=OneWay}"/>
 
             <Button
+                Grid.Row="5" Grid.Column="1"
                 x:Name="ButtonOK" x:FieldModifier="private"
-                Grid.Row="5" Grid.Column="1" Content="OK" HorizontalAlignment="Left" Width="50"
-                Command="{Binding Path=OK, Mode=OneWay}"/>
+                HorizontalAlignment="Left" Width="50" Content="OK" 
+                Command="{Binding ConfirmShooterEdit, Mode=OneWay}"/>
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="1">
@@ -79,19 +76,12 @@
             </Grid.RowDefinitions>
 
             <DataGrid 
+                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                 x:Name="DataGridShooters" x:FieldModifier="private"
-                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
+                AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
                 ItemsSource="{Binding Shooters, Mode=OneWay}"
-                SelectedItem="{
-                    Binding SelectedItem,
-                    Mode=OneWayToSource,
-                    UpdateSourceTrigger=PropertyChanged
-                }"
-                SelectedIndex="{
-                    Binding Path=SelectedIndex,
-                    Mode=OneWayToSource,
-                    UpdateSourceTrigger=PropertyChanged
-                }">
+                SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
+                SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="ID" Binding="{Binding ID}"/>
@@ -101,13 +91,15 @@
             </DataGrid>
 
             <Button
+                Grid.Row="2" Grid.Column="0" 
                 x:Name="ButtonEdit" x:FieldModifier="private"
-                Grid.Row="2" Grid.Column="0" Margin="10" Content="Edytuj" HorizontalAlignment="Center" Width="50"
+                HorizontalAlignment="Center" Width="50" Margin="10" Content="Edytuj" 
                 Command="{Binding EditShooter, Mode=OneWay}"/>
 
             <Button
+                Grid.Row="2" Grid.Column="1"
                 x:Name="ButtonDelete" x:FieldModifier="private"
-                Grid.Row="2" Grid.Column="1" Margin="10" Content="Usuń" HorizontalAlignment="Center" Width="50"
+                HorizontalAlignment="Center" Width="50" Margin="10" Content="Usuń" 
                 Command="{Binding DeleteShooter, Mode=OneWay}"/>
         </Grid>
     </Grid>
