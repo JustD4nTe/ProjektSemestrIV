@@ -127,6 +127,11 @@
     <Compile Include="DAL\Repositories\StageRepository.cs" />
     <Compile Include="Models\ShooterModel.cs" />
     <Compile Include="Models\StageModel.cs" />
+    <Compile Include="Properties\Resources.pl-PL.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.pl-PL.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\EditShootersViewModel.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
     <Compile Include="DAL\Repositories\CompetitionsRepository.cs" />
@@ -224,6 +229,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.pl-PL.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.pl-PL.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
