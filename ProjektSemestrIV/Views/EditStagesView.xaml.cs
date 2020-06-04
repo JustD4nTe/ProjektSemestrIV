@@ -17,8 +17,8 @@ namespace ProjektSemestrIV.Views {
     /// <summary>
     /// Interaction logic for StagesView.xaml
     /// </summary>
-    public partial class StagesView : UserControl {
-        public StagesView() {
+    public partial class EditStagesView : UserControl {
+        public EditStagesView() {
             InitializeComponent();
         }
     }
