@@ -86,8 +86,8 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Name}}" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Surname}}" Binding="{Binding Surname}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterName}}" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterSurname}}" Binding="{Binding Surname}"/>
                 </DataGrid.Columns>
             </DataGrid>
 
