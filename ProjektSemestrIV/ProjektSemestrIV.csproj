@@ -92,8 +92,12 @@
     <Compile Include="ViewModels\ScoreViewModel.cs" />
     <Compile Include="ViewModels\ShootersViewModel.cs" />
     <Compile Include="ViewModels\ShowCompetitionsViewModel.cs" />
+    <Compile Include="ViewModels\ShowCompetitionViewModel.cs" />
     <Compile Include="ViewModels\ShowShootersViewModel.cs" />
     <Compile Include="ViewModels\StagesViewModel.cs" />
+    <Compile Include="Views\ShowCompetitionView.xaml.cs">
+      <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditShootersView.xaml.cs">
       <DependentUpon>EditShootersView.xaml</DependentUpon>
     </Compile>
@@ -130,6 +134,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ShowCompetitionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditShootersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
