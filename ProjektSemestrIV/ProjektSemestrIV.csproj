@@ -78,8 +78,11 @@
     </ApplicationDefinition>
     <Compile Include="DAL\DatabaseConnection.cs" />
     <Compile Include="DAL\Entities\Shooter.cs" />
+    <Compile Include="DAL\Entities\Stage.cs" />
     <Compile Include="DAL\Repositories\ShooterRepository.cs" />
+    <Compile Include="DAL\Repositories\StageRepository.cs" />
     <Compile Include="Models\ShooterModel.cs" />
+    <Compile Include="Models\StageModel.cs" />
     <Compile Include="ViewModels\EditShootersViewModel.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
     <Compile Include="DAL\Repositories\CompetitionsRepository.cs" />
@@ -92,8 +95,8 @@
     <Compile Include="ViewModels\ScoreViewModel.cs" />
     <Compile Include="ViewModels\ShootersViewModel.cs" />
     <Compile Include="ViewModels\ShowCompetitionsViewModel.cs" />
+    <Compile Include="ViewModels\EditStagesViewModel.cs" />
     <Compile Include="ViewModels\ShowShootersViewModel.cs" />
-    <Compile Include="ViewModels\StagesViewModel.cs" />
     <Compile Include="Views\EditShootersView.xaml.cs">
       <DependentUpon>EditShootersView.xaml</DependentUpon>
     </Compile>
@@ -112,11 +115,10 @@
     <Compile Include="Views\ShowCompetitionsView.xaml.cs">
       <DependentUpon>ShowCompetitionsView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EditStagesView.xaml.cs">
+      <DependentUpon>EditStagesView.xaml</DependentUpon>
     <Compile Include="Views\ShowShootersView.xaml.cs">
       <DependentUpon>ShowShootersView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\StagesView.xaml.cs">
-      <DependentUpon>StagesView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -154,11 +156,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\EditStagesView.xaml">
     <Page Include="Views\ShowShootersView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\StagesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

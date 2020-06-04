@@ -25,7 +25,6 @@ namespace ProjektSemestrIV.ViewModels {
         }
 
         public void ExecuteUpdateFormView( object parameter ) {
-            switch (parameter.ToString())
             {
                 case "Connection":
                     SelectedViewModel = new ConnectionViewModel();
@@ -36,8 +35,8 @@ namespace ProjektSemestrIV.ViewModels {
                 case "Competitions":
                     SelectedViewModel = new CompetitionsViewModel();
                     break;
-                case "Stages":
-                    SelectedViewModel = new StagesViewModel();
+                case "EditStages":
+                    SelectedViewModel = new EditStagesViewModel();
                     break;
                 case "Shooters":
                     SelectedViewModel = new ShootersViewModel();
