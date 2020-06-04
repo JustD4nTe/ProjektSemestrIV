@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:ProjektSemestrIV"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
@@ -28,6 +29,7 @@
 
             <Label Content="Wyświetlanie" HorizontalAlignment="Center"/>
             <Button Content="Lista zawodów" Command="{Binding UpdateFormView}" CommandParameter="ShowCompetitions"/>
+            <Button Content="Lista zawodników" Command="{Binding UpdateFormView}" CommandParameter="ShowShooters"/>
         </StackPanel>
         
         <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding SelectedViewModel}"/>

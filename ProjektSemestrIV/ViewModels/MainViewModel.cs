@@ -23,28 +23,33 @@ namespace ProjektSemestrIV.ViewModels {
                 return updateFormView;
             }
         }
+
         public void ExecuteUpdateFormView( object parameter ) {
-            if(parameter.ToString() == "Connection") {
-                SelectedViewModel = new ConnectionViewModel();
-            }
-            else if(parameter.ToString() == "EditShooters") {
-                SelectedViewModel = new EditShootersViewModel();
-            }
-            else if(parameter.ToString() == "Competitions") {
-                SelectedViewModel = new CompetitionsViewModel();
-            }
-            else if(parameter.ToString() == "EditStages") {
-                SelectedViewModel = new EditStagesViewModel();
-            }
-            else if(parameter.ToString() == "Shooters") {
-                SelectedViewModel = new ShootersViewModel();
-            }
-            else if(parameter.ToString() == "Score") {
-                SelectedViewModel = new ScoreViewModel();
-            }
-            else if (parameter.ToString() == "ShowCompetitions")
             {
-                SelectedViewModel = new ShowCompetitionsViewModel();
+                case "Connection":
+                    SelectedViewModel = new ConnectionViewModel();
+                    break;
+                case "EditShooters":
+                    SelectedViewModel = new EditShootersViewModel();
+                    break;
+                case "Competitions":
+                    SelectedViewModel = new CompetitionsViewModel();
+                    break;
+                case "EditStages":
+                    SelectedViewModel = new EditStagesViewModel();
+                    break;
+                case "Shooters":
+                    SelectedViewModel = new ShootersViewModel();
+                    break;
+                case "Score":
+                    SelectedViewModel = new ScoreViewModel();
+                    break;
+                case "ShowCompetitions":
+                    SelectedViewModel = new ShowCompetitionsViewModel();
+                    break;
+                case "ShowShooters":
+                    SelectedViewModel = new ShowShootersViewModel();
+                    break;
             }
         }
     }
