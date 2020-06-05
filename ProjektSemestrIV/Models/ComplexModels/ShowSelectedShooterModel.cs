@@ -1,5 +1,6 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Repositories;
+using ProjektSemestrIV.Models.ShowModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public double GetShooterCompetitionDeltaAccuracy() => ShooterRepository.GetShooterCompetitionDeltaAccuracyFromDB(shooter.ID);
 
-        public List<(string location, string startDate, string position, uint points)> GetShooterCompetitions() => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID);
+        public List<ShooterCompetitionOverview> GetShooterCompetitions() => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID);
 
         public double GetShooterGeneralAveragePositionFromDB() => ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID);
 

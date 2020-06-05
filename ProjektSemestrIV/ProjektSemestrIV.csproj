@@ -127,6 +127,7 @@
     <Compile Include="DAL\Repositories\StageRepository.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedShooterModel.cs" />
     <Compile Include="Models\ShooterModel.cs" />
+    <Compile Include="Models\ShowModels\ShooterCompetitionOverview.cs" />
     <Compile Include="Models\StageModel.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <AutoGen>True</AutoGen>
