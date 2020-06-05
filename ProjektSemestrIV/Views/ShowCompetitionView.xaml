@@ -24,27 +24,27 @@
                 <Label Grid.Row="0" Grid.Column="0"
                        Content="Data trwania"/>
                 <Label Grid.Row="0" Grid.Column="1"
-                       Content="{Binding DurationDate}"/>
+                       Content="{Binding DurationDate, Mode=OneWay}"/>
 
                 <Label Grid.Row="1" Grid.Column="0"
                        Content="Miejsce zawodów"/>
                 <Label Grid.Row="1" Grid.Column="1"
-                       Content="{Binding Location}"/>
+                       Content="{Binding Location, Mode=OneWay}"/>
 
                 <Label Grid.Row="2" Grid.Column="0"
                        Content="Liczba uczestników"/>
                 <Label Grid.Row="2" Grid.Column="1"
-                       Content="{Binding ShootersCount}"/>
+                       Content="{Binding ShootersCount, Mode=OneWay}"/>
 
                 <Label Grid.Row="3" Grid.Column="0"
                        Content="Najszybszy czas przebiegu"/>
                 <Label Grid.Row="3" Grid.Column="1"
-                       Content="{Binding FastetTime}"/>
+                       Content="{Binding FastestShooter, Mode=OneWay}"/>
                 
                 <Label Grid.Row="4" Grid.Column="0"
                        Content="Podium"/>
                 <Label Grid.Row="4" Grid.Column="1"
-                       Content="{Binding Podium}"/>
+                       Content="{Binding Podium, Mode=OneWay}"/>
             </Grid>
         </TabItem>
         <TabItem Header="Lista tras">

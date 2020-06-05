@@ -1,56 +1,29 @@
-﻿using System.Collections.ObjectModel;
+﻿using ProjektSemestrIV.DisplayModels;
+using ProjektSemestrIV.Models;
+using System.Collections.ObjectModel;
 
 namespace ProjektSemestrIV.ViewModels
 {
     class ShowCompetitionViewModel : BaseViewModel
     {
-        private string durationDate;
-        public string DurationDate
-        {
-            get { return durationDate; }
-            set { durationDate = value; onPropertyChanged(nameof(DurationDate)); }
-        }
+        private ShowCompetitionModel model;
 
-        private string location;
-        public string Location
-        {
-            get { return location; }
-            set { location = value; onPropertyChanged(nameof(Location)); }
-        }
+        public string DurationDate { get; }
+        public string Location { get; }
+        public uint ShootersCount { get; }
+        public string FastestShooter { get; }
+        public string Podium { get; }
+        public ObservableCollection<ShowCompetitionStageModel> Stages { get; }
+        public ObservableCollection<(string Name, string Surname, uint Point)> Shooters { get; }
 
-        private uint shootersCount;
-        public uint ShootersCount
+        public ShowCompetitionViewModel(uint id)
         {
-            get { return shootersCount; }
-            set { shootersCount = value; onPropertyChanged(nameof(ShootersCount)); }
-        }
+            model = new ShowCompetitionModel(id);
 
-        private string fastestTime;
-        public string FastestTime
-        {
-            get { return fastestTime; }
-            set { fastestTime = value; onPropertyChanged(nameof(FastestTime)); }
-        }
-
-        private string podium;
-        public string Podium
-        {
-            get { return podium; }
-            set { podium = value; onPropertyChanged(nameof(Podium)); }
-        }
-
-        private ObservableCollection<(string Name, string BestPlayer)> stages;
-        public ObservableCollection<(string Name, string BestPlayer)> Stages
-        {
-            get { return stages; }
-            set { stages = value; onPropertyChanged(nameof(Stages)); }
-        }
-
-        private ObservableCollection<(string Name, string Surname, uint Point)> shooters;
-        public ObservableCollection<(string Name, string Surname, uint Point)> Shooters
-        {
-            get { return shooters; }
-            set { shooters = value; onPropertyChanged(nameof(Shooters)); }
+            DurationDate = model.GetDurationDate();
+            Location = model.GetLocation();
+            ShootersCount = model.GetShootersCount();
+            FastestShooter = model.GetFastestShooter();
         }
     }
 }

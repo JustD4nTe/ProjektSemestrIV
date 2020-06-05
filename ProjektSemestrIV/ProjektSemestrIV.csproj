@@ -78,9 +78,11 @@
     </ApplicationDefinition>
     <Compile Include="DAL\DatabaseConnection.cs" />
     <Compile Include="DAL\Entities\Shooter.cs" />
+    <Compile Include="DAL\Entities\ShooterWithCompetitionTime.cs" />
     <Compile Include="DAL\Repositories\CompetitionRepository.cs" />
     <Compile Include="DAL\Repositories\ShooterRepository.cs" />
     <Compile Include="Models\ShooterModel.cs" />
+    <Compile Include="Models\ShowCompetitionModel.cs" />
     <Compile Include="ViewModels\EditShootersViewModel.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
     <Compile Include="Models\CompetitionModel.cs" />
