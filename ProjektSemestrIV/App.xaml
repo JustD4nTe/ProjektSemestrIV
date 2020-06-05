@@ -14,8 +14,8 @@
             <views:EditShootersView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type viewmodels:CompetitionsViewModel}">
-            <views:CompetitionsView/>
+        <DataTemplate DataType="{x:Type viewmodels:EditCompetitionsViewModel}">
+            <views:EditCompetitionsView/>
         </DataTemplate>
         
         <DataTemplate DataType="{x:Type viewmodels:EditScoreViewModel}">

@@ -33,8 +33,8 @@ namespace ProjektSemestrIV.ViewModels {
                 case "EditShooters":
                     SelectedViewModel = new EditShootersViewModel();
                     break;
-                case "Competitions":
-                    SelectedViewModel = new CompetitionsViewModel();
+                case "EditCompetitions":
+                    SelectedViewModel = new EditCompetitionsViewModel();
                     break;
                 case "EditStages":
                     SelectedViewModel = new EditStagesViewModel();

@@ -143,7 +143,7 @@
     <Compile Include="DAL\Repositories\CompetitionsRepository.cs" />
     <Compile Include="Models\CompetitionModel.cs" />
     <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />
-    <Compile Include="ViewModels\CompetitionsViewModel.cs" />
+    <Compile Include="ViewModels\EditCompetitionsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\BaseClass\RelayCommand.cs" />
@@ -155,8 +155,8 @@
     <Compile Include="Views\EditShootersView.xaml.cs">
       <DependentUpon>EditShootersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CompetitionsView.xaml.cs">
-      <DependentUpon>CompetitionsView.xaml</DependentUpon>
+    <Compile Include="Views\EditCompetitionsView.xaml.cs">
+      <DependentUpon>EditCompetitionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConnectionView.xaml.cs">
       <DependentUpon>ConnectionView.xaml</DependentUpon>
@@ -192,7 +192,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CompetitionsView.xaml">
+    <Page Include="Views\EditCompetitionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
