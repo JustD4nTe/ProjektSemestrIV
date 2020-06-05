@@ -10,7 +10,7 @@ namespace ProjektSemestrIV.DAL.Entities
     class Competition
     {
         #region Properties
-        public UInt16 Id { get; set; } 
+        public uint Id { get; set; } 
         public string Location { get; set; }
         public string StartDate { get; set; }
         public string EndDate { get; set; }
@@ -19,7 +19,7 @@ namespace ProjektSemestrIV.DAL.Entities
         #region Constructors
         public Competition(MySqlDataReader reader)
         {
-            Id = UInt16.Parse(reader["id"].ToString());
+            Id = uint.Parse(reader["id"].ToString());
             Location = reader["miejsce"].ToString();
             StartDate = reader["rozpoczecie"].ToString();
             EndDate = reader["zakonczenie"].ToString();

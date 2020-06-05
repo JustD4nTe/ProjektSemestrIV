@@ -10,16 +10,16 @@ using System.Threading.Tasks;
 namespace ProjektSemestrIV.Models {
     class ShooterModel {
         public Boolean AddShooterToDatabase( Shooter shooter )
-            => ShooterRepository.AddShooterToDatabase(shooter);
+            => ShooterRepository.AddShooterToDB(shooter);
 
         public Boolean DeleteShooterFromDatabase( UInt32 shooterID )
-            => ShooterRepository.DeleteShooterFromDatabase(shooterID);
+            => ShooterRepository.DeleteShooterFromDB(shooterID);
 
         public Boolean EditShooterInDatabase( Shooter shooter, UInt32 id )
-            => ShooterRepository.EditShooterInDatabase(shooter, id);
+            => ShooterRepository.EditShooterInDB(shooter, id);
 
         public ObservableCollection<Shooter> GetAllShooters() {
-            List<Shooter> shooters = ShooterRepository.GetAllShooters();
+            List<Shooter> shooters = ShooterRepository.GetAllShootersFromDB();
             return new ObservableCollection<Shooter>(shooters);
         }
     }

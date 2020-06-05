@@ -10,6 +10,6 @@ namespace ProjektSemestrIV.Models
 {
     class CompetitionModel
     {
-        public List<Competition> GetAllCompetitionsFromDB() => CompetitionsRepository.GetAllCompetitionsFromDB();
+        public List<Competition> GetAllCompetitionsFromDB() => CompetitionRepository.GetAllCompetitionsFromDB();
     }
 }

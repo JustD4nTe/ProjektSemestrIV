@@ -125,6 +125,7 @@
     <Compile Include="DAL\Entities\Stage.cs" />
     <Compile Include="DAL\Repositories\ShooterRepository.cs" />
     <Compile Include="DAL\Repositories\StageRepository.cs" />
+    <Compile Include="Models\ComplexModels\ShowSelectedShooterModel.cs" />
     <Compile Include="Models\ShooterModel.cs" />
     <Compile Include="Models\StageModel.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
@@ -134,32 +135,24 @@
     </Compile>
     <Compile Include="ViewModels\EditShootersViewModel.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
-    <Compile Include="DAL\Repositories\CompetitionsRepository.cs" />
+    <Compile Include="DAL\Repositories\CompetitionRepository.cs" />
     <Compile Include="Models\CompetitionModel.cs" />
     <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />
-    <Compile Include="ViewModels\CompetitionsViewModel.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\BaseClass\RelayCommand.cs" />
-    <Compile Include="ViewModels\ScoreViewModel.cs" />
-    <Compile Include="ViewModels\ShootersViewModel.cs" />
+    <Compile Include="ViewModels\ShowSelectedShooterViewModel.cs" />
     <Compile Include="ViewModels\ShowCompetitionsViewModel.cs" />
     <Compile Include="ViewModels\EditStagesViewModel.cs" />
     <Compile Include="ViewModels\ShowShootersViewModel.cs" />
     <Compile Include="Views\EditShootersView.xaml.cs">
       <DependentUpon>EditShootersView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\CompetitionsView.xaml.cs">
-      <DependentUpon>CompetitionsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ConnectionView.xaml.cs">
       <DependentUpon>ConnectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ScoreView.xaml.cs">
-      <DependentUpon>ScoreView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ShootersView.xaml.cs">
-      <DependentUpon>ShootersView.xaml</DependentUpon>
+    <Compile Include="Views\ShowSelectedShooterView.xaml.cs">
+      <DependentUpon>ShowSelectedShooterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShowCompetitionsView.xaml.cs">
       <DependentUpon>ShowCompetitionsView.xaml</DependentUpon>
@@ -186,19 +179,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CompetitionsView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\ConnectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ScoreView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ShootersView.xaml">
+    <Page Include="Views\ShowSelectedShooterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
