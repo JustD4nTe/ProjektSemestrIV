@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using ProjektSemestrIV.DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Repositories
 {
-    class CompetitionsRepository
+    class CompetitionRepository
     {
-        private const string ALL_COMPETITIONS = "SELECT * FROM zawody";
+        private const string AllCompetitions = "SELECT * FROM zawody";
 
         public static List<Competition> GetAllCompetitionsFromDB()
         {
             List<Competition> competitions = new List<Competition>();
             using (var connection = DatabaseConnection.Instance.Connection)
             {
-                var command = new MySqlCommand(ALL_COMPETITIONS, connection);
+                var command = new MySqlCommand(AllCompetitions, connection);
                 connection.Open();
                 var reader = command.ExecuteReader();
                 while (reader.Read())
