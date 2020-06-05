@@ -1,5 +1,4 @@
-﻿using ProjektSemestrIV.DAL.Entities;
-using ProjektSemestrIV.Models.ComplexModels;
+﻿using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
 using System;
 using System.Collections.Generic;
@@ -19,15 +18,15 @@ namespace ProjektSemestrIV.ViewModels
 
         public string Surname { get; }
 
-        public double GeneralAccuracy { get; }
+        public string GeneralAccuracy { get; }
 
-        public double AlphaAccuracy { get; }
+        public string AlphaAccuracy { get; }
 
-        public double CharlieAccuracy { get; }
+        public string CharlieAccuracy { get; }
 
-        public double DeltaAccuracy { get; }
+        public string DeltaAccuracy { get; }
 
-        public double AveragePosition { get; }
+        public string AveragePosition { get; }
 
         public ObservableCollection<ShooterCompetitionOverview> Competitions { get; }
         #endregion

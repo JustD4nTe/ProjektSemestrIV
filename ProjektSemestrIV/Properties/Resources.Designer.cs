@@ -97,6 +97,33 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Alpha Accuracy.
+        /// </summary>
+        public static string AlphaAccuracy {
+            get {
+                return ResourceManager.GetString("AlphaAccuracy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Charlie Accuracy.
+        /// </summary>
+        public static string CharlieAccuracy {
+            get {
+                return ResourceManager.GetString("CharlieAccuracy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Competitions.
+        /// </summary>
+        public static string Competitions {
+            get {
+                return ResourceManager.GetString("Competitions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration.
         /// </summary>
         public static string Configuration {
@@ -129,6 +156,15 @@ namespace ProjektSemestrIV.Properties {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delta Accuracy.
+        /// </summary>
+        public static string DeltaAccuracy {
+            get {
+                return ResourceManager.GetString("DeltaAccuracy", resourceCulture);
             }
         }
         
@@ -169,6 +205,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General Accuracy.
+        /// </summary>
+        public static string GeneralAccuracy {
+            get {
+                return ResourceManager.GetString("GeneralAccuracy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Id.
         /// </summary>
         public static string Id {
@@ -183,6 +228,15 @@ namespace ProjektSemestrIV.Properties {
         public static string IdCompetition {
             get {
                 return ResourceManager.GetString("IdCompetition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Info.
+        /// </summary>
+        public static string Info {
+            get {
+                return ResourceManager.GetString("Info", resourceCulture);
             }
         }
         
@@ -241,11 +295,29 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Points.
+        /// </summary>
+        public static string Points {
+            get {
+                return ResourceManager.GetString("Points", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Port.
         /// </summary>
         public static string Port {
             get {
                 return ResourceManager.GetString("Port", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Position {
+            get {
+                return ResourceManager.GetString("Position", resourceCulture);
             }
         }
         

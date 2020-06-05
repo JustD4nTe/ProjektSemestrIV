@@ -129,6 +129,15 @@
   <data name="AddStage" xml:space="preserve">
     <value>Add Stage</value>
   </data>
+  <data name="AlphaAccuracy" xml:space="preserve">
+    <value>Alpha Accuracy</value>
+  </data>
+  <data name="CharlieAccuracy" xml:space="preserve">
+    <value>Charlie Accuracy</value>
+  </data>
+  <data name="Competitions" xml:space="preserve">
+    <value>Competitions</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
   </data>
@@ -140,6 +149,9 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="DeltaAccuracy" xml:space="preserve">
+    <value>Delta Accuracy</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
@@ -153,11 +165,17 @@
   <data name="EndDate" xml:space="preserve">
     <value>End Date</value>
   </data>
+  <data name="GeneralAccuracy" xml:space="preserve">
+    <value>General Accuracy</value>
+  </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
   </data>
   <data name="IdCompetition" xml:space="preserve">
     <value>Competition Id</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
   </data>
   <data name="ListCompetition" xml:space="preserve">
     <value>Competition List</value>
@@ -177,8 +195,14 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Points" xml:space="preserve">
+    <value>Points</value>
+  </data>
   <data name="Port" xml:space="preserve">
     <value>Port</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
   </data>
   <data name="Rules" xml:space="preserve">
     <value>Rules</value>

@@ -96,7 +96,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                              INNER JOIN trasa
                              ON trasa.id = tarcza.trasa_id
                              INNER JOIN zawody
-                             ON zawody.id = trasa.id_zawodyczas
+                             ON zawody.id = trasa.id_zawody
                              WHERE strzelec.id = {id};";
             double accuracy = 0;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
@@ -121,7 +121,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                              INNER JOIN trasa
                              ON trasa.id = tarcza.trasa_id
                              INNER JOIN zawody
-                             ON zawody.id = trasa.id_zawodyczas
+                             ON zawody.id = trasa.id_zawody
                              WHERE strzelec.id = {id};";
             double accuracy = 0;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
@@ -146,7 +146,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                              INNER JOIN trasa
                              ON trasa.id = tarcza.trasa_id
                              INNER JOIN zawody
-                             ON zawody.id = trasa.id_zawodyczas
+                             ON zawody.id = trasa.id_zawody
                              WHERE strzelec.id = {id};";
             double accuracy = 0;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
@@ -171,7 +171,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN trasa
                             ON trasa.id = tarcza.trasa_id
                             INNER JOIN zawody
-                            ON zawody.id = trasa.id_zawodyczas
+                            ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {id};";
             double accuracy = 0;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
@@ -240,7 +240,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    results.Add(new ShooterCompetitionOverview(reader.GetString("location"), reader.GetString("startDate"), reader.GetString("position"), reader.GetUInt32("points")));
+                    results.Add(new ShooterCompetitionOverview(reader.GetString("location"), reader.GetDateTime("startDate").ToString(), reader.GetUInt32("position"), reader.GetDouble("points")));
                 }
                 connection.Close();
             }
@@ -287,7 +287,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody
                             ON zawody.id = trasa.id_zawody
                             GROUP BY strzelec.id) AS subQuery
-                            WHERE  shooterId = 1";
+                            WHERE  shooterId = {id}";
             double position = 0;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {

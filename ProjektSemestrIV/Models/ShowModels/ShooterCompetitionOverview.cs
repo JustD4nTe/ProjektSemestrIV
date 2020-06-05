@@ -13,11 +13,11 @@ namespace ProjektSemestrIV.Models.ShowModels
 
         public string StartDate { get; set; }
 
-        public string Position { get; set; }
+        public uint Position { get; set; }
 
-        public uint Points { get; set; }
+        public double Points { get; set; }
 
-        public ShooterCompetitionOverview(string location, string startDate, string position, uint points)
+        public ShooterCompetitionOverview(string location, string startDate, uint position, double points)
         {
             Location = location;
             StartDate = startDate;

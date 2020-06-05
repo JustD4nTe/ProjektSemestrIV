@@ -25,5 +25,9 @@
         <DataTemplate DataType="{x:Type viewmodels:ShowShootersViewModel}">
             <views:ShowShootersView/>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewmodels:ShowSelectedShooterViewModel}">
+            <views:SelectedShooterView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>
