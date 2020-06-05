@@ -1,4 +1,5 @@
 ﻿using ProjektSemestrIV.DisplayModels;
+using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models;
 using System.Collections.ObjectModel;
 
@@ -14,7 +15,7 @@ namespace ProjektSemestrIV.ViewModels
         public string FastestShooter { get; }
         public string Podium { get; }
         public ObservableCollection<ShowCompetitionStageModel> Stages { get; }
-        public ObservableCollection<(string Name, string Surname, uint Point)> Shooters { get; }
+        public ObservableCollection<ShowCompetitionShooterModel> Shooters { get; }
 
         public ShowCompetitionViewModel(uint id)
         {
@@ -24,6 +25,9 @@ namespace ProjektSemestrIV.ViewModels
             Location = model.GetLocation();
             ShootersCount = model.GetShootersCount();
             FastestShooter = model.GetFastestShooter();
+            Podium = model.GetShootersOnPodium();
+
+            Shooters = model.GetShootersFromCompetition().Convert();
         }
     }
 }

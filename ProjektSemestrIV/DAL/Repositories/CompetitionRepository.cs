@@ -1,4 +1,4 @@
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using ProjektSemestrIV.DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -98,6 +98,49 @@ namespace ProjektSemestrIV.DAL.Repositories
             }
 
             return shooterNameWithTime;
+        }
+
+        public static IEnumerable<ShooterWithPoints> GetPlayersWithPointsFromStage(uint competitionId, bool isPodium = false)
+        {            
+            // calculate points from target
+            var pointsFormula = "((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))";
+
+            // calculate points for every shooter
+            var rawPoints = $"select strzelec.id as strzelec_id, trasa.id as trasa_id, ({pointsFormula}) as suma "
+                            + "from strzelec inner join tarcza on strzelec.id=tarcza.strzelec_id "
+                            + "inner join trasa on tarcza.trasa_id=trasa.id "
+                            + $"where trasa.id_zawody={competitionId} "
+                            + "group by strzelec.id, trasa.id";
+
+
+            // points / stage time
+            var pointsFromStage = "select strzelec.imie as Imie, strzelec.nazwisko as Nazwisko, sum(sumowanieTarcz.suma/przebieg.czas) as SumaPunktow "
+                                    + $"from ({rawPoints}) as sumowanieTarcz "
+                                    + "inner join przebieg on przebieg.id_strzelec = sumowanieTarcz.strzelec_id and przebieg.id_trasa = sumowanieTarcz.trasa_id "
+                                    + "inner join strzelec on strzelec.id = sumowanieTarcz.strzelec_id "
+                                    + "group by sumowanieTarcz.strzelec_id "
+                                    + "order by sumaPunktow desc ";
+            
+            if (isPodium)
+            {
+                pointsFromStage += "Limit 3";
+            }
+
+            var shooters = new List<ShooterWithPoints>();
+            using (var connection = DatabaseConnection.Instance.Connection)
+            {
+                var command = new MySqlCommand(pointsFromStage, connection);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    shooters.Add(new ShooterWithPoints(reader));
+                }
+                connection.Close();
+            }
+
+            return shooters;
+
         }
     }
 }
