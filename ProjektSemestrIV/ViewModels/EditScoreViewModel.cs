@@ -57,8 +57,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private UInt16 alpha;
-        public UInt16 Alpha {
+        private Byte alpha;
+        public Byte Alpha {
             get { return alpha; }
             set {
                 alpha = value;
@@ -66,8 +66,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private UInt16 charlie;
-        public UInt16 Charlie {
+        private Byte charlie;
+        public Byte Charlie {
             get { return charlie; }
             set {
                 charlie = value;
@@ -75,8 +75,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private UInt16 delta;
-        public UInt16 Delta {
+        private Byte delta;
+        public Byte Delta {
             get { return delta; }
             set {
                 delta = value;
@@ -84,8 +84,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private UInt16 miss;
-        public UInt16 Miss {
+        private Byte miss;
+        public Byte Miss {
             get { return miss; }
             set {
                 miss = value;
@@ -93,8 +93,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private UInt16 noShoot;
-        public UInt16 NoShoot {
+        private Byte noShoot;
+        public Byte NoShoot {
             get { return noShoot; }
             set {
                 noShoot = value;
@@ -102,8 +102,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private UInt16 procedure;
-        public UInt16 Procedure {
+        private Byte procedure;
+        public Byte Procedure {
             get { return procedure; }
             set {
                 procedure = value;
@@ -111,8 +111,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private UInt16 extra;
-        public UInt16 Extra {
+        private Byte extra;
+        public Byte Extra {
             get { return extra; }
             set {
                 extra = value;

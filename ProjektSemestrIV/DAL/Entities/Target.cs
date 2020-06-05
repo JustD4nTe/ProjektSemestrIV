@@ -10,28 +10,28 @@ namespace ProjektSemestrIV.DAL.Entities {
         public UInt32 ID { get; set; }
         public UInt32 Shooter_ID { get; set; }
         public UInt32 Stage_ID { get; set; }
-        public UInt16 Alpha { get; set; }
-        public UInt16 Charlie { get; set; }
-        public UInt16 Delta { get; set; }
-        public UInt16 Miss { get; set; }
-        public UInt16 NoShoot { get; set; }
-        public UInt16 Procedure { get; set; }
-        public UInt16 Extra { get; set; }
+        public Byte Alpha { get; set; }
+        public Byte Charlie { get; set; }
+        public Byte Delta { get; set; }
+        public Byte Miss { get; set; }
+        public Byte NoShoot { get; set; }
+        public Byte Procedure { get; set; }
+        public Byte Extra { get; set; }
 
         public Target( MySqlDataReader reader ) {
             ID = UInt32.Parse(reader["id"].ToString());
             Shooter_ID = UInt32.Parse(reader["strzelec_id"].ToString());
             Stage_ID = UInt32.Parse(reader["trasa_id"].ToString());
-            Alpha = UInt16.Parse(reader["alpha"].ToString());
-            Charlie = UInt16.Parse(reader["charlie"].ToString());
-            Delta = UInt16.Parse(reader["delta"].ToString());
-            Miss = UInt16.Parse(reader["miss"].ToString());
-            NoShoot = UInt16.Parse(reader["n-s"].ToString());
-            Procedure = UInt16.Parse(reader["proc"].ToString());
-            Extra = UInt16.Parse(reader["extra"].ToString());
+            Alpha = Byte.Parse(reader["alpha"].ToString());
+            Charlie = Byte.Parse(reader["charlie"].ToString());
+            Delta = Byte.Parse(reader["delta"].ToString());
+            Miss = Byte.Parse(reader["miss"].ToString());
+            NoShoot = Byte.Parse(reader["n-s"].ToString());
+            Procedure = Byte.Parse(reader["proc"].ToString());
+            Extra = Byte.Parse(reader["extra"].ToString());
         }
 
-        public Target(UInt32 shooter_id, UInt32 stage_id, UInt16 alpha, UInt16 charlie, UInt16 delta, UInt16 miss, UInt16 noShoot, UInt16 procedure, UInt16 extra ) {
+        public Target(UInt32 shooter_id, UInt32 stage_id, Byte alpha, Byte charlie, Byte delta, Byte miss, Byte noShoot, Byte procedure, Byte extra ) {
             Shooter_ID = shooter_id;
             Stage_ID = stage_id;
             Alpha = alpha;
