@@ -33,7 +33,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public List<ShooterCompetitionOverview> GetShooterCompetitions() => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID);
 
-        public double GetShooterGeneralAveragePositionFromDB() => ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID);
+        public double GetShooterGeneralAveragePosition() => ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID);
 
     }
 }
