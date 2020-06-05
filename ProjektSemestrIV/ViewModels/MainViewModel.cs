@@ -42,8 +42,8 @@ namespace ProjektSemestrIV.ViewModels {
                 case "Shooters":
                     SelectedViewModel = new ShootersViewModel();
                     break;
-                case "Score":
-                    SelectedViewModel = new ScoreViewModel();
+                case "EditScore":
+                    SelectedViewModel = new EditScoreViewModel();
                     break;
                 case "ShowCompetitions":
                     SelectedViewModel = new ShowCompetitionsViewModel();

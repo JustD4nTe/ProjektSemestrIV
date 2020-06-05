@@ -121,12 +121,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAL\DatabaseConnection.cs" />
+    <Compile Include="DAL\Entities\Run.cs" />
     <Compile Include="DAL\Entities\Shooter.cs" />
     <Compile Include="DAL\Entities\Stage.cs" />
+    <Compile Include="DAL\Entities\Target.cs" />
+    <Compile Include="DAL\Repositories\RunRepository.cs" />
     <Compile Include="DAL\Repositories\ShooterRepository.cs" />
     <Compile Include="DAL\Repositories\StageRepository.cs" />
+    <Compile Include="DAL\Repositories\TargetRepository.cs" />
+    <Compile Include="Models\RunModel.cs" />
     <Compile Include="Models\ShooterModel.cs" />
     <Compile Include="Models\StageModel.cs" />
+    <Compile Include="Models\TargetModel.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -141,7 +147,7 @@
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\BaseClass\RelayCommand.cs" />
-    <Compile Include="ViewModels\ScoreViewModel.cs" />
+    <Compile Include="ViewModels\EditScoreViewModel.cs" />
     <Compile Include="ViewModels\ShootersViewModel.cs" />
     <Compile Include="ViewModels\ShowCompetitionsViewModel.cs" />
     <Compile Include="ViewModels\EditStagesViewModel.cs" />
@@ -155,8 +161,8 @@
     <Compile Include="Views\ConnectionView.xaml.cs">
       <DependentUpon>ConnectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ScoreView.xaml.cs">
-      <DependentUpon>ScoreView.xaml</DependentUpon>
+    <Compile Include="Views\EditScoreView.xaml.cs">
+      <DependentUpon>EditScoreView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShootersView.xaml.cs">
       <DependentUpon>ShootersView.xaml</DependentUpon>
@@ -194,7 +200,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ScoreView.xaml">
+    <Page Include="Views\EditScoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
