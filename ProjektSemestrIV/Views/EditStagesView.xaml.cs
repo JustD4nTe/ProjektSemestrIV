@@ -15,10 +15,10 @@ using System.Windows.Shapes;
 
 namespace ProjektSemestrIV.Views {
     /// <summary>
-    /// Interaction logic for ShootersView.xaml
+    /// Interaction logic for StagesView.xaml
     /// </summary>
-    public partial class ShootersView : UserControl {
-        public ShootersView() {
+    public partial class EditStagesView : UserControl {
+        public EditStagesView() {
             InitializeComponent();
         }
     }

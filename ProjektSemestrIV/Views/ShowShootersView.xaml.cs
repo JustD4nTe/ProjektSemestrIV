@@ -21,7 +21,7 @@ namespace ProjektSemestrIV.Views
     public partial class ShowShootersView : UserControl
     {
         public ShowShootersView()
-        {
+        {   
             InitializeComponent();
         }
     }

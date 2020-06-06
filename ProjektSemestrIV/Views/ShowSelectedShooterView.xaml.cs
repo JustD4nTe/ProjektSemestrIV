@@ -13,12 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjektSemestrIV.Views {
+namespace ProjektSemestrIV.Views
+{
     /// <summary>
-    /// Interaction logic for CompetitionsView.xaml
+    /// Interaction logic for SelectedShooterView.xaml
     /// </summary>
-    public partial class CompetitionsView : UserControl {
-        public CompetitionsView() {
+    public partial class SelectedShooterView : UserControl
+    {
+        public SelectedShooterView()
+        {
             InitializeComponent();
         }
     }

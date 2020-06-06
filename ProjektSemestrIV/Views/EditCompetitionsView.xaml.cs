@@ -15,10 +15,10 @@ using System.Windows.Shapes;
 
 namespace ProjektSemestrIV.Views {
     /// <summary>
-    /// Interaction logic for ScoreView.xaml
+    /// Interaction logic for CompetitionsView.xaml
     /// </summary>
-    public partial class ScoreView : UserControl {
-        public ScoreView() {
+    public partial class EditCompetitionsView : UserControl {
+        public EditCompetitionsView() {
             InitializeComponent();
         }
     }

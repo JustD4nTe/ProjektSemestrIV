@@ -118,117 +118,93 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add" xml:space="preserve">
-    <value>Add</value>
+    <value>Dodaj</value>
   </data>
   <data name="AddCompetition" xml:space="preserve">
-    <value>Add Competition</value>
+    <value>Dodaj zawody</value>
   </data>
   <data name="AddCourse" xml:space="preserve">
-    <value>Add Course</value>
+    <value>Dodaj przebieg</value>
   </data>
   <data name="AddStage" xml:space="preserve">
-    <value>Add Stage</value>
-  </data>
-  <data name="AlphaAccuracy" xml:space="preserve">
-    <value>Alpha Accuracy</value>
-  </data>
-  <data name="AveragePosition" xml:space="preserve">
-    <value>Average Position</value>
-  </data>
-  <data name="CharlieAccuracy" xml:space="preserve">
-    <value>Charlie Accuracy</value>
+    <value>Dodaj trasę</value>
   </data>
   <data name="Competitions" xml:space="preserve">
-    <value>Competitions</value>
+    <value>Zawody</value>
   </data>
   <data name="Configuration" xml:space="preserve">
-    <value>Configuration</value>
+    <value>Konfiguracja</value>
   </data>
   <data name="ConnectionConfiguration" xml:space="preserve">
-    <value>Connection Configuration</value>
+    <value>Konfiguracja połączenia</value>
   </data>
   <data name="Database" xml:space="preserve">
-    <value>Database</value>
+    <value>Baza danych</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="DeltaAccuracy" xml:space="preserve">
-    <value>Delta Accuracy</value>
+    <value>Usuń</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Edytuj</value>
   </data>
   <data name="EditShooter" xml:space="preserve">
-    <value>Edit shooter</value>
+    <value>Edytuj strzelca</value>
   </data>
   <data name="EditStage" xml:space="preserve">
-    <value>Edt Stage</value>
+    <value>Edytuj trasę</value>
   </data>
   <data name="EndDate" xml:space="preserve">
-    <value>End Date</value>
-  </data>
-  <data name="GeneralAccuracy" xml:space="preserve">
-    <value>General Accuracy</value>
+    <value>Data zakończenia</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
   </data>
   <data name="IdCompetition" xml:space="preserve">
-    <value>Competition Id</value>
-  </data>
-  <data name="Info" xml:space="preserve">
-    <value>Info</value>
+    <value>Id zawodów</value>
   </data>
   <data name="ListCompetition" xml:space="preserve">
-    <value>Competition List</value>
+    <value>Lista zawodów</value>
   </data>
   <data name="ListShooters" xml:space="preserve">
-    <value>Shooters List</value>
+    <value>Lista strzelców</value>
   </data>
   <data name="Location" xml:space="preserve">
-    <value>Location</value>
+    <value>Miejsce</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Nazwa</value>
   </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="Points" xml:space="preserve">
-    <value>Points</value>
+    <value>Hasło</value>
   </data>
   <data name="Port" xml:space="preserve">
     <value>Port</value>
   </data>
-  <data name="Position" xml:space="preserve">
-    <value>Position</value>
-  </data>
   <data name="Rules" xml:space="preserve">
-    <value>Rules</value>
+    <value>Zasady</value>
   </data>
   <data name="ServerAdress" xml:space="preserve">
-    <value>Server Adress</value>
+    <value>Adres serwera</value>
   </data>
   <data name="ShooterEditing" xml:space="preserve">
-    <value>Shooter Editing</value>
+    <value>Edycja strzelca</value>
   </data>
   <data name="ShooterName" xml:space="preserve">
-    <value>Name</value>
+    <value>Imię</value>
   </data>
   <data name="ShooterSurname" xml:space="preserve">
-    <value>Surname</value>
+    <value>Nazwisko</value>
   </data>
   <data name="StartDate" xml:space="preserve">
-    <value>Start Date</value>
+    <value>Data rozpoczęcia</value>
   </data>
   <data name="User" xml:space="preserve">
-    <value>User</value>
+    <value>Użytkownik</value>
   </data>
   <data name="View" xml:space="preserve">
-    <value>View</value>
+    <value>Widok</value>
   </data>
 </root>
