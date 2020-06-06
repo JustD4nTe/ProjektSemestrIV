@@ -27,6 +27,7 @@ namespace ProjektSemestrIV.ViewModels
             FastestShooter = model.GetFastestShooter();
             Podium = model.GetShootersOnPodium();
 
+            Stages = model.GetStageWithBestShooters().Convert();
             Shooters = model.GetShootersFromCompetition().Convert();
         }
     }

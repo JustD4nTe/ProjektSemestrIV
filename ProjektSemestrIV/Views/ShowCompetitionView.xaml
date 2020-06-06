@@ -51,7 +51,7 @@
             <DataGrid ItemsSource="{Binding Stages}" AutoGenerateColumns="False"
                       AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nazwa trasy" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Nazwa trasy" Binding="{Binding StageName}"/>
                     <DataGridTextColumn Header="Najlepszy gracz" Binding="{Binding BestPlayer}"/>
                 </DataGrid.Columns>
             </DataGrid>

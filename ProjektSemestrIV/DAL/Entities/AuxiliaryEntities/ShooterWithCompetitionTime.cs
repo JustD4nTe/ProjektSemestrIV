@@ -1,7 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 
-namespace ProjektSemestrIV.DAL.Entities
+namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
     class ShooterWithCompetitionTime
     {

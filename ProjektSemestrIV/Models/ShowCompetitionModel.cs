@@ -48,5 +48,11 @@ namespace ProjektSemestrIV.Models
         => CompetitionRepository.GetPlayersWithPointsFromStage(competition.Id)
                                 .Select(x => new ShowCompetitionShooterModel(x.Name, x.Surname, x.Points));
 
+        public IEnumerable<ShowCompetitionStageModel> GetStageWithBestShooters()
+        => CompetitionRepository.GetStagesWithBestPlayer(competition.Id)
+                                .Select(x => new ShowCompetitionStageModel(x.StageName,
+                                                                           x.ShooterName,
+                                                                           x.ShooterSurname,
+                                                                           x.ShooterPoints));
     }
 }

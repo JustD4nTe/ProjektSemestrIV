@@ -77,9 +77,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAL\DatabaseConnection.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithPoints.cs" />
     <Compile Include="DAL\Entities\Shooter.cs" />
-    <Compile Include="DAL\Entities\ShooterWithCompetitionTime.cs" />
-    <Compile Include="DAL\Entities\ShooterWithPoints.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithCompetitionTime.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
     <Compile Include="DAL\Repositories\CompetitionRepository.cs" />
     <Compile Include="DAL\Repositories\ShooterRepository.cs" />
     <Compile Include="DisplayModels\ShowCompetition\ShowCompetitionShooterModel.cs" />

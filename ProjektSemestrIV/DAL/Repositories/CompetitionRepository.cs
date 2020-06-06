@@ -1,10 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using ProjektSemestrIV.DAL.Entities;
-using System;
+using ProjektSemestrIV.DAL.Entities.AuxiliaryEntities;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Repositories
 {
@@ -140,7 +137,46 @@ namespace ProjektSemestrIV.DAL.Repositories
             }
 
             return shooters;
+        }
 
+        public static IEnumerable<StageWithBestShooter> GetStagesWithBestPlayer(uint competitionId)
+        {
+            var pointsFormula = "((sum(alpha) * 5 + sum(charlie) * 3 + sum(delta)) - 10 * (sum(miss) + sum(`n-s`) + sum(proc) + sum(extra))) ";
+
+            var rawPoints = $"select strzelec.id as strzelec_id, trasa.id as trasa_id, {pointsFormula} as suma "
+                            + "from strzelec inner join tarcza on strzelec.id = tarcza.strzelec_id "
+                            + "inner join trasa on tarcza.trasa_id = trasa.id "
+                            + $"where trasa.id_zawody = {competitionId} "
+                            + "group by strzelec.id, trasa.id";
+
+            var ranking = "RANK() OVER(PARTITION BY trasa.nazwa Order by dzikiePunkty.suma / przebieg.czas) ";
+
+            var getAllStagesWithAllShooters = $"select trasa.nazwa as nazwaTrasy, dzikiePunkty.strzelec_id, dzikiePunkty.suma/przebieg.czas as punktyStrzelca, {ranking} rankingGraczy "
+                                                + $"from({rawPoints}) as dzikiePunkty "
+                                                + "inner join przebieg on przebieg.id_strzelec = dzikiePunkty.strzelec_id and przebieg.id_trasa = dzikiePunkty.trasa_id "
+                                                + "inner join trasa on trasa.id = dzikiePunkty.trasa_id "
+                                                + "order by nazwaTrasy";
+
+            var getBestPlayersOnStage = $"with ranking as ({getAllStagesWithAllShooters}) "
+                                            + "select nazwaTrasy, strzelec.imie as imieStrzelca, strzelec.nazwisko as nazwiskoStrzelca, punktyStrzelca "
+                                            + "from ranking "
+                                            + "inner join strzelec on strzelec.id = strzelec_id "
+                                            + "where rankingGraczy = 1";
+
+            var stages = new List<StageWithBestShooter>();
+            using (var connection = DatabaseConnection.Instance.Connection)
+            {
+                var command = new MySqlCommand(getBestPlayersOnStage, connection);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    stages.Add(new StageWithBestShooter(reader));
+                }
+                connection.Close();
+            }
+
+            return stages;
         }
     }
 }
