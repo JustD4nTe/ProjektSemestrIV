@@ -9,25 +9,26 @@
         <DataTemplate DataType="{x:Type viewmodels:ConnectionViewModel}">
             <views:ConnectionView />
         </DataTemplate>
-
+        <DataTemplate DataType="{x:Type viewmodels:EditCompetitionsViewModel}">
+            <views:EditCompetitionsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:EditScoreViewModel}">
+            <views:EditScoreView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:EditShootersViewModel}">
             <views:EditShootersView/>
         </DataTemplate>
-
         <DataTemplate DataType="{x:Type viewmodels:EditStagesViewModel}">
             <views:EditStagesView/>
         </DataTemplate>
-
         <DataTemplate DataType="{x:Type viewmodels:ShowCompetitionsViewModel}">
             <views:ShowCompetitionsView/>
         </DataTemplate>
-
-        <DataTemplate DataType="{x:Type viewmodels:ShowShootersViewModel}">
-            <views:ShowShootersView/>
-        </DataTemplate>
-
         <DataTemplate DataType="{x:Type viewmodels:ShowSelectedShooterViewModel}">
             <views:SelectedShooterView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ShowShootersViewModel}">
+            <views:ShowShootersView/>
         </DataTemplate>
     </Application.Resources>
 </Application>
