@@ -106,6 +106,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Average Position.
+        /// </summary>
+        public static string AveragePosition {
+            get {
+                return ResourceManager.GetString("AveragePosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Charlie Accuracy.
         /// </summary>
         public static string CharlieAccuracy {

@@ -132,6 +132,9 @@
   <data name="AlphaAccuracy" xml:space="preserve">
     <value>Alpha Accuracy</value>
   </data>
+  <data name="AveragePosition" xml:space="preserve">
+    <value>Average Position</value>
+  </data>
   <data name="CharlieAccuracy" xml:space="preserve">
     <value>Charlie Accuracy</value>
   </data>

@@ -23,17 +23,23 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public string GetShooterSurname() => shooter.Surname;
 
-        public string GetShooterCompetitionGeneralAccuracy() => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionGeneralAccuracyFromDB(shooter.ID));
+        public string GetShooterCompetitionGeneralAccuracy() 
+            => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionGeneralAccuracyFromDB(shooter.ID));
 
-        public string GetShooterCompetitionAlphaAccuracy() => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionAlphaAccuracyFromDB(shooter.ID));
+        public string GetShooterCompetitionAlphaAccuracy() 
+            => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionAlphaAccuracyFromDB(shooter.ID));
     
-        public string GetShooterCompetitionCharlieAccuracy() => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionCharlieAccuracyFromDB(shooter.ID));
+        public string GetShooterCompetitionCharlieAccuracy()
+            => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionCharlieAccuracyFromDB(shooter.ID));
 
-        public string GetShooterCompetitionDeltaAccuracy() => String.Format("{0:P2}",ShooterRepository.GetShooterCompetitionDeltaAccuracyFromDB(shooter.ID));
+        public string GetShooterCompetitionDeltaAccuracy() 
+            => String.Format("{0:P2}",ShooterRepository.GetShooterCompetitionDeltaAccuracyFromDB(shooter.ID));
 
-        public List<ShooterCompetitionOverview> GetShooterCompetitions() => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID);
+        public List<ShooterCompetitionOverview> GetShooterCompetitions() 
+            => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID);
 
-        public string GetShooterGeneralAveragePosition() => String.Format("{0:N2}",ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
+        public string GetShooterGeneralAveragePosition() 
+            => String.Format("{0:N2}",ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
 
     }
 }

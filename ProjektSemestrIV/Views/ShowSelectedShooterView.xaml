@@ -32,6 +32,10 @@
             <Label Content="{Binding Source={x:Static resx:Resources.DeltaAccuracy}}"/>
             <Label Content="{Binding DeltaAccuracy}"/>
         </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.AveragePosition}}"/>
+            <Label Content="{Binding AveragePosition}"/>
+        </StackPanel>
         <DataGrid x:Name="DataGridCompetitions" ItemsSource="{Binding Competitions}"
             AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>

@@ -240,7 +240,11 @@ namespace ProjektSemestrIV.DAL.Repositories
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    results.Add(new ShooterCompetitionOverview(reader.GetString("location"), reader.GetDateTime("startDate").ToString(), reader.GetUInt32("position"), reader.GetDouble("points")));
+                    results.Add(new ShooterCompetitionOverview(
+                        reader.GetString("location"), 
+                        reader.GetDateTime("startDate").ToString(), 
+                        reader.GetUInt32("position"), 
+                        reader.GetDouble("points")));
                 }
                 connection.Close();
             }
