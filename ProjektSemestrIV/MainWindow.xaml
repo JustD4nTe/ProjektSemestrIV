@@ -21,7 +21,7 @@
             <Separator Margin="0,10,0,10" Height="0"/>
 
             <Label Content="{Binding Source={x:Static resx:Resources.Edit}}" HorizontalAlignment="Center"/>
-            <Button Content="{Binding Source={x:Static resx:Resources.AddCompetition}}" Command="{Binding UpdateFormView}" CommandParameter="Competitions"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.AddCompetition}}" Command="{Binding UpdateFormView}" CommandParameter="EditCompetitions"/>
             <Button Content="{Binding Source={x:Static resx:Resources.EditStage}}" Command="{Binding UpdateFormView}" CommandParameter="EditStages"/>
             <Button Content="{Binding Source={x:Static resx:Resources.EditShooter}}" Command="{Binding UpdateFormView}" CommandParameter="EditShooters"/>
             <Button Content="{Binding Source={x:Static resx:Resources.AddCourse}}" Command="{Binding UpdateFormView}" CommandParameter="EditScore"/>

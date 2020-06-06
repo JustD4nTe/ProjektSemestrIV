@@ -17,8 +17,8 @@ namespace ProjektSemestrIV.Views {
     /// <summary>
     /// Interaction logic for CompetitionsView.xaml
     /// </summary>
-    public partial class CompetitionsView : UserControl {
-        public CompetitionsView() {
+    public partial class EditCompetitionsView : UserControl {
+        public EditCompetitionsView() {
             InitializeComponent();
         }
     }
