@@ -115,6 +115,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Best shooter.
+        /// </summary>
+        public static string BestShooter {
+            get {
+                return ResourceManager.GetString("BestShooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Charlie Accuracy.
         /// </summary>
         public static string CharlieAccuracy {
@@ -178,6 +187,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Duration date.
+        /// </summary>
+        public static string DurationDate {
+            get {
+                return ResourceManager.GetString("DurationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -210,6 +228,15 @@ namespace ProjektSemestrIV.Properties {
         public static string EndDate {
             get {
                 return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fastest run.
+        /// </summary>
+        public static string FastestRun {
+            get {
+                return ResourceManager.GetString("FastestRun", resourceCulture);
             }
         }
         
@@ -268,6 +295,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stages list.
+        /// </summary>
+        public static string ListStages {
+            get {
+                return ResourceManager.GetString("ListStages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location.
         /// </summary>
         public static string Location {
@@ -286,6 +322,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of participatns.
+        /// </summary>
+        public static string NumberOfParticipants {
+            get {
+                return ResourceManager.GetString("NumberOfParticipants", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string Ok {
@@ -300,6 +345,15 @@ namespace ProjektSemestrIV.Properties {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Podium.
+        /// </summary>
+        public static string Podium {
+            get {
+                return ResourceManager.GetString("Podium", resourceCulture);
             }
         }
         
@@ -372,6 +426,15 @@ namespace ProjektSemestrIV.Properties {
         public static string ShooterSurname {
             get {
                 return ResourceManager.GetString("ShooterSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stage name.
+        /// </summary>
+        public static string StageName {
+            get {
+                return ResourceManager.GetString("StageName", resourceCulture);
             }
         }
         

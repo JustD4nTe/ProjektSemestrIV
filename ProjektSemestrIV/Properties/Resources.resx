@@ -135,6 +135,9 @@
   <data name="AveragePosition" xml:space="preserve">
     <value>Average Position</value>
   </data>
+  <data name="BestShooter" xml:space="preserve">
+    <value>Best shooter</value>
+  </data>
   <data name="CharlieAccuracy" xml:space="preserve">
     <value>Charlie Accuracy</value>
   </data>
@@ -156,6 +159,9 @@
   <data name="DeltaAccuracy" xml:space="preserve">
     <value>Delta Accuracy</value>
   </data>
+  <data name="DurationDate" xml:space="preserve">
+    <value>Duration date</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -167,6 +173,9 @@
   </data>
   <data name="EndDate" xml:space="preserve">
     <value>End Date</value>
+  </data>
+  <data name="FastestRun" xml:space="preserve">
+    <value>Fastest run</value>
   </data>
   <data name="GeneralAccuracy" xml:space="preserve">
     <value>General Accuracy</value>
@@ -186,17 +195,26 @@
   <data name="ListShooters" xml:space="preserve">
     <value>Shooters List</value>
   </data>
+  <data name="ListStages" xml:space="preserve">
+    <value>Stages list</value>
+  </data>
   <data name="Location" xml:space="preserve">
     <value>Location</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="NumberOfParticipants" xml:space="preserve">
+    <value>Number of participatns</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="Podium" xml:space="preserve">
+    <value>Podium</value>
   </data>
   <data name="Points" xml:space="preserve">
     <value>Points</value>
@@ -221,6 +239,9 @@
   </data>
   <data name="ShooterSurname" xml:space="preserve">
     <value>Surname</value>
+  </data>
+  <data name="StageName" xml:space="preserve">
+    <value>Stage name</value>
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>Start Date</value>

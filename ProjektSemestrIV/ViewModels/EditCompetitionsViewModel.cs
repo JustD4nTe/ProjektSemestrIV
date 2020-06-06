@@ -1,5 +1,6 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Repositories;
+using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace ProjektSemestrIV.ViewModels {
         private CompetitionModel competitionModel;
         public EditCompetitionsViewModel() {
             competitionModel = new CompetitionModel();
-            Competitions = new ObservableCollection<Competition>(competitionModel.GetAllCompetitionsFromDB());
+            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
             SelectedCompetitionIndex = -1;
             EditedCompetitionIndex = -1;
         }
@@ -79,7 +80,7 @@ namespace ProjektSemestrIV.ViewModels {
             Location = "";
             StartDate = "";
             EndDate = "";
-            Competitions = new ObservableCollection<Competition>(competitionModel.GetAllCompetitionsFromDB());
+            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
         }
 
 
@@ -104,7 +105,7 @@ namespace ProjektSemestrIV.ViewModels {
             StartDate = "";
             EndDate = "";
             EditedCompetitionIndex = -1;
-            Competitions = new ObservableCollection<Competition>(competitionModel.GetAllCompetitionsFromDB());
+            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
         }
 
 
@@ -143,7 +144,7 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteDeleteCompetition( object parameter ) {
             UInt32 id = SelectedCompetition.Id;
             competitionModel.DeleteCompetitionFromDatabase(id);
-            Competitions = new ObservableCollection<Competition>(competitionModel.GetAllCompetitionsFromDB());
+            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
         }
     }
 }

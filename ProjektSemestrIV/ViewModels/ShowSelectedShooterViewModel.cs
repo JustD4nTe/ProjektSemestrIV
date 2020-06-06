@@ -1,4 +1,5 @@
-﻿using ProjektSemestrIV.Models.ComplexModels;
+﻿using ProjektSemestrIV.Extensions;
+using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
 using System;
 using System.Collections.Generic;
@@ -41,7 +42,7 @@ namespace ProjektSemestrIV.ViewModels
             CharlieAccuracy = model.GetShooterCompetitionCharlieAccuracy();
             DeltaAccuracy = model.GetShooterCompetitionDeltaAccuracy();
             AveragePosition = model.GetShooterGeneralAveragePosition();
-            Competitions = new ObservableCollection<ShooterCompetitionOverview>(model.GetShooterCompetitions());
+            Competitions = model.GetShooterCompetitions().Convert();
         }
     }
 }

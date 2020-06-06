@@ -2,9 +2,6 @@
 using ProjektSemestrIV.DAL.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.Models
 {
@@ -21,6 +18,5 @@ namespace ProjektSemestrIV.Models
 
         public Boolean EditCompetitionInDatabase( Competition competition, UInt32 id )
             => CompetitionRepository.EditCompetitionInDatabase(competition, id);
-
     }
 }

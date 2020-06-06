@@ -129,6 +129,9 @@
   <data name="AddStage" xml:space="preserve">
     <value>Dodaj trasę</value>
   </data>
+  <data name="BestShooter" xml:space="preserve">
+    <value>Najlepszy strzelec</value>
+  </data>
   <data name="Competitions" xml:space="preserve">
     <value>Zawody</value>
   </data>
@@ -144,6 +147,9 @@
   <data name="Delete" xml:space="preserve">
     <value>Usuń</value>
   </data>
+  <data name="DurationDate" xml:space="preserve">
+    <value>Data trwania</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edytuj</value>
   </data>
@@ -155,6 +161,9 @@
   </data>
   <data name="EndDate" xml:space="preserve">
     <value>Data zakończenia</value>
+  </data>
+  <data name="FastestRun" xml:space="preserve">
+    <value>Najszybszy czas przebiegu</value>
   </data>
   <data name="Id" xml:space="preserve">
     <value>Id</value>
@@ -168,17 +177,29 @@
   <data name="ListShooters" xml:space="preserve">
     <value>Lista strzelców</value>
   </data>
+  <data name="ListStages" xml:space="preserve">
+    <value>Lista tras</value>
+  </data>
   <data name="Location" xml:space="preserve">
     <value>Miejsce</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Nazwa</value>
   </data>
+  <data name="NumberOfParticipants" xml:space="preserve">
+    <value>Liczba uczestników</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Hasło</value>
+  </data>
+  <data name="Podium" xml:space="preserve">
+    <value>Podium</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Punkty</value>
   </data>
   <data name="Port" xml:space="preserve">
     <value>Port</value>
@@ -197,6 +218,9 @@
   </data>
   <data name="ShooterSurname" xml:space="preserve">
     <value>Nazwisko</value>
+  </data>
+  <data name="StageName" xml:space="preserve">
+    <value>Nazwa trasy</value>
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>Data rozpoczęcia</value>

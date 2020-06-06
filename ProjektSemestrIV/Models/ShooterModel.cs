@@ -1,5 +1,6 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Repositories;
+using ProjektSemestrIV.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,9 +19,7 @@ namespace ProjektSemestrIV.Models {
         public Boolean EditShooterInDatabase( Shooter shooter, UInt32 id )
             => ShooterRepository.EditShooterInDB(shooter, id);
 
-        public ObservableCollection<Shooter> GetAllShooters() {
-            List<Shooter> shooters = ShooterRepository.GetAllShootersFromDB();
-            return new ObservableCollection<Shooter>(shooters);
-        }
+        public ObservableCollection<Shooter> GetAllShooters()
+            => ShooterRepository.GetAllShootersFromDB().Convert();
     }
 }

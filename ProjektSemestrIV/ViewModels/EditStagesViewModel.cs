@@ -1,4 +1,5 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
+using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace ProjektSemestrIV.ViewModels {
             stageModel = new StageModel();
             competitionModel = new CompetitionModel();
             Stages = stageModel.GetAllStages();
-            Competitions = new ObservableCollection<Competition>(competitionModel.GetAllCompetitionsFromDB());
+            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
             SelectedStageIndex = -1;
             EditedStageIndex = -1;
         }
