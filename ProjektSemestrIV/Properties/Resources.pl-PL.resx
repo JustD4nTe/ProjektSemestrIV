@@ -129,6 +129,9 @@
   <data name="AddStage" xml:space="preserve">
     <value>Dodaj trasę</value>
   </data>
+  <data name="Competitions" xml:space="preserve">
+    <value>Zawody</value>
+  </data>
   <data name="Configuration" xml:space="preserve">
     <value>Konfiguracja</value>
   </data>

@@ -24,9 +24,9 @@ namespace ProjektSemestrIV.ViewModels {
 
         private UInt32 target_id;
         public UInt32 Target_id {
-            get { return shooter_id; }
+            get { return target_id; }
             set {
-                shooter_id = value;
+                target_id = value;
                 onPropertyChanged(nameof(Target_id));
             }
         }

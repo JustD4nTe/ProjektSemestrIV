@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Repositories
 {
-    class CompetitionsRepository
+    class CompetitionRepository
     {
         private const string ALL_COMPETITIONS = "SELECT * FROM zawody";
 
