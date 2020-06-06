@@ -1,6 +1,6 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Repositories;
-using ProjektSemestrIV.DisplayModels;
+using ProjektSemestrIV.Models.ShowModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,13 +44,13 @@ namespace ProjektSemestrIV.Models
             return podium;
         }
 
-        public IEnumerable<ShowCompetitionShooterModel> GetShootersFromCompetition()
+        public IEnumerable<ShooterWithPointsOverview> GetShootersFromCompetition()
         => CompetitionRepository.GetPlayersWithPointsFromStage(competition.Id)
-                                .Select(x => new ShowCompetitionShooterModel(x.Name, x.Surname, x.Points));
+                                .Select(x => new ShooterWithPointsOverview(x.Name, x.Surname, x.Points));
 
-        public IEnumerable<ShowCompetitionStageModel> GetStageWithBestShooters()
+        public IEnumerable<StageWithBestPlayerOverview> GetStageWithBestShooters()
         => CompetitionRepository.GetStagesWithBestPlayer(competition.Id)
-                                .Select(x => new ShowCompetitionStageModel(x.StageName,
+                                .Select(x => new StageWithBestPlayerOverview(x.StageName,
                                                                            x.ShooterName,
                                                                            x.ShooterSurname,
                                                                            x.ShooterPoints));

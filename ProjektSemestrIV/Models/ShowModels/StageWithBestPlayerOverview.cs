@@ -1,11 +1,11 @@
-﻿namespace ProjektSemestrIV.DisplayModels
+﻿namespace ProjektSemestrIV.Models.ShowModels
 {
-    class ShowCompetitionStageModel
+    class StageWithBestPlayerOverview
     {
         public string StageName { get; set; }
         public string BestPlayer { get; set; }
 
-        public ShowCompetitionStageModel(string stageName, string playerName, 
+        public StageWithBestPlayerOverview(string stageName, string playerName, 
             string playerSurname, double playerPoints)
         {
             StageName = stageName;

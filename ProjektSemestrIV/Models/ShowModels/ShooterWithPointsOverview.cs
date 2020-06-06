@@ -1,12 +1,12 @@
-﻿namespace ProjektSemestrIV.DisplayModels
+﻿namespace ProjektSemestrIV.Models.ShowModels
 {
-    class ShowCompetitionShooterModel
+    class ShooterWithPointsOverview
     {
         public string Name { get; set; }
         public string Surname{ get; set; }
         public double Points { get; set; }
 
-        public ShowCompetitionShooterModel(string name, string surname, double points)
+        public ShooterWithPointsOverview(string name, string surname, double points)
         {
             Name = name;
             Surname = surname;
