@@ -115,11 +115,11 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Best player.
+        ///   Looks up a localized string similar to Best shooter.
         /// </summary>
-        public static string BestPlayer {
+        public static string BestShooter {
             get {
-                return ResourceManager.GetString("BestPlayer", resourceCulture);
+                return ResourceManager.GetString("BestShooter", resourceCulture);
             }
         }
         

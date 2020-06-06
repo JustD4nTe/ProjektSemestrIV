@@ -98,7 +98,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return shooterNameWithTime;
         }
 
-        public static IEnumerable<ShooterWithPoints> GetPlayersWithPointsFromStage(uint competitionId, bool isPodium = false)
+        public static IEnumerable<ShooterWithPoints> GetShootersWithPointsFromStage(uint competitionId, bool isPodium = false)
         {            
             // calculate points from target
             var pointsFormula = "((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))";
@@ -140,7 +140,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return shooters;
         }
 
-        public static IEnumerable<StageWithBestShooter> GetStagesWithBestPlayer(uint competitionId)
+        public static IEnumerable<StageWithBestShooter> GetStagesWithBestShooter(uint competitionId)
         {
             var pointsFormula = "((sum(alpha) * 5 + sum(charlie) * 3 + sum(delta)) - 10 * (sum(miss) + sum(`n-s`) + sum(proc) + sum(extra))) ";
 

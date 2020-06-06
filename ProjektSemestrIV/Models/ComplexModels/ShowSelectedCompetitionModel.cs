@@ -36,7 +36,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public string GetShootersOnPodium()
         {
-            var playersOnPodium = CompetitionRepository.GetPlayersWithPointsFromStage(competition.Id, true).ToList();
+            var playersOnPodium = CompetitionRepository.GetShootersWithPointsFromStage(competition.Id, true).ToList();
 
             var podium = $"I - {playersOnPodium[0].Name} {playersOnPodium[0].Surname}: {playersOnPodium[0].Points}\n"
                             + $"II - {playersOnPodium[1].Name} {playersOnPodium[1].Surname}: {playersOnPodium[1].Points}\n"
@@ -45,11 +45,11 @@ namespace ProjektSemestrIV.Models.ComplexModels
         }
 
         public IEnumerable<ShooterWithPointsOverview> GetShootersFromCompetition()
-        => CompetitionRepository.GetPlayersWithPointsFromStage(competition.Id)
+        => CompetitionRepository.GetShootersWithPointsFromStage(competition.Id)
                                 .Select(x => new ShooterWithPointsOverview(x.Name, x.Surname, x.Points));
 
         public IEnumerable<StageWithBestPlayerOverview> GetStageWithBestShooters()
-        => CompetitionRepository.GetStagesWithBestPlayer(competition.Id)
+        => CompetitionRepository.GetStagesWithBestShooter(competition.Id)
                                 .Select(x => new StageWithBestPlayerOverview(x.StageName,
                                                                            x.ShooterName,
                                                                            x.ShooterSurname,

@@ -135,8 +135,8 @@
   <data name="AveragePosition" xml:space="preserve">
     <value>Average Position</value>
   </data>
-  <data name="BestPlayer" xml:space="preserve">
-    <value>Best player</value>
+  <data name="BestShooter" xml:space="preserve">
+    <value>Best shooter</value>
   </data>
   <data name="CharlieAccuracy" xml:space="preserve">
     <value>Charlie Accuracy</value>
