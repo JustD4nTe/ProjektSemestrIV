@@ -54,6 +54,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StageName}}" Binding="{Binding StageName}"/>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.BestPlayer}}" Binding="{Binding BestPlayer}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Points}}" Binding="{Binding Points}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </TabItem>
