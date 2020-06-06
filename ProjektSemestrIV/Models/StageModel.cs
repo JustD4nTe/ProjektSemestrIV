@@ -1,5 +1,6 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Repositories;
+using ProjektSemestrIV.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,10 +11,8 @@ using System.Windows.Documents;
 
 namespace ProjektSemestrIV.Models {
     class StageModel {
-        public ObservableCollection<Stage> GetAllStages() {
-            List<Stage> stages = StageRepository.GetAllStages();
-            return new ObservableCollection<Stage>(stages);
-        }
+        public ObservableCollection<Stage> GetAllStages()
+            => StageRepository.GetAllStages().Convert();
 
         public Boolean AddStageToDatabase( Stage stage )
             => StageRepository.AddStageToDatabase(stage);

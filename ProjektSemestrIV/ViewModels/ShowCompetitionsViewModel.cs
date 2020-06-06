@@ -1,4 +1,5 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
+using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace ProjektSemestrIV.ViewModels
         public ShowCompetitionsViewModel()
         {
             model = new CompetitionModel();
-            Competitions = new ObservableCollection<Competition>(model.GetAllCompetitionsFromDB());
+            Competitions = model.GetAllCompetitionsFromDB().Convert();
         }
     }
 }
