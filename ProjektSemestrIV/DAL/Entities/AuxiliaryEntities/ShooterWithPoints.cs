@@ -11,9 +11,9 @@ namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 
         public ShooterWithPoints(MySqlDataReader reader)
         {
-            Name = reader["Imie"].ToString();
-            Surname = reader["Nazwisko"].ToString();
-            Points = reader.GetDouble("SumaPunktow");
+            Name = reader.GetString("imie");
+            Surname = reader.GetString("nazwisko");
+            Points = reader.GetDouble("sumaPunktow");
         }
     }
 }

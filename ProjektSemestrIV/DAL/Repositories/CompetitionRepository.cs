@@ -112,7 +112,7 @@ namespace ProjektSemestrIV.DAL.Repositories
 
 
             // points / stage time
-            var pointsFromStage = "select strzelec.imie as Imie, strzelec.nazwisko as Nazwisko, sum(sumowanieTarcz.suma/przebieg.czas) as SumaPunktow "
+            var pointsFromStage = "select strzelec.imie as imie, strzelec.nazwisko as nazwisko, sum(sumowanieTarcz.suma/przebieg.czas) as sumaPunktow "
                                     + $"from ({rawPoints}) as sumowanieTarcz "
                                     + "inner join przebieg on przebieg.id_strzelec = sumowanieTarcz.strzelec_id and przebieg.id_trasa = sumowanieTarcz.trasa_id "
                                     + "inner join strzelec on strzelec.id = sumowanieTarcz.strzelec_id "
