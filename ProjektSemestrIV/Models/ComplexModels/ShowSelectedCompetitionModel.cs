@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ProjektSemestrIV.Models
+namespace ProjektSemestrIV.Models.ComplexModels
 {
-    class ShowCompetitionModel
+    class ShowSelectedCompetitionModel
     {
         private Competition competition;
 
-        public ShowCompetitionModel(uint id)
+        public ShowSelectedCompetitionModel(uint id)
         {
             competition = CompetitionRepository.GetCompetitionFromDB(id);
         }

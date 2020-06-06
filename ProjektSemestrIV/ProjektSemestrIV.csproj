@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -120,62 +120,50 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    
     <Compile Include="DAL\DatabaseConnection.cs" />
-
     <Compile Include="DAL\Entities\Competition.cs" />
     <Compile Include="DAL\Entities\Run.cs" />
     <Compile Include="DAL\Entities\Shooter.cs" />
     <Compile Include="DAL\Entities\Stage.cs" />
     <Compile Include="DAL\Entities\Target.cs" />
-
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithPoints.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithCompetitionTime.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
     <Compile Include="Models\ShowModels\ShooterWithPointsOverview.cs" />
     <Compile Include="Models\ShowModels\StageWithBestPlayerOverview.cs" />
     <Compile Include="Extensions\IEnumerableExtension.cs" />
-
     <Compile Include="DAL\Repositories\CompetitionRepository.cs" />
     <Compile Include="DAL\Repositories\RunRepository.cs" />
     <Compile Include="DAL\Repositories\ShooterRepository.cs" />
     <Compile Include="DAL\Repositories\StageRepository.cs" />
     <Compile Include="DAL\Repositories\TargetRepository.cs" />
-    
     <Compile Include="Models\ComplexModels\ShowSelectedShooterModel.cs" />
     <Compile Include="Models\ShowModels\ShooterCompetitionOverview.cs" />
     <Compile Include="Models\CompetitionModel.cs" />
     <Compile Include="Models\RunModel.cs" />
-
-    <Compile Include="Models\ShooterModel.cs" />   
+    <Compile Include="Models\ShooterModel.cs" />
     <Compile Include="Models\StageModel.cs" />
     <Compile Include="Models\TargetModel.cs" />
-    <Compile Include="Models\ShowCompetitionModel.cs" />
-
+    <Compile Include="Models\ComplexModels\ShowSelectedCompetitionModel.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
     </Compile>
-    
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
-    
     <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />
     <Compile Include="ViewModels\BaseClass\RelayCommand.cs" />
-
     <Compile Include="ViewModels\EditCompetitionsViewModel.cs" />
     <Compile Include="ViewModels\EditScoreViewModel.cs" />
     <Compile Include="ViewModels\EditStagesViewModel.cs" />
-    
     <Compile Include="ViewModels\EditShootersViewModel.cs" />
     <Compile Include="ViewModels\ShowCompetitionsViewModel.cs" />
-    <Compile Include="ViewModels\ShowCompetitionViewModel.cs" />
+    <Compile Include="ViewModels\ShowSelectedCompetitionViewModel.cs" />
     <Compile Include="ViewModels\ShowShootersViewModel.cs" />
     <Compile Include="ViewModels\ShowSelectedShooterViewModel.cs" />
-
-    <Compile Include="Views\ShowCompetitionView.xaml.cs">
-      <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
+    <Compile Include="Views\ShowSelectedCompetitionView.xaml.cs">
+      <DependentUpon>ShowSelectedCompetitionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditShootersView.xaml.cs">
       <DependentUpon>EditShootersView.xaml</DependentUpon>
@@ -192,7 +180,6 @@
     <Compile Include="Views\EditScoreView.xaml.cs">
       <DependentUpon>EditScoreView.xaml</DependentUpon>
     </Compile>
-
     <Compile Include="Views\ShowCompetitionsView.xaml.cs">
       <DependentUpon>ShowCompetitionsView.xaml</DependentUpon>
     </Compile>
@@ -214,7 +201,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\ShowCompetitionView.xaml">
+    <Page Include="Views\ShowSelectedCompetitionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

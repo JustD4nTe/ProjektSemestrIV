@@ -1,13 +1,13 @@
 ﻿using ProjektSemestrIV.Extensions;
-using ProjektSemestrIV.Models;
+using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
 using System.Collections.ObjectModel;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowCompetitionViewModel : BaseViewModel
+    class ShowSelectedCompetitionViewModel : BaseViewModel
     {
-        private ShowCompetitionModel model;
+        private ShowSelectedCompetitionModel model;
 
         public string DurationDate { get; }
         public string Location { get; }
@@ -17,9 +17,9 @@ namespace ProjektSemestrIV.ViewModels
         public ObservableCollection<StageWithBestPlayerOverview> Stages { get; }
         public ObservableCollection<ShooterWithPointsOverview> Shooters { get; }
 
-        public ShowCompetitionViewModel(uint id)
+        public ShowSelectedCompetitionViewModel(uint id)
         {
-            model = new ShowCompetitionModel(id);
+            model = new ShowSelectedCompetitionModel(id);
 
             DurationDate = model.GetDurationDate();
             Location = model.GetLocation();
