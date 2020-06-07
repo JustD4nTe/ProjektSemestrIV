@@ -115,6 +115,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Average time.
+        /// </summary>
+        public static string AverageTime {
+            get {
+                return ResourceManager.GetString("AverageTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Best shooter.
         /// </summary>
         public static string BestShooter {
@@ -129,6 +138,24 @@ namespace ProjektSemestrIV.Properties {
         public static string CharlieAccuracy {
             get {
                 return ResourceManager.GetString("CharlieAccuracy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Competition.
+        /// </summary>
+        public static string Competition {
+            get {
+                return ResourceManager.GetString("Competition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Competition points.
+        /// </summary>
+        public static string CompetitionPoints {
+            get {
+                return ResourceManager.GetString("CompetitionPoints", resourceCulture);
             }
         }
         
@@ -331,6 +358,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Number of targets.
+        /// </summary>
+        public static string NumberOfTargets {
+            get {
+                return ResourceManager.GetString("NumberOfTargets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Ok.
         /// </summary>
         public static string Ok {
@@ -435,6 +471,15 @@ namespace ProjektSemestrIV.Properties {
         public static string StageName {
             get {
                 return ResourceManager.GetString("StageName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stage points.
+        /// </summary>
+        public static string StagePoints {
+            get {
+                return ResourceManager.GetString("StagePoints", resourceCulture);
             }
         }
         
