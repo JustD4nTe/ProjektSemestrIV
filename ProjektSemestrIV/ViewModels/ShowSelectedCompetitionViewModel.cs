@@ -1,25 +1,31 @@
 ﻿using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
+using ProjektSemestrIV.ViewModels.BaseClass;
 using System.Collections.ObjectModel;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedCompetitionViewModel : BaseViewModel
+    class ShowSelectedCompetitionViewModel : BaseViewModel, ISubView
     {
         private ShowSelectedCompetitionModel model;
 
-        public string DurationDate { get; }
-        public string Location { get; }
-        public uint ShootersCount { get; }
-        public string FastestShooter { get; }
-        public string Podium { get; }
-        public ObservableCollection<StageWithBestPlayerOverview> Stages { get; }
-        public ObservableCollection<ShooterWithPointsOverview> Shooters { get; }
+        public string DurationDate { get; private set; }
+        public string Location { get; private set; }
+        public uint ShootersCount { get; private set; }
+        public string FastestShooter { get; private set; }
+        public string Podium { get; private set; }
+        public ObservableCollection<StageWithBestPlayerOverview> Stages { get; private set; }
+        public ObservableCollection<ShooterWithPointsOverview> Shooters { get; private set; }
 
-        public ShowSelectedCompetitionViewModel(uint id)
+        public ShowSelectedCompetitionViewModel()
         {
-            model = new ShowSelectedCompetitionModel(id);
+            model = new ShowSelectedCompetitionModel();
+        }
+
+        public BaseViewModel GetView(uint id)
+        {
+            model.SetNewId(id);
 
             DurationDate = model.GetDurationDate();
             Location = model.GetLocation();
@@ -29,6 +35,8 @@ namespace ProjektSemestrIV.ViewModels
 
             Stages = model.GetStageWithBestShooters().Convert();
             Shooters = model.GetShootersFromCompetition().Convert();
+
+            return this;
         }
     }
 }

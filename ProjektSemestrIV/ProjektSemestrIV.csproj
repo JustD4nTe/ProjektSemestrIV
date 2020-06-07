@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -135,6 +135,7 @@
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithPoints.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithCompetitionTime.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
+    <Compile Include="Events\SwitchViewEventArgs.cs" />
     <Compile Include="Models\ShowModels\ShooterWithPointsOverview.cs" />
     <Compile Include="Models\ShowModels\StageWithBestPlayerOverview.cs" />
     <Compile Include="Extensions\IEnumerableExtension.cs" />
@@ -151,11 +152,13 @@
     <Compile Include="Models\StageModel.cs" />
     <Compile Include="Models\TargetModel.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedCompetitionModel.cs" />
+    <Compile Include="Models\ViewTypeEnum.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\BaseClass\ISubView.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />

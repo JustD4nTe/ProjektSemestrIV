@@ -1,9 +1,12 @@
-﻿using ProjektSemestrIV.Models;
+﻿using ProjektSemestrIV.Events;
+using ProjektSemestrIV.Models;
+using ProjektSemestrIV.ViewModels.BaseClass;
 using System;
 using System.Windows.Input;
 
 namespace ProjektSemestrIV.ViewModels {
     class MainViewModel : BaseViewModel {
+
 		private BaseViewModel selectedViewModel;
 		public BaseViewModel SelectedViewModel {
 			get { return selectedViewModel; }
@@ -22,6 +25,16 @@ namespace ProjektSemestrIV.ViewModels {
 
                 return updateFormView;
             }
+        }
+
+        private readonly BaseViewModel showCompetitionsViewModel;
+        private readonly ISubView showSelectedCompetitionViewModel;
+
+        public MainViewModel()
+        {
+            showCompetitionsViewModel = new ShowCompetitionsViewModel();
+            showSelectedCompetitionViewModel = new ShowSelectedCompetitionViewModel();
+            showCompetitionsViewModel.SwitchView += SwitchingView;
         }
 
         public void ExecuteUpdateFormView( object parameter ) {
@@ -43,10 +56,22 @@ namespace ProjektSemestrIV.ViewModels {
                     SelectedViewModel = new EditScoreViewModel();
                     break;
                 case "ShowCompetitions":
-                    SelectedViewModel = new ShowCompetitionsViewModel();
+                    SelectedViewModel = showCompetitionsViewModel;
                     break;
                 case "ShowShooters":
                     SelectedViewModel = new ShowShootersViewModel();
+                    break;
+            }
+        }
+
+        public void SwitchingView(object sender, SwitchViewEventArgs e)
+        {
+            switch (e.NextView)
+            {
+                case ViewTypeEnum.ShowSelectedCompetition:
+                    SelectedViewModel = showSelectedCompetitionViewModel.GetView(e.NextViewId);
+                    break;
+                default:
                     break;
             }
         }

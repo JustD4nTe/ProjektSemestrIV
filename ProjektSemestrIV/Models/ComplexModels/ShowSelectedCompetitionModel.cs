@@ -11,10 +11,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
     {
         private Competition competition;
 
-        public ShowSelectedCompetitionModel(uint id)
-        {
-            competition = CompetitionRepository.GetCompetitionFromDB(id);
-        }
+        public ShowSelectedCompetitionModel() { }
 
         // return dd.mm.yyyy-dd.mm.yyyy
         public string GetDurationDate()
@@ -54,5 +51,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
                                                                            x.ShooterName,
                                                                            x.ShooterSurname,
                                                                            x.ShooterPoints));
+
+        public void SetNewId(uint id)
+        => competition = CompetitionRepository.GetCompetitionFromDB(id);
+
     }
 }

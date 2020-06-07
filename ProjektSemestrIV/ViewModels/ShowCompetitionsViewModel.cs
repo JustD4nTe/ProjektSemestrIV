@@ -1,12 +1,9 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
+using ProjektSemestrIV.Events;
 using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ProjektSemestrIV.ViewModels
 {
@@ -14,17 +11,22 @@ namespace ProjektSemestrIV.ViewModels
     {
         private CompetitionModel model;
 
-        private ObservableCollection<Competition> competitions;
-        public ObservableCollection<Competition> Competitions
-        {
-            get { return competitions; }
-            private set { competitions = value; onPropertyChanged(nameof(Competitions)); }
-        }
+        public ObservableCollection<Competition> Competitions { get; }
+        public Competition SelectedCompetitionId { get; set; }
+
+        public ICommand SwitchViewCommand { get; }
 
         public ShowCompetitionsViewModel()
         {
             model = new CompetitionModel();
             Competitions = model.GetAllCompetitionsFromDB().Convert();
+
+            SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => true);
         }
+
+        private void OnSwitchView()
+        => SwitchView(this, new SwitchViewEventArgs(
+                                    ViewTypeEnum.ShowSelectedCompetition,
+                                    SelectedCompetitionId.Id));
     }
 }
