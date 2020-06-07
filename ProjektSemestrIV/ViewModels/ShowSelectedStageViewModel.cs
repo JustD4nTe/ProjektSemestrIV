@@ -1,4 +1,5 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
+using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,25 @@ namespace ProjektSemestrIV.ViewModels
 {
     class ShowSelectedStageViewModel : BaseViewModel
     {
-        public string Competition { get; }
+        private ShowSelectedStageModel model;
+
+        public string CompetitionLocation { get; }
         public string StageName { get; }
         public string StageRules { get; }
         public uint NumOfTargets { get; }
         public string BestShooter { get; }
         public double AverageTime { get; }
-        public ObservableCollection<ShooterWithStagePointsAndCompetitionPoints> Shooters { get; }
+
+        public ObservableCollection<ShooterWithStagePointsAndCompetitionPointsOverview> Shooters { get; }
+
+        public ShowSelectedStageViewModel(uint id)
+        {
+            model = new ShowSelectedStageModel(id);
+            CompetitionLocation = model.GetCompetitionLocation();
+            StageName = model.GetStageName();
+            StageRules = model.GetStageRules();
+            NumOfTargets = model.GetNumOfTargets();
+        }
 
     }
 }

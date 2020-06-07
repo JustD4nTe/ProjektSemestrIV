@@ -121,6 +121,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAL\DatabaseConnection.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithStagePointsAndCompetitionPoints.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
     <Compile Include="DAL\Entities\Run.cs" />
     <Compile Include="DAL\Entities\Shooter.cs" />
@@ -131,7 +132,7 @@
     <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedStageModel.cs" />
     <Compile Include="Models\ShowModels\ShooterWithPointsOverview.cs" />
-    <Compile Include="Models\ShowModels\ShooterWithStagePointsAndCompetitionPoints.cs" />
+    <Compile Include="Models\ShowModels\ShooterWithStagePointsAndCompetitionPointsOverview.cs" />
     <Compile Include="Models\ShowModels\StageWithBestPlayerOverview.cs" />
     <Compile Include="Extensions\IEnumerableExtension.cs" />
     <Compile Include="DAL\Repositories\CompetitionRepository.cs" />

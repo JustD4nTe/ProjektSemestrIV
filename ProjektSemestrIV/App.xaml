@@ -30,7 +30,7 @@
         <DataTemplate DataType="{x:Type viewmodels:ShowSelectedShooterViewModel}">
             <views:SelectedShooterView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:ShowSelectedShooterViewModel}">
+        <DataTemplate DataType="{x:Type viewmodels:ShowSelectedStageViewModel}">
             <views:ShowSelectedStageView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:ShowShootersViewModel}">

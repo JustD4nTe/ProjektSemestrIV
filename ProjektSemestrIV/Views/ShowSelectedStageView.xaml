@@ -10,7 +10,7 @@
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.Competition}}"/>
-            <Label Content="{Binding Competition}"/>
+            <Label Content="{Binding CompetitionLocation}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.StageName}}"/>
@@ -35,11 +35,11 @@
         <DataGrid x:Name="DataGridShooters" ItemsSource="{Binding Shooters}"
             AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Position}}" Binding="{Binding Position}" Width="100"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterName}}" Binding="{Binding Name}" Width="150"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterSurname}}" Binding="{Binding Surname}" Width="150"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StagePoints}}" Binding="{Binding StagePoints}" Width="150"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.CompetitionPoints}}" Binding="{Binding CompetitionPoints}" Width="150"/>
+                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Position}}" Binding="{Binding Position}" Width="70"/>
+                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterName}}" Binding="{Binding Name}" Width="120"/>
+                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterSurname}}" Binding="{Binding Surname}" Width="120"/>
+                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StagePoints}}" Binding="{Binding StagePoints}" Width="120"/>
+                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.CompetitionPoints}}" Binding="{Binding CompetitionPoints}" Width="120"/>
             </DataGrid.Columns>
         </DataGrid>
     </StackPanel>

@@ -10,6 +10,7 @@ namespace ProjektSemestrIV.DAL.Repositories
 {
     class StageRepository
     {
+        #region CRUD
         public static List<Stage> GetAllStages()
         {
             List<Stage> stages = new List<Stage>();
@@ -33,7 +34,6 @@ namespace ProjektSemestrIV.DAL.Repositories
             Stage stage = null;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
-
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
@@ -82,5 +82,29 @@ namespace ProjektSemestrIV.DAL.Repositories
             }
             return executed;
         }
+        #endregion
+
+        #region Auxiliary queries
+        public static uint GetNumOfTargetsOnStageFromDB(uint id)
+        {
+            string query = $@"SELECT count(tarcza.id) AS numOfTargets FROM trasa
+                            INNER JOIN tarcza
+                            ON trasa.id = tarcza.trasa_id
+                            WHERE trasa.id = {id};";
+            uint numOfTargets = 0;
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                    numOfTargets = (uint)reader.GetInt64("numOfTargets");
+                connection.Close();
+            }
+            return numOfTargets;
+        }
+        
+        #endregion
     }
 }
