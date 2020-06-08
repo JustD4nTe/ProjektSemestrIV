@@ -1,18 +1,15 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Repositories;
 using ProjektSemestrIV.Models.ShowModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.Models.ComplexModels
 {
     class ShowSelectedStageModel
     {
-        private Stage stage;
-        private Competition competition;
+        private readonly Stage stage;
+        private readonly Competition competition;
 
         public ShowSelectedStageModel(uint id)
         {
@@ -37,12 +34,11 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public double GetAverageTime() => StageRepository.GetAverageTimeOnStageByIdFromDB(stage.ID);
 
         public IEnumerable<ShooterWithStagePointsAndCompetitionPointsOverview> GetShooters()
-            => ShooterRepository.GetShooterWithStagePointsAndCompetitionPointsByIdFromDB(stage.ID).
-            Select(x => new ShooterWithStagePointsAndCompetitionPointsOverview(
-                x.Position,
-                x.Name,
-                x.Surname,
-                x.StagePoints,
-                x.CompetitionPoints));
+            => ShooterRepository.GetShooterWithStagePointsAndCompetitionPointsByIdFromDB(stage.ID)
+            .Select(x => new ShooterWithStagePointsAndCompetitionPointsOverview(x.Position,
+                                                                                x.Name,
+                                                                                x.Surname,
+                                                                                x.StagePoints,
+                                                                                x.CompetitionPoints));
     }
 }

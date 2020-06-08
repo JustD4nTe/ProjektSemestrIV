@@ -2,15 +2,13 @@
 using ProjektSemestrIV.DAL.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Repositories
 {
-    class StageRepository
+    internal class StageRepository
     {
         #region CRUD
+
         public static List<Stage> GetAllStages()
         {
             List<Stage> stages = new List<Stage>();
@@ -82,9 +80,11 @@ namespace ProjektSemestrIV.DAL.Repositories
             }
             return executed;
         }
-        #endregion
+
+        #endregion CRUD
 
         #region Auxiliary queries
+
         public static uint GetNumOfTargetsOnStageFromDB(uint id)
         {
             string query = $@"SELECT count(tarcza.id) AS numOfTargets FROM trasa
@@ -94,7 +94,6 @@ namespace ProjektSemestrIV.DAL.Repositories
             uint numOfTargets = 0;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
-
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
@@ -104,7 +103,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             }
             return numOfTargets;
         }
-        
+
         public static double GetAverageTimeOnStageByIdFromDB(uint id)
         {
             string query = $@"SELECT avg(przebieg.czas) AS averageTime FROM przebieg
@@ -114,7 +113,6 @@ namespace ProjektSemestrIV.DAL.Repositories
             double averageTime = 0;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
-
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
@@ -124,6 +122,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             }
             return averageTime;
         }
-        #endregion
+
+        #endregion Auxiliary queries
     }
 }

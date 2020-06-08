@@ -5,9 +5,9 @@ namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
     class ShooterWithPoints
     {
-        public String Name { get; set; }
-        public String Surname { get; set; }
-        public double Points { get; set; }
+        public String Name { get; }
+        public String Surname { get; }
+        public double Points { get; }
 
         public ShooterWithPoints(MySqlDataReader reader)
         {

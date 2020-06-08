@@ -242,9 +242,9 @@ namespace ProjektSemestrIV.DAL.Repositories
                 if (reader.Read())
                 {
                     results.Add(new ShooterCompetition(
-                        reader.GetString("location"), 
-                        reader.GetDateTime("startDate").ToString(), 
-                        reader.GetUInt32("position"), 
+                        reader.GetString("location"),
+                        reader.GetDateTime("startDate").ToString(),
+                        reader.GetUInt32("position"),
                         reader.GetDouble("points")));
                 }
                 connection.Close();
@@ -393,7 +393,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return shooter;
         }
 
-        public static IEnumerable<ShooterWithStagePointsAndCompetitionPoints> 
+        public static IEnumerable<ShooterWithStagePointsAndCompetitionPoints>
             GetShooterWithStagePointsAndCompetitionPointsByIdFromDB(uint id)
         {
             string query = $@"WITH ranking AS (SELECT 
@@ -415,22 +415,21 @@ namespace ProjektSemestrIV.DAL.Repositories
                             inner join trasa on trasa.id=summing.trasa_id)
                         SELECT rankingGraczy AS position, imie AS name, nazwisko AS surname, sumaPunktow as stagePoints, generalPoints AS competitionPoints FROM ranking
                         WHERE trasaId = {id}";
-            var shooters= new List<ShooterWithStagePointsAndCompetitionPoints>();
+            var shooters = new List<ShooterWithStagePointsAndCompetitionPoints>();
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
-                    shooters.Add(new ShooterWithStagePointsAndCompetitionPoints(
-                        (uint)reader.GetUInt64("position"),
-                        reader.GetString("name"),
-                        reader.GetString("surname"),
-                        reader.GetDouble("stagePoints"),
-                        reader.GetDouble("competitionPoints")));
+                    shooters.Add(new ShooterWithStagePointsAndCompetitionPoints((uint)reader.GetUInt64("position"),
+                                                                                reader.GetString("name"),
+                                                                                reader.GetString("surname"),
+                                                                                reader.GetDouble("stagePoints"),
+                                                                                reader.GetDouble("competitionPoints")));
                 connection.Close();
             }
-            foreach(var shooter in shooters)
+            foreach (var shooter in shooters)
                 Console.WriteLine(shooter.Name + shooter.Surname);
             return shooters;
         }

@@ -5,10 +5,10 @@ namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
     class StageWithBestShooter
     {
-        public String StageName { get; set; }
-        public String ShooterName { get; set; }
-        public String ShooterSurname { get; set; }
-        public double ShooterPoints { get; set; }
+        public String StageName { get; }
+        public String ShooterName { get; }
+        public String ShooterSurname { get; }
+        public double ShooterPoints { get; }
 
         public StageWithBestShooter(MySqlDataReader reader)
         {
