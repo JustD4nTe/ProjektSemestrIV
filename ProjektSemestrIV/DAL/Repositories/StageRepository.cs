@@ -105,6 +105,25 @@ namespace ProjektSemestrIV.DAL.Repositories
             return numOfTargets;
         }
         
+        public static double GetAverageTimeOnStageByIdFromDB(uint id)
+        {
+            string query = $@"SELECT avg(przebieg.czas) AS averageTime FROM przebieg
+                            INNER JOIN trasa
+                            ON trasa.id = przebieg.id_trasa
+                            WHERE trasa.id = {id};";
+            double averageTime = 0;
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                    averageTime = reader.GetDouble("averageTime");
+                connection.Close();
+            }
+            return averageTime;
+        }
         #endregion
     }
 }

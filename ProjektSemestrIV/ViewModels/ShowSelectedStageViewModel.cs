@@ -1,4 +1,5 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
+using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
 using System;
@@ -30,6 +31,9 @@ namespace ProjektSemestrIV.ViewModels
             StageName = model.GetStageName();
             StageRules = model.GetStageRules();
             NumOfTargets = model.GetNumOfTargets();
+            BestShooter = model.GetShooterWithPoints();
+            AverageTime = model.GetAverageTime();
+            Shooters = model.GetShooters().Convert();
         }
 
     }

@@ -30,7 +30,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.AverageTime}}"/>
-            <Label Content="{Binding DeltaAccuracy}"/>
+            <Label Content="{Binding AverageTime}"/>
         </StackPanel>
         <DataGrid x:Name="DataGridShooters" ItemsSource="{Binding Shooters}"
             AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False">
