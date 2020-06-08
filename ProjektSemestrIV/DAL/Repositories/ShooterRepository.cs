@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using ProjektSemestrIV.DAL.Entities;
+using ProjektSemestrIV.DAL.Entities.AuxiliaryEntities;
 using ProjektSemestrIV.Models.ShowModels;
 using System;
 using System.Collections.Generic;
@@ -198,9 +199,9 @@ namespace ProjektSemestrIV.DAL.Repositories
             return accuracy;
         }
 
-        public static List<ShooterCompetitionOverview> GetShooterAccomplishedCompetitionsFromDB(uint id)
+        public static IEnumerable<ShooterCompetition> GetShooterAccomplishedCompetitionsFromDB(uint id)
         {
-            var results = new List<ShooterCompetitionOverview>();
+            var results = new List<ShooterCompetition>();
             string query = $@"SELECT shooterId, location, startDate, position, points
                             FROM (
                             SELECT 
@@ -251,7 +252,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
-                    results.Add(new ShooterCompetitionOverview(
+                    results.Add(new ShooterCompetition(
                         reader.GetString("location"),
                         reader.GetDateTime("startDate").ToString(),
                         reader.GetUInt32("position"),
@@ -375,6 +376,77 @@ namespace ProjektSemestrIV.DAL.Repositories
             return time;
         }
 
+        public static ShooterWithPoints GetShooterWithPointsByStageIdFromDB(uint id)
+        {
+            string query = $@"WITH ranking AS (SELECT 
+	                            summing.strzelec_imie AS imie,
+                                summing.strzelec_nazwisko AS nazwisko,
+                                summing.suma/przebieg.czas AS sumaPunktow,
+                                summing.trasa_id AS trasaId,
+                                RANK() OVER ( PARTITION BY trasa.id Order by summing.suma/przebieg.czas ) rankingGraczy 
+                                from (select strzelec.imie AS strzelec_imie, strzelec.nazwisko AS strzelec_nazwisko, strzelec.id as strzelec_id, trasa.id as trasa_id, (((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))) as suma 
+                                    from strzelec inner join tarcza on strzelec.id=tarcza.strzelec_id 
+                                    inner join trasa on tarcza.trasa_id=trasa.id        
+                                    group by strzelec.id, trasa.id) as summing
+                                inner join przebieg on przebieg.id_strzelec = summing.strzelec_id and przebieg.id_trasa = summing.trasa_id
+                                inner join trasa on trasa.id=summing.trasa_id)
+                            SELECT imie, nazwisko, sumaPunktow FROM ranking
+                            WHERE trasaId = {id}
+                            LIMIT 1;";
+            ShooterWithPoints shooter = null;
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if (reader.Read())
+                    shooter = new ShooterWithPoints(reader);
+                connection.Close();
+            }
+            return shooter;
+        }
+
+        public static IEnumerable<ShooterWithStagePointsAndCompetitionPoints>
+            GetShooterWithStagePointsAndCompetitionPointsByIdFromDB(uint id)
+        {
+            string query = $@"WITH ranking AS (SELECT 
+	                        summing.strzelec_imie AS imie,
+                            summing.strzelec_nazwisko AS nazwisko,
+                            summing.suma/przebieg.czas AS sumaPunktow,
+                            summing.trasa_id AS trasaId,
+                            (SELECT ((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra))) / przebieg.czas AS points FROM strzelec
+		                        inner join tarcza on strzelec.id=tarcza.strzelec_id 
+		                        inner join trasa on tarcza.trasa_id=trasa.id
+                                INNER JOIN przebieg ON przebieg.id_strzelec = strzelec.id AND przebieg.id_trasa = trasa.id
+                                WHERE strzelec.id = summing.strzelec_id) AS generalPoints,
+                            RANK() OVER ( PARTITION BY trasa.id Order by summing.suma/przebieg.czas DESC) rankingGraczy 
+                            from (select strzelec.imie AS strzelec_imie, strzelec.nazwisko AS strzelec_nazwisko, strzelec.id as strzelec_id, trasa.id as trasa_id, (sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)) as suma 
+                                from strzelec inner join tarcza on strzelec.id=tarcza.strzelec_id 
+                                inner join trasa on tarcza.trasa_id=trasa.id        
+                                group by strzelec.id, trasa.id) as summing
+                            inner join przebieg on przebieg.id_strzelec = summing.strzelec_id and przebieg.id_trasa = summing.trasa_id
+                            inner join trasa on trasa.id=summing.trasa_id)
+                        SELECT rankingGraczy AS position, imie AS name, nazwisko AS surname, sumaPunktow as stagePoints, generalPoints AS competitionPoints FROM ranking
+                        WHERE trasaId = {id}";
+            var shooters = new List<ShooterWithStagePointsAndCompetitionPoints>();
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                while (reader.Read())
+                    shooters.Add(new ShooterWithStagePointsAndCompetitionPoints((uint)reader.GetUInt64("position"),
+                                                                                reader.GetString("name"),
+                                                                                reader.GetString("surname"),
+                                                                                reader.GetDouble("stagePoints"),
+                                                                                reader.GetDouble("competitionPoints")));
+                connection.Close();
+            }
+            foreach (var shooter in shooters)
+                Console.WriteLine(shooter.Name + shooter.Surname);
+            return shooters;
+        }
         #endregion
     }
 }

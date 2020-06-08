@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
-
-namespace ProjektSemestrIV.Models.ShowModels
+﻿namespace ProjektSemestrIV.Models.ShowModels
 {
     class ShooterCompetitionOverview
     {
-        public string Location { get; set; }
-
-        public string StartDate { get; set; }
-
-        public uint Position { get; set; }
-
-        public double Points { get; set; }
+        public string Location { get;  }
+        public string StartDate { get;  }
+        public uint Position { get;  }
+        public double Points { get; }
 
         public ShooterCompetitionOverview(string location, string startDate, uint position, double points)
         {

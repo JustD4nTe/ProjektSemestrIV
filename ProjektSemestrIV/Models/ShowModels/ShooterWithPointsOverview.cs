@@ -2,9 +2,9 @@
 {
     class ShooterWithPointsOverview
     {
-        public string Name { get; set; }
-        public string Surname{ get; set; }
-        public double Points { get; set; }
+        public string Name { get; }
+        public string Surname { get; }
+        public double Points { get; }
 
         public ShooterWithPointsOverview(string name, string surname, double points)
         {

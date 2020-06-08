@@ -135,11 +135,20 @@
   <data name="AveragePosition" xml:space="preserve">
     <value>Average Position</value>
   </data>
+  <data name="AverageTime" xml:space="preserve">
+    <value>Average time</value>
+  </data>
   <data name="BestShooter" xml:space="preserve">
     <value>Best shooter</value>
   </data>
   <data name="CharlieAccuracy" xml:space="preserve">
     <value>Charlie Accuracy</value>
+  </data>
+  <data name="Competition" xml:space="preserve">
+    <value>Competition</value>
+  </data>
+  <data name="CompetitionPoints" xml:space="preserve">
+    <value>Competition points</value>
   </data>
   <data name="Competitions" xml:space="preserve">
     <value>Competitions</value>
@@ -207,6 +216,9 @@
   <data name="NumberOfParticipants" xml:space="preserve">
     <value>Number of participatns</value>
   </data>
+  <data name="NumberOfTargets" xml:space="preserve">
+    <value>Number of targets</value>
+  </data>
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
@@ -242,6 +254,12 @@
   </data>
   <data name="StageName" xml:space="preserve">
     <value>Stage name</value>
+  </data>
+  <data name="StagePoints" xml:space="preserve">
+    <value>Stage points</value>
+  </data>
+  <data name="StageRanking" xml:space="preserve">
+    <value>Stage ranking</value>
   </data>
   <data name="StartDate" xml:space="preserve">
     <value>Start Date</value>

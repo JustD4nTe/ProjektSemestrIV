@@ -5,9 +5,9 @@ namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
     class ShooterWithCompetitionTime
     {
-        public String Name { get; set; }
-        public String Surname { get; set; }
-        public double TimeInSeconds { get; set; }
+        public String Name { get;}
+        public String Surname { get;}
+        public double TimeInSeconds { get;}
 
         public ShooterWithCompetitionTime(MySqlDataReader reader)
         {
