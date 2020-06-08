@@ -1,29 +1,38 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
+using ProjektSemestrIV.Events;
 using ProjektSemestrIV.Models;
-using System;
-using System.Collections.Generic;
+using ProjektSemestrIV.ViewModels.BaseClass;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowShootersViewModel : BaseViewModel
+    class ShowShootersViewModel : SwitchViewModel
     {
-        private ShooterModel model;
+        private readonly ShooterModel model;
 
-        private ObservableCollection<Shooter> shooters;
-        public ObservableCollection<Shooter> Shooters
-        {
-            get { return shooters; }
-            private set { shooters = value; onPropertyChanged(nameof(Shooters)); }
-        }
+        public ObservableCollection<Shooter> Shooters { get; private set; }
+        public Shooter SelectedShooter { get; set; }
+        public ICommand SwitchViewCommand { get; }
 
         public ShowShootersViewModel()
         {
-            model = new ShooterModel();
-            Shooters = model.GetAllShooters();
+            model = new ShooterModel();            
+
+            SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => true);
         }
+
+        public override IBaseViewModel GetViewModel(params uint[] id)
+        {
+            Shooters = model.GetAllShooters();
+
+            return this;
+        }
+
+
+        private void OnSwitchView()
+        => SwitchView(this, new SwitchViewEventArgs(
+                                    ViewTypeEnum.ShowSelectedShooter,
+                                    SelectedShooter.ID));
     }
 }

@@ -11,11 +11,6 @@ namespace ProjektSemestrIV.Models.ComplexModels
     {
         private Competition competition;
 
-        public ShowSelectedCompetitionModel(uint id)
-        {
-            competition = CompetitionRepository.GetCompetitionFromDB(id);
-        }
-
         // return dd.mm.yyyy-dd.mm.yyyy
         public string GetDurationDate()
         => competition.StartDate.Substring(0, 10) + "-" + competition.EndDate.Substring(0, 10);
@@ -50,9 +45,14 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public IEnumerable<StageWithBestPlayerOverview> GetStageWithBestShooters()
         => CompetitionRepository.GetStagesWithBestShooter(competition.Id)
-                                .Select(x => new StageWithBestPlayerOverview(x.StageName,
+                                .Select(x => new StageWithBestPlayerOverview(x.Id,
+                                                                           x.StageName,
                                                                            x.ShooterName,
                                                                            x.ShooterSurname,
                                                                            x.ShooterPoints));
+
+        public void SetNewId(uint id)
+        => competition = CompetitionRepository.GetCompetitionFromDB(id);
+
     }
 }

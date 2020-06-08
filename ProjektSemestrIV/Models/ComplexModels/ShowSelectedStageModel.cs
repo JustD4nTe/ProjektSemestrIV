@@ -8,14 +8,8 @@ namespace ProjektSemestrIV.Models.ComplexModels
 {
     class ShowSelectedStageModel
     {
-        private readonly Stage stage;
-        private readonly Competition competition;
-
-        public ShowSelectedStageModel(uint id)
-        {
-            stage = StageRepository.GetStageByIdFromDB(id);
-            competition = CompetitionRepository.GetCompetitionFromDB(stage.Competition_ID);
-        }
+        private Stage stage;
+        private Competition competition;
 
         public string GetCompetitionLocation() => competition.Location;
 
@@ -35,10 +29,15 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public IEnumerable<ShooterWithStagePointsAndCompetitionPointsOverview> GetShooters()
             => ShooterRepository.GetShooterWithStagePointsAndCompetitionPointsByIdFromDB(stage.ID)
-            .Select(x => new ShooterWithStagePointsAndCompetitionPointsOverview(x.Position,
-                                                                                x.Name,
-                                                                                x.Surname,
-                                                                                x.StagePoints,
-                                                                                x.CompetitionPoints));
+                                .Select(x => new ShooterWithStagePointsAndCompetitionPointsOverview(x.Position,
+                                                                                                    x.Name,
+                                                                                                    x.Surname,
+                                                                                                    x.StagePoints,
+                                                                                                    x.CompetitionPoints));
+        public  void SetNewId(uint id)
+        {
+            stage = StageRepository.GetStageByIdFromDB(id);
+            competition = CompetitionRepository.GetCompetitionFromDB(stage.Competition_ID);
+        }
     }
 }

@@ -9,12 +9,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
 {
     class ShowSelectedShooterModel
     {
-        private readonly Shooter shooter;
-
-        public ShowSelectedShooterModel(uint id)
-        {
-            shooter = ShooterRepository.GetShooterByIdFromDB(id);
-        }
+        private Shooter shooter;
 
         public string GetShooterName() => shooter.Name;
 
@@ -34,12 +29,12 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public IEnumerable<ShooterCompetitionOverview> GetShooterCompetitions()
             => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID)
-            .Select(x => new ShooterCompetitionOverview(x.Location,
-                                                        x.StartDate,
-                                                        x.Position,
-                                                        x.Points));
+                                .Select(x => new ShooterCompetitionOverview(x.Location, x.StartDate, x.Position,x.Points));
 
         public string GetShooterGeneralAveragePosition()
             => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
+        
+        public void SetNewId(uint id)
+            => shooter = ShooterRepository.GetShooterByIdFromDB(id);
     }
 }

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"
         xmlns:local="clr-namespace:ProjektSemestrIV"
+        xmlns:viewType="clr-namespace:ProjektSemestrIV.Models"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     
@@ -16,21 +17,32 @@
 
         <StackPanel Grid.Row="0" Grid.Column="0">
             <Label Content="{Binding Source={x:Static resx:Resources.ConnectionConfiguration}}" HorizontalAlignment="Center"/>
-            <Button Content="{Binding Source={x:Static resx:Resources.Configuration}}" Command="{Binding UpdateFormView}" CommandParameter="Connection"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.Configuration}}" 
+                    Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.Configuration}"/>
 
             <Separator Margin="0,10,0,10" Height="0"/>
 
             <Label Content="{Binding Source={x:Static resx:Resources.Edit}}" HorizontalAlignment="Center"/>
-            <Button Content="{Binding Source={x:Static resx:Resources.AddCompetition}}" Command="{Binding UpdateFormView}" CommandParameter="EditCompetitions"/>
-            <Button Content="{Binding Source={x:Static resx:Resources.EditStage}}" Command="{Binding UpdateFormView}" CommandParameter="EditStages"/>
-            <Button Content="{Binding Source={x:Static resx:Resources.EditShooter}}" Command="{Binding UpdateFormView}" CommandParameter="EditShooters"/>
-            <Button Content="{Binding Source={x:Static resx:Resources.AddCourse}}" Command="{Binding UpdateFormView}" CommandParameter="EditScore"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.AddCompetition}}" 
+                    Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.EditCompetitions}"/>
+            
+            <Button Content="{Binding Source={x:Static resx:Resources.EditStage}}" 
+                    Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.EditStages}"/>
+            
+            <Button Content="{Binding Source={x:Static resx:Resources.EditShooter}}" 
+                    Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.EditShooters}"/>
+            
+            <Button Content="{Binding Source={x:Static resx:Resources.AddCourse}}" 
+                    Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.EditScore}"/>
 
             <Separator Margin="0,10,0,10" Height="0"/>
 
             <Label Content="{Binding Source={x:Static resx:Resources.View}}" HorizontalAlignment="Center"/>
-            <Button Content="{Binding Source={x:Static resx:Resources.ListCompetition}}" Command="{Binding UpdateFormView}" CommandParameter="ShowCompetitions"/>
-            <Button Content="{Binding Source={x:Static resx:Resources.ListShooters}}" Command="{Binding UpdateFormView}" CommandParameter="ShowShooters"/>
+            <Button Content="{Binding Source={x:Static resx:Resources.ListCompetition}}" 
+                    Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.ShowCompetitions}"/>
+            
+            <Button Content="{Binding Source={x:Static resx:Resources.ListShooters}}"
+                    Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.ShowShooters}"/>
         </StackPanel>
         
         <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding SelectedViewModel}"/>
