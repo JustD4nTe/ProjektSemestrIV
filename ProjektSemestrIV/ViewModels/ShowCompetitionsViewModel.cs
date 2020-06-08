@@ -2,16 +2,17 @@
 using ProjektSemestrIV.Events;
 using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models;
+using ProjektSemestrIV.ViewModels.BaseClass;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowCompetitionsViewModel : BaseViewModel
+    class ShowCompetitionsViewModel : SwitchViewModel
     {
-        private CompetitionModel model;
+        private readonly CompetitionModel model;
 
-        public ObservableCollection<Competition> Competitions { get; }
+        public ObservableCollection<Competition> Competitions { get; private set; }
         public Competition SelectedCompetitionId { get; set; }
 
         public ICommand SwitchViewCommand { get; }
@@ -19,9 +20,15 @@ namespace ProjektSemestrIV.ViewModels
         public ShowCompetitionsViewModel()
         {
             model = new CompetitionModel();
-            Competitions = model.GetAllCompetitionsFromDB().Convert();
 
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => true);
+        }
+
+        public override IBaseViewModel GetViewModel(params uint[] id)
+        {
+            Competitions = model.GetAllCompetitionsFromDB().Convert();
+
+            return this;
         }
 
         private void OnSwitchView()

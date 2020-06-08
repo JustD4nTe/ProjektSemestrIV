@@ -158,7 +158,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\BaseClass\ISubView.cs" />
+    <Compile Include="ViewModels\BaseClass\IBaseViewModel.cs" />
+    <Compile Include="ViewModels\BaseClass\ISwitchViewModel.cs" />
+    <Compile Include="ViewModels\BaseClass\SwitchViewModel.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />

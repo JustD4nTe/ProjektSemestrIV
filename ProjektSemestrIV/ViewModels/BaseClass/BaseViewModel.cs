@@ -1,13 +1,11 @@
-﻿using ProjektSemestrIV.Events;
+﻿using ProjektSemestrIV.ViewModels.BaseClass;
 using System;
 using System.ComponentModel;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class BaseViewModel : INotifyPropertyChanged
+    abstract class BaseViewModel : INotifyPropertyChanged, IBaseViewModel
     {
-        public EventHandler<SwitchViewEventArgs> SwitchView;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void onPropertyChanged(params String[] namesOfProperties)

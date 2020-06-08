@@ -1,7 +1,6 @@
 ﻿namespace ProjektSemestrIV.ViewModels.BaseClass
 {
-    interface ISubView
+    interface IBaseViewModel
     {
-        BaseViewModel GetView(uint id);
     }
 }

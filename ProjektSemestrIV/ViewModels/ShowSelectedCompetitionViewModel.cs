@@ -6,9 +6,9 @@ using System.Collections.ObjectModel;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedCompetitionViewModel : BaseViewModel, ISubView
+    class ShowSelectedCompetitionViewModel : SwitchViewModel
     {
-        private ShowSelectedCompetitionModel model;
+        private readonly ShowSelectedCompetitionModel model;
 
         public string DurationDate { get; private set; }
         public string Location { get; private set; }
@@ -23,9 +23,9 @@ namespace ProjektSemestrIV.ViewModels
             model = new ShowSelectedCompetitionModel();
         }
 
-        public BaseViewModel GetView(uint id)
+        public override IBaseViewModel GetViewModel(params uint[] id)
         {
-            model.SetNewId(id);
+            model.SetNewId(id[0]);
 
             DurationDate = model.GetDurationDate();
             Location = model.GetLocation();

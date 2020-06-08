@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedShooterViewModel : BaseViewModel, ISubView
+    class ShowSelectedShooterViewModel : SwitchViewModel
     {
         #region Fields and properties
         private readonly ShowSelectedShooterModel model;
@@ -34,9 +34,9 @@ namespace ProjektSemestrIV.ViewModels
             model = new ShowSelectedShooterModel();
         }
 
-        public BaseViewModel GetView(uint id)
+        public override IBaseViewModel GetViewModel(params uint[] id)
         {
-            model.SetNewId(id);
+            model.SetNewId(id[0]);
 
             Name = model.GetShooterName();
             Surname = model.GetShooterSurname();

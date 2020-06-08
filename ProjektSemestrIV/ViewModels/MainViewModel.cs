@@ -6,8 +6,8 @@ using System.Windows.Input;
 namespace ProjektSemestrIV.ViewModels {
     class MainViewModel : BaseViewModel {
 
-		private BaseViewModel selectedViewModel;
-		public BaseViewModel SelectedViewModel {
+		private IBaseViewModel selectedViewModel;
+		public IBaseViewModel SelectedViewModel {
 			get { return selectedViewModel; }
 			set {
 				selectedViewModel = value;
@@ -26,10 +26,10 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private readonly BaseViewModel showCompetitionsViewModel;
-        private readonly ISubView showSelectedCompetitionViewModel;
-        private readonly BaseViewModel showShootersViewModel;
-        private readonly ISubView showSelectedShooterViewModel;
+        private readonly ISwitchViewModel showCompetitionsViewModel;
+        private readonly ISwitchViewModel showSelectedCompetitionViewModel;
+        private readonly ISwitchViewModel showShootersViewModel;
+        private readonly ISwitchViewModel showSelectedShooterViewModel;
 
         public MainViewModel()
         {
@@ -61,10 +61,10 @@ namespace ProjektSemestrIV.ViewModels {
                     SelectedViewModel = new EditScoreViewModel();
                     break;
                 case ViewTypeEnum.ShowCompetitions:
-                    SelectedViewModel = showCompetitionsViewModel;
+                    SelectedViewModel = showCompetitionsViewModel.GetViewModel();
                     break;
                 case ViewTypeEnum.ShowShooters:
-                    SelectedViewModel = showShootersViewModel;
+                    SelectedViewModel = showShootersViewModel.GetViewModel();
                     break;
                 default:
                     break;
@@ -76,10 +76,10 @@ namespace ProjektSemestrIV.ViewModels {
             switch (e.NextView)
             {
                 case ViewTypeEnum.ShowSelectedCompetition:
-                    SelectedViewModel = showSelectedCompetitionViewModel.GetView(e.NextViewId);
+                    SelectedViewModel = showSelectedCompetitionViewModel.GetViewModel(e.NextViewId);
                     break;
                 case ViewTypeEnum.ShowSelectedShooter:
-                    SelectedViewModel = showSelectedShooterViewModel.GetView(e.NextViewId);
+                    SelectedViewModel = showSelectedShooterViewModel.GetViewModel(e.NextViewId);
                     break;
                 default:
                     break;
