@@ -102,12 +102,14 @@ namespace ProjektSemestrIV.DAL.Repositories
             double accuracy = 0;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
-
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
-                    accuracy = reader.GetDouble("accuracy");
+                {
+                    var readValue = reader["accuracy"];
+                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
+                }
                 connection.Close();
             }
             return accuracy;
@@ -132,7 +134,10 @@ namespace ProjektSemestrIV.DAL.Repositories
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
-                    accuracy = reader.GetDouble("accuracy");
+                {
+                    var readValue = reader["accuracy"];
+                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
+                }
                 connection.Close();
             }
             return accuracy;
@@ -157,7 +162,10 @@ namespace ProjektSemestrIV.DAL.Repositories
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
-                    accuracy = reader.GetDouble("accuracy");
+                {
+                    var readValue = reader["accuracy"];
+                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
+                }
                 connection.Close();
             }
             return accuracy;
@@ -182,7 +190,10 @@ namespace ProjektSemestrIV.DAL.Repositories
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
-                    accuracy = reader.GetDouble("accuracy");
+                {
+                    var readValue = reader["accuracy"];
+                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
+                }
                 connection.Close();
             }
             return accuracy;
@@ -301,7 +312,10 @@ namespace ProjektSemestrIV.DAL.Repositories
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
-                    position = reader.GetDouble("averagePosition");
+                {
+                    var readValue = reader["averagePosition"];
+                    position = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
+                }
                 connection.Close();
             }
             return position;
