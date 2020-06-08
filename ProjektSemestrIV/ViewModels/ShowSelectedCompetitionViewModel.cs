@@ -1,8 +1,11 @@
-﻿using ProjektSemestrIV.Extensions;
+﻿using ProjektSemestrIV.Events;
+using ProjektSemestrIV.Extensions;
+using ProjektSemestrIV.Models;
 using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
 using ProjektSemestrIV.ViewModels.BaseClass;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace ProjektSemestrIV.ViewModels
 {
@@ -18,9 +21,14 @@ namespace ProjektSemestrIV.ViewModels
         public ObservableCollection<StageWithBestPlayerOverview> Stages { get; private set; }
         public ObservableCollection<ShooterWithPointsOverview> Shooters { get; private set; }
 
+        public StageWithBestPlayerOverview SelectedStage { get; set; }
+
+        public ICommand SwitchViewCommand { get; }
+
         public ShowSelectedCompetitionViewModel()
         {
             model = new ShowSelectedCompetitionModel();
+            SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => SelectedStage != null);
         }
 
         public override IBaseViewModel GetViewModel(params uint[] id)
@@ -38,5 +46,10 @@ namespace ProjektSemestrIV.ViewModels
 
             return this;
         }
+
+        private void OnSwitchView()
+        => SwitchView(this, new SwitchViewEventArgs(
+                                    ViewTypeEnum.ShowSelectedStage,
+                                    SelectedStage.Id));
     }
 }

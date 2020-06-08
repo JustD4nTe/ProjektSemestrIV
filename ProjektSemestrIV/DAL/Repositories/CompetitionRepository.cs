@@ -152,14 +152,14 @@ namespace ProjektSemestrIV.DAL.Repositories
 
             var ranking = "RANK() OVER(PARTITION BY trasa.nazwa Order by dzikiePunkty.suma / przebieg.czas) ";
 
-            var getAllStagesWithAllShooters = $"select trasa.nazwa as nazwaTrasy, dzikiePunkty.strzelec_id, dzikiePunkty.suma/przebieg.czas as punktyStrzelca, {ranking} rankingGraczy "
+            var getAllStagesWithAllShooters = $"select trasa.id as trasa_id, trasa.nazwa as nazwaTrasy, dzikiePunkty.strzelec_id, dzikiePunkty.suma/przebieg.czas as punktyStrzelca, {ranking} rankingGraczy "
                                                 + $"from({rawPoints}) as dzikiePunkty "
                                                 + "inner join przebieg on przebieg.id_strzelec = dzikiePunkty.strzelec_id and przebieg.id_trasa = dzikiePunkty.trasa_id "
                                                 + "inner join trasa on trasa.id = dzikiePunkty.trasa_id "
                                                 + "order by nazwaTrasy";
 
             var getBestPlayersOnStage = $"with ranking as ({getAllStagesWithAllShooters}) "
-                                            + "select nazwaTrasy, strzelec.imie as imieStrzelca, strzelec.nazwisko as nazwiskoStrzelca, punktyStrzelca "
+                                            + "select trasa_id, nazwaTrasy, strzelec.imie as imieStrzelca, strzelec.nazwisko as nazwiskoStrzelca, punktyStrzelca "
                                             + "from ranking "
                                             + "inner join strzelec on strzelec.id = strzelec_id "
                                             + "where rankingGraczy = 1";

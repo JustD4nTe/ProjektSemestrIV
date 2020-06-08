@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"
              xmlns:local="clr-namespace:ProjektSemestrIV.Views"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <TabControl>
@@ -50,12 +51,19 @@
         </TabItem>
         <TabItem Header="{Binding Source={x:Static resx:Resources.ListStages}}">
             <DataGrid ItemsSource="{Binding Stages}" AutoGenerateColumns="False"
-                      AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True">
+                      AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
+                      SelectedItem="{Binding SelectedStage}" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StageName}}" Binding="{Binding StageName}"/>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.BestShooter}}" Binding="{Binding BestPlayer}"/>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Points}}" Binding="{Binding Points}"/>
                 </DataGrid.Columns>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding SwitchViewCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </DataGrid>
         </TabItem>
         <TabItem Header="{Binding Source={x:Static resx:Resources.ListShooters}}">
