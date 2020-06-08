@@ -7,40 +7,46 @@
              xmlns:local="clr-namespace:ProjektSemestrIV.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="{Binding Source={x:Static resx:Resources.Competition}}"/>
-            <Label Content="{Binding CompetitionLocation}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="{Binding Source={x:Static resx:Resources.StageName}}"/>
-            <Label Content="{Binding StageName}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="{Binding Source={x:Static resx:Resources.Rules}}"/>
-            <Label Content="{Binding StageRules}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="{Binding Source={x:Static resx:Resources.NumberOfTargets}}"/>
-            <Label Content="{Binding NumOfTargets}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="{Binding Source={x:Static resx:Resources.BestShooter}}"/>
-            <Label Content="{Binding BestShooter}"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal">
-            <Label Content="{Binding Source={x:Static resx:Resources.AverageTime}}"/>
-            <Label Content="{Binding AverageTime}"/>
-        </StackPanel>
-        <DataGrid x:Name="DataGridShooters" ItemsSource="{Binding Shooters}"
+    <TabControl>
+        <TabItem Header="{Binding Source={x:Static resx:Resources.Info}}">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{Binding Source={x:Static resx:Resources.Competition}}"/>
+                    <Label Content="{Binding CompetitionLocation}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{Binding Source={x:Static resx:Resources.StageName}}"/>
+                    <Label Content="{Binding StageName}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{Binding Source={x:Static resx:Resources.NumberOfTargets}}"/>
+                    <Label Content="{Binding NumOfTargets}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{Binding Source={x:Static resx:Resources.BestShooter}}"/>
+                    <Label Content="{Binding BestShooter}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{Binding Source={x:Static resx:Resources.AverageTime}}"/>
+                    <Label Content="{Binding AverageTime}"/>
+                </StackPanel>
+                <StackPanel>
+                    <Label Content="{Binding Source={x:Static resx:Resources.Rules}}"/>
+                    <Label Content="{Binding StageRules, Mode=OneWay}"/>
+                </StackPanel>
+            </StackPanel>
+        </TabItem>
+        <TabItem Header="{Binding Source={x:Static resx:Resources.StageRanking}}">
+            <DataGrid x:Name="DataGridShooters" CanUserAddRows="True"  ItemsSource="{Binding Shooters}"
             AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Position}}" Binding="{Binding Position}" Width="70"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterName}}" Binding="{Binding Name}" Width="120"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterSurname}}" Binding="{Binding Surname}" Width="120"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StagePoints}}" Binding="{Binding StagePoints}" Width="120"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.CompetitionPoints}}" Binding="{Binding CompetitionPoints}" Width="120"/>
-            </DataGrid.Columns>
-        </DataGrid>
-    </StackPanel>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Position}}" Binding="{Binding Position}" Width="70"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterName}}" Binding="{Binding Name}" Width="120"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterSurname}}" Binding="{Binding Surname}" Width="120"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StagePoints}}" Binding="{Binding StagePoints}" Width="120"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.CompetitionPoints}}" Binding="{Binding CompetitionPoints}" Width="120"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </TabItem>
+    </TabControl>
 </UserControl>

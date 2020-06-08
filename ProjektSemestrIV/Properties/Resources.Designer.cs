@@ -484,6 +484,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stage ranking.
+        /// </summary>
+        public static string StageRanking {
+            get {
+                return ResourceManager.GetString("StageRanking", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start Date.
         /// </summary>
         public static string StartDate {

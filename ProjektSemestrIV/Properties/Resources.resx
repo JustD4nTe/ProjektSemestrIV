@@ -258,6 +258,9 @@
   <data name="StagePoints" xml:space="preserve">
     <value>Stage points</value>
   </data>
+  <data name="StageRanking" xml:space="preserve">
+    <value>Stage ranking</value>
+  </data>
   <data name="StartDate" xml:space="preserve">
     <value>Start Date</value>
   </data>
