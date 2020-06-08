@@ -9,9 +9,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
 {
     class ShowSelectedShooterModel
     {
-        private readonly Shooter shooter;
-
-        public ShowSelectedShooterModel() { }
+        private Shooter shooter;
 
         public string GetShooterName() => shooter.Name;
 
