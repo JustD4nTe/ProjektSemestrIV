@@ -1,7 +1,14 @@
 ﻿namespace ProjektSemestrIV.Models
 {
-	enum ViewTypeEnum
+	public enum ViewTypeEnum
 	{
+		Configuration,
+		EditCompetitions,
+		EditStages,
+		EditShooters,
+		EditScore,
+		ShowCompetitions,
+		ShowShooters,
 		ShowSelectedCompetition
 	}
 }

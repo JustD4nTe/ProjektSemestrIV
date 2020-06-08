@@ -1,7 +1,6 @@
 ﻿using ProjektSemestrIV.Events;
 using ProjektSemestrIV.Models;
 using ProjektSemestrIV.ViewModels.BaseClass;
-using System;
 using System.Windows.Input;
 
 namespace ProjektSemestrIV.ViewModels {
@@ -20,7 +19,7 @@ namespace ProjektSemestrIV.ViewModels {
 		public ICommand UpdateFormView {
             get {
                 if(updateFormView == null) {
-                    updateFormView = new RelayCommand(ExecuteUpdateFormView, null);
+                    updateFormView = new RelayCommand(ChooseGeneralView, null);
                 }
 
                 return updateFormView;
@@ -34,37 +33,39 @@ namespace ProjektSemestrIV.ViewModels {
         {
             showCompetitionsViewModel = new ShowCompetitionsViewModel();
             showSelectedCompetitionViewModel = new ShowSelectedCompetitionViewModel();
-            showCompetitionsViewModel.SwitchView += SwitchingView;
+            showCompetitionsViewModel.SwitchView += SwitchToSubView;
         }
 
-        public void ExecuteUpdateFormView( object parameter ) {
-            switch (parameter.ToString())
+        public void ChooseGeneralView( object parameter ) {
+            switch ((ViewTypeEnum)parameter)
             {
-                case "Connection":
+                case ViewTypeEnum.Configuration:
                     SelectedViewModel = new ConnectionViewModel();
                     break;
-                case "EditCompetitions":
+                case ViewTypeEnum.EditCompetitions:
                     SelectedViewModel = new EditCompetitionsViewModel();
                     break;
-                case "EditShooters":
+                case ViewTypeEnum.EditShooters:
                     SelectedViewModel = new EditShootersViewModel();
                     break;
-                case "EditStages":
+                case ViewTypeEnum.EditStages:
                     SelectedViewModel = new EditStagesViewModel();
                     break;       
-                case "EditScore":
+                case ViewTypeEnum.EditScore:
                     SelectedViewModel = new EditScoreViewModel();
                     break;
-                case "ShowCompetitions":
+                case ViewTypeEnum.ShowCompetitions:
                     SelectedViewModel = showCompetitionsViewModel;
                     break;
-                case "ShowShooters":
+                case ViewTypeEnum.ShowShooters:
                     SelectedViewModel = new ShowShootersViewModel();
+                    break;
+                default:
                     break;
             }
         }
 
-        public void SwitchingView(object sender, SwitchViewEventArgs e)
+        public void SwitchToSubView(object sender, SwitchViewEventArgs e)
         {
             switch (e.NextView)
             {
