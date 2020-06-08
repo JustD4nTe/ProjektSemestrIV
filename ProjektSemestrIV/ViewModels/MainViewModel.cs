@@ -28,7 +28,7 @@ namespace ProjektSemestrIV.ViewModels {
             switch (parameter.ToString())
             {
                 case "Connection":
-                    SelectedViewModel = new ShowSelectedStageViewModel(1);
+                    SelectedViewModel = new ConnectionViewModel();
                     break;
                 case "EditCompetitions":
                     SelectedViewModel = new EditCompetitionsViewModel();
