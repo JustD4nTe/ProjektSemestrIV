@@ -4,15 +4,12 @@ using ProjektSemestrIV.Models.ShowModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Permissions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.Models.ComplexModels
 {
     class ShowSelectedShooterModel
     {
-        private Shooter shooter;
+        private readonly Shooter shooter;
 
         public ShowSelectedShooterModel() { }
 
@@ -32,13 +29,13 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public string GetShooterCompetitionDeltaAccuracy()
             => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionDeltaAccuracyFromDB(shooter.ID));
 
-        public List<ShooterCompetitionOverview> GetShooterCompetitions()
-            => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID);
+        public IEnumerable<ShooterCompetitionOverview> GetShooterCompetitions()
+            => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID)
+                                .Select(x => new ShooterCompetitionOverview(x.Location, x.StartDate, x.Position,x.Points));
 
         public string GetShooterGeneralAveragePosition()
             => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
-
-
+        
         public void SetNewId(uint id)
             => shooter = ShooterRepository.GetShooterByIdFromDB(id);
     }

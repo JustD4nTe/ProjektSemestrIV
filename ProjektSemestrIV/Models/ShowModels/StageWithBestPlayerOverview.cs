@@ -2,12 +2,11 @@
 {
     class StageWithBestPlayerOverview
     {
-        public string StageName { get; set; }
-        public string BestPlayer { get; set; }
-        public double Points { get; set; }
+        public string StageName { get; }
+        public string BestPlayer { get; }
+        public double Points { get; }
 
-        public StageWithBestPlayerOverview(string stageName, string playerName, 
-            string playerSurname, double playerPoints)
+        public StageWithBestPlayerOverview(string stageName, string playerName, string playerSurname, double playerPoints)
         {
             StageName = stageName;
             BestPlayer = playerName + " " + playerSurname;
