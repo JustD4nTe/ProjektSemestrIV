@@ -9,6 +9,7 @@
 		EditScore,
 		ShowCompetitions,
 		ShowShooters,
-		ShowSelectedCompetition
+		ShowSelectedCompetition,
+		ShowSelectedShooter
 	}
 }

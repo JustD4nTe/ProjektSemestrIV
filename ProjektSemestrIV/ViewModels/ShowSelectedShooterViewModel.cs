@@ -1,40 +1,43 @@
 ﻿using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
+using ProjektSemestrIV.ViewModels.BaseClass;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedShooterViewModel : BaseViewModel
+    class ShowSelectedShooterViewModel : BaseViewModel, ISubView
     {
         #region Fields and properties
-        private ShowSelectedShooterModel model;
+        private readonly ShowSelectedShooterModel model;
 
-        public string Name { get; }
+        public string Name { get; private set; }
 
-        public string Surname { get; }
+        public string Surname { get; private set; }
 
-        public string GeneralAccuracy { get; }
+        public string GeneralAccuracy { get; private set; }
 
-        public string AlphaAccuracy { get; }
+        public string AlphaAccuracy { get; private set; }
 
-        public string CharlieAccuracy { get; }
+        public string CharlieAccuracy { get; private set; }
 
-        public string DeltaAccuracy { get; }
+        public string DeltaAccuracy { get; private set; }
 
-        public string AveragePosition { get; }
+        public string AveragePosition { get; private set; }
 
-        public ObservableCollection<ShooterCompetitionOverview> Competitions { get; }
+        public ObservableCollection<ShooterCompetitionOverview> Competitions { get; private set; }
         #endregion
 
-        public ShowSelectedShooterViewModel(uint id)
+        public ShowSelectedShooterViewModel()
         {
-            model = new ShowSelectedShooterModel(id);
+            model = new ShowSelectedShooterModel();
+        }
+
+        public BaseViewModel GetView(uint id)
+        {
+            model.SetNewId(id);
+
             Name = model.GetShooterName();
             Surname = model.GetShooterSurname();
             GeneralAccuracy = model.GetShooterCompetitionGeneralAccuracy();
@@ -43,6 +46,8 @@ namespace ProjektSemestrIV.ViewModels
             DeltaAccuracy = model.GetShooterCompetitionDeltaAccuracy();
             AveragePosition = model.GetShooterGeneralAveragePosition();
             Competitions = model.GetShooterCompetitions().Convert();
+
+            return this;
         }
     }
 }

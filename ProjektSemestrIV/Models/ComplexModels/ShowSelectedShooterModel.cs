@@ -14,32 +14,32 @@ namespace ProjektSemestrIV.Models.ComplexModels
     {
         private Shooter shooter;
 
-        public ShowSelectedShooterModel(uint id)
-        {
-            shooter = ShooterRepository.GetShooterByIdFromDB(id);
-        }
+        public ShowSelectedShooterModel() { }
 
         public string GetShooterName() => shooter.Name;
 
         public string GetShooterSurname() => shooter.Surname;
 
-        public string GetShooterCompetitionGeneralAccuracy() 
+        public string GetShooterCompetitionGeneralAccuracy()
             => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionGeneralAccuracyFromDB(shooter.ID));
 
-        public string GetShooterCompetitionAlphaAccuracy() 
+        public string GetShooterCompetitionAlphaAccuracy()
             => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionAlphaAccuracyFromDB(shooter.ID));
-    
+
         public string GetShooterCompetitionCharlieAccuracy()
             => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionCharlieAccuracyFromDB(shooter.ID));
 
-        public string GetShooterCompetitionDeltaAccuracy() 
-            => String.Format("{0:P2}",ShooterRepository.GetShooterCompetitionDeltaAccuracyFromDB(shooter.ID));
+        public string GetShooterCompetitionDeltaAccuracy()
+            => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionDeltaAccuracyFromDB(shooter.ID));
 
-        public List<ShooterCompetitionOverview> GetShooterCompetitions() 
+        public List<ShooterCompetitionOverview> GetShooterCompetitions()
             => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID);
 
-        public string GetShooterGeneralAveragePosition() 
-            => String.Format("{0:N2}",ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
+        public string GetShooterGeneralAveragePosition()
+            => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
 
+
+        public void SetNewId(uint id)
+            => shooter = ShooterRepository.GetShooterByIdFromDB(id);
     }
 }

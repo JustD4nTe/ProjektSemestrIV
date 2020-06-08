@@ -28,12 +28,18 @@ namespace ProjektSemestrIV.ViewModels {
 
         private readonly BaseViewModel showCompetitionsViewModel;
         private readonly ISubView showSelectedCompetitionViewModel;
+        private readonly BaseViewModel showShootersViewModel;
+        private readonly ISubView showSelectedShooterViewModel;
 
         public MainViewModel()
         {
             showCompetitionsViewModel = new ShowCompetitionsViewModel();
             showSelectedCompetitionViewModel = new ShowSelectedCompetitionViewModel();
+            showShootersViewModel = new ShowShootersViewModel();
+            showSelectedShooterViewModel = new ShowSelectedShooterViewModel();
+
             showCompetitionsViewModel.SwitchView += SwitchToSubView;
+            showShootersViewModel.SwitchView += SwitchToSubView;
         }
 
         public void ChooseGeneralView( object parameter ) {
@@ -58,7 +64,7 @@ namespace ProjektSemestrIV.ViewModels {
                     SelectedViewModel = showCompetitionsViewModel;
                     break;
                 case ViewTypeEnum.ShowShooters:
-                    SelectedViewModel = new ShowShootersViewModel();
+                    SelectedViewModel = showShootersViewModel;
                     break;
                 default:
                     break;
@@ -71,6 +77,9 @@ namespace ProjektSemestrIV.ViewModels {
             {
                 case ViewTypeEnum.ShowSelectedCompetition:
                     SelectedViewModel = showSelectedCompetitionViewModel.GetView(e.NextViewId);
+                    break;
+                case ViewTypeEnum.ShowSelectedShooter:
+                    SelectedViewModel = showSelectedShooterViewModel.GetView(e.NextViewId);
                     break;
                 default:
                     break;
