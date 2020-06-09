@@ -138,6 +138,7 @@
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithCompetitionTime.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
     <Compile Include="Events\SwitchViewEventArgs.cs" />
+    <Compile Include="Models\ComplexModels\ShowSelectedShooterInCompetitionModel.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedStageModel.cs" />
     <Compile Include="Models\ShowModels\ShooterWithPointsOverview.cs" />
     <Compile Include="Models\ShowModels\ShooterWithStagePointsAndCompetitionPointsOverview.cs" />
@@ -153,6 +154,7 @@
     <Compile Include="Models\CompetitionModel.cs" />
     <Compile Include="Models\RunModel.cs" />
     <Compile Include="Models\ShooterModel.cs" />
+    <Compile Include="Models\ShowModels\StatsAtStageOverview.cs" />
     <Compile Include="Models\StageModel.cs" />
     <Compile Include="Models\TargetModel.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedCompetitionModel.cs" />
@@ -176,6 +178,7 @@
     <Compile Include="ViewModels\ShowCompetitionsViewModel.cs" />
     <Compile Include="ViewModels\ShowSelectedCompetitionViewModel.cs" />
     <Compile Include="ViewModels\ShowSelectedStageViewModel.cs" />
+    <Compile Include="ViewModels\ShowSelectedShooterInCompetitionViewModel.cs" />
     <Compile Include="ViewModels\ShowShootersViewModel.cs" />
     <Compile Include="ViewModels\ShowSelectedShooterViewModel.cs" />
     <Compile Include="Views\ShowSelectedCompetitionView.xaml.cs">
@@ -204,6 +207,9 @@
     </Compile>
     <Compile Include="Views\ShowSelectedStageView.xaml.cs">
       <DependentUpon>ShowSelectedStageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowSelectedShooterInCompetition.xaml.cs">
+      <DependentUpon>ShowSelectedShooterInCompetition.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShowShootersView.xaml.cs">
       <DependentUpon>ShowShootersView.xaml</DependentUpon>
@@ -253,6 +259,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShowSelectedStageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowSelectedShooterInCompetition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
