@@ -324,7 +324,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                                 summing.strzelec_nazwisko AS nazwisko,
                                 summing.suma/przebieg.czas AS sumaPunktow,
                                 summing.trasa_id AS trasaId,
-                                RANK() OVER ( PARTITION BY trasa.id Order by summing.suma/przebieg.czas ) rankingGraczy 
+                                RANK() OVER ( PARTITION BY trasa.id Order by summing.suma/przebieg.czas DESC) rankingGraczy 
                                 from (select strzelec.imie AS strzelec_imie, strzelec.nazwisko AS strzelec_nazwisko, strzelec.id as strzelec_id, trasa.id as trasa_id, (((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))) as suma 
                                     from strzelec inner join tarcza on strzelec.id=tarcza.strzelec_id 
                                     inner join trasa on tarcza.trasa_id=trasa.id        
@@ -351,25 +351,32 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static IEnumerable<ShooterWithStagePointsAndCompetitionPoints>
             GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(uint id)
         {
-            string query = $@"WITH ranking AS (SELECT 
-	                        summing.strzelec_imie AS imie,
-                            summing.strzelec_nazwisko AS nazwisko,
-                            summing.suma/przebieg.czas AS sumaPunktow,
-                            summing.trasa_id AS trasaId,
-                            (SELECT ((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra))) / przebieg.czas AS points FROM strzelec
-		                        inner join tarcza on strzelec.id=tarcza.strzelec_id 
-		                        inner join trasa on tarcza.trasa_id=trasa.id
-                                INNER JOIN przebieg ON przebieg.id_strzelec = strzelec.id AND przebieg.id_trasa = trasa.id
-                                WHERE strzelec.id = summing.strzelec_id) AS generalPoints,
-                            RANK() OVER ( PARTITION BY trasa.id Order by summing.suma/przebieg.czas DESC) rankingGraczy 
-                            from (select strzelec.imie AS strzelec_imie, strzelec.nazwisko AS strzelec_nazwisko, strzelec.id as strzelec_id, trasa.id as trasa_id, (sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)) as suma 
-                                from strzelec inner join tarcza on strzelec.id=tarcza.strzelec_id 
-                                inner join trasa on tarcza.trasa_id=trasa.id        
-                                group by strzelec.id, trasa.id) as summing
-                            inner join przebieg on przebieg.id_strzelec = summing.strzelec_id and przebieg.id_trasa = summing.trasa_id
-                            inner join trasa on trasa.id=summing.trasa_id)
-                        SELECT rankingGraczy AS position, imie AS name, nazwisko AS surname, sumaPunktow as stagePoints, generalPoints AS competitionPoints FROM ranking
-                        WHERE trasaId = {id}";
+            string query = $@"WITH punktacja as (SELECT punkty.suma/przebieg.czas AS pkt ,punkty.strzelec_imie, punkty.strzelec_nazwisko, punkty.strzelec_id, punkty.trasa_id, punkty.zawody_miejsce, punkty.zawody_rozpoczecie, punkty.zawody_id
+                            FROM (SELECT strzelec.imie AS strzelec_imie, strzelec.nazwisko AS strzelec_nazwisko, strzelec.id AS strzelec_id, trasa.id AS trasa_id, zawody.id AS zawody_id, zawody.miejsce AS zawody_miejsce, zawody.rozpoczecie AS zawody_rozpoczecie, 
+                            ((sum(alpha) * 5 + sum(charlie) * 3 + sum(delta)) - 10 * (sum(miss) + sum(`n-s`) + sum(proc) + sum(extra))) AS suma
+                            FROM strzelec
+                            INNER JOIN tarcza ON strzelec.id = tarcza.strzelec_id
+                            INNER JOIN trasa ON tarcza.trasa_id = trasa.id
+                            INNER JOIN zawody ON zawody.id = trasa.id_zawody
+                            WHERE trasa.id = trasa_id
+                            GROUP BY strzelec.id, zawody.id,trasa.id
+                            ) AS punkty
+                            INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
+                            INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
+                            SELECT subQuery.zawody_id, subQuery.trasa_id, subQuery.zawody_miejsce AS location, subQuery.strzelec_imie AS name, subQuery.strzelec_nazwisko AS surname, subQuery.position, subQuery.stagePoints, sum(compQuery.compPoints) AS competitionPoints  
+                            FROM (SELECT punktacja.strzelec_imie, punktacja.strzelec_nazwisko, punktacja.strzelec_id, punktacja.zawody_miejsce, punktacja.zawody_rozpoczecie AS startDate, sum(pkt) AS compPoints, punktacja.trasa_id, punktacja.zawody_id
+                            FROM punktacja
+                            GROUP BY strzelec_id, zawody_miejsce, zawody_rozpoczecie, trasa_id, zawody_id) as compQuery,
+                            (SELECT punktacja.strzelec_imie, punktacja.strzelec_nazwisko, punktacja.strzelec_id, punktacja.zawody_miejsce, punktacja.zawody_rozpoczecie AS startDate, RANK() OVER(ORDER BY sum(punktacja.pkt) DESC) AS position, 
+                            sum(pkt) AS stagePoints, punktacja.trasa_id, punktacja.zawody_id
+                            FROM punktacja
+                            WHERE trasa_id = {id}
+                            GROUP BY strzelec_id, zawody_miejsce, zawody_rozpoczecie, trasa_id, zawody_id) as subQuery
+                            WHERE
+                            compQuery.zawody_id = subQuery.zawody_id
+                            AND 
+                            compQuery.strzelec_id = subQuery.strzelec_id
+                            GROUP BY subQuery.zawody_id, subQuery.trasa_id,location,name,surname, subQuery.position, subQuery.stagePoints;";
             var shooters = new List<ShooterWithStagePointsAndCompetitionPoints>();
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {

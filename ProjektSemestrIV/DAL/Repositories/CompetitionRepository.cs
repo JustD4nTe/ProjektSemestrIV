@@ -150,7 +150,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             + $"where trasa.id_zawody = {competitionId} "
                             + "group by strzelec.id, trasa.id";
 
-            var ranking = "RANK() OVER(PARTITION BY trasa.nazwa Order by dzikiePunkty.suma / przebieg.czas) ";
+            var ranking = "RANK() OVER(PARTITION BY trasa.nazwa Order by dzikiePunkty.suma / przebieg.czas DESC) ";
 
             var getAllStagesWithAllShooters = $"select trasa.id as trasa_id, trasa.nazwa as nazwaTrasy, dzikiePunkty.strzelec_id, dzikiePunkty.suma/przebieg.czas as punktyStrzelca, {ranking} rankingGraczy "
                                                 + $"from({rawPoints}) as dzikiePunkty "
