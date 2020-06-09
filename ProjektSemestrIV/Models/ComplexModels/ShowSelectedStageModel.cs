@@ -28,7 +28,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public double GetAverageTime() => StageRepository.GetAverageTimeOnStageByIdFromDB(stage.ID);
 
         public IEnumerable<ShooterWithStagePointsAndCompetitionPointsOverview> GetShooters()
-            => ShooterRepository.GetShooterWithStagePointsAndCompetitionPointsByIdFromDB(stage.ID)
+            => ShooterRepository.GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(stage.ID)
                                 .Select(x => new ShooterWithStagePointsAndCompetitionPointsOverview(x.Position,
                                                                                                     x.Name,
                                                                                                     x.Surname,

@@ -108,7 +108,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                 if (reader.Read())
                 {
                     var readValue = reader["accuracy"];
-                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
+                    accuracy = readValue is DBNull ?  0.0 : (double)readValue;
                 }
                 connection.Close();
             }
@@ -202,49 +202,19 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static IEnumerable<ShooterCompetition> GetShooterAccomplishedCompetitionsFromDB(uint id)
         {
             var results = new List<ShooterCompetition>();
-            string query = $@"SELECT shooterId, location, startDate, position, points
-                            FROM (
-                            SELECT 
-                            strzelec.id AS shooterId,
-                            zawody.miejsce AS location,
-                            zawody.rozpoczecie AS startDate,
-                            RANK() OVER (ORDER BY (SELECT sum(points) AS sumOfPoints
-                            FROM (SELECT ((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))/czas AS points
-                            FROM tarcza
-                            INNER JOIN strzelec
-                            ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa
-                            ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody
-                            ON zawody.id = trasa.id_zawody
-                            INNER JOIN przebieg
-                            ON trasa.id = przebieg.id_trasa AND strzelec.id = przebieg.id_strzelec
-                            WHERE strzelec.id = shooterId
-                            GROUP BY trasa.id) AS pointsQuery) DESC) AS position,
-                            (SELECT sum(points) AS sumOfPoints
-                            FROM (SELECT ((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))/czas AS points
-                            FROM tarcza
-                            INNER JOIN strzelec
-                            ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa
-                            ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody
-                            ON zawody.id = trasa.id_zawody
-                            INNER JOIN przebieg
-                            ON trasa.id = przebieg.id_trasa AND strzelec.id = przebieg.id_strzelec
-                            WHERE strzelec.id = shooterId
-                            GROUP BY trasa.id) AS pointsQuery) AS points
-                            FROM tarcza
-                            INNER JOIN strzelec
-                            ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa
-                            ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody
-                            ON zawody.id = trasa.id_zawody
-                            INNER JOIN przebieg
-                            ON trasa.id = przebieg.id_trasa
-                            GROUP BY strzelec.id, zawody.id) AS subQuery
-                            WHERE shooterId = {id};";
+            string query = $@"WITH punktacja as (SELECT punkty.suma/przebieg.czas AS pkt , punkty.strzelec_id, punkty.trasa_id, punkty.zawody_miejsce, punkty.zawody_rozpoczecie 
+                            FROM (SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, zawody.id AS zawody_id, zawody.miejsce AS zawody_miejsce, zawody.rozpoczecie AS zawody_rozpoczecie, ((sum(alpha) * 5 + sum(charlie) * 3 + sum(delta)) - 10 * (sum(miss) + sum(`n-s`) + sum(proc) + sum(extra))) AS suma
+                            FROM strzelec
+                            INNER JOIN tarcza ON strzelec.id = tarcza.strzelec_id
+                            INNER JOIN trasa ON tarcza.trasa_id = trasa.id
+                            INNER JOIN zawody ON zawody.id = trasa.id_zawody
+                            GROUP BY strzelec.id, zawody.id,trasa.id) AS punkty
+                            INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
+                            INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
+                            SELECT * FROM (SELECT strzelec_id AS shooterId, zawody_miejsce AS location, zawody_rozpoczecie AS startDate, RANK() OVER(ORDER BY sum(punktacja.pkt) DESC) AS position, sum(punktacja.pkt) AS points 
+                            FROM punktacja
+                            GROUP BY punktacja.strzelec_id, zawody_miejsce, zawody_rozpoczecie) as subQuery
+                            WHERE shooterId = 2;";
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
@@ -265,45 +235,16 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static double GetShooterGeneralAveragePositionFromDB(uint id)
         {
-            string query = $@"SELECT AVG(position) AS averagePosition
-                            FROM (
-                            SELECT 
-                            strzelec.id AS shooterId,
-                            RANK() OVER (ORDER BY (SELECT sum(points) AS sumOfPoints
-                            FROM (SELECT ((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))/czas AS points
-                            FROM tarcza
-                            INNER JOIN strzelec
-                            ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa
-                            ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody
-                            ON zawody.id = trasa.id_zawody
-                            INNER JOIN przebieg
-                            ON trasa.id = przebieg.id_trasa AND strzelec.id = przebieg.id_strzelec
-                            WHERE strzelec.id = shooterId
-                            GROUP BY trasa.id) AS pointsQuery) DESC) AS position,
-                            (SELECT sum(points) AS sumOfPoints
-                            FROM (SELECT ((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))/czas AS points
-                            FROM tarcza
-                            INNER JOIN strzelec
-                            ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa
-                            ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody
-                            ON zawody.id = trasa.id_zawody
-                            INNER JOIN przebieg
-                            ON trasa.id = przebieg.id_trasa AND strzelec.id = przebieg.id_strzelec
-                            WHERE strzelec.id = shooterId
-                            GROUP BY trasa.id) AS pointsQuery) AS points
-                            FROM tarcza
-                            INNER JOIN strzelec
-                            ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa
-                            ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody
-                            ON zawody.id = trasa.id_zawody
-                            GROUP BY strzelec.id) AS subQuery
-                            WHERE  shooterId = {id}";
+            string query = $@"WITH ranking as (SELECT RANK() OVER(ORDER BY punkty.suma/przebieg.czas DESC) AS positions, punkty.suma/przebieg.czas AS pkt , punkty.strzelec_id
+                            FROM (SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, ((sum(alpha) * 5 + sum(charlie) * 3 + sum(delta)) - 10 * (sum(miss) + sum(`n-s`) + sum(proc) + sum(extra))) AS suma
+                            FROM strzelec
+                            INNER JOIN tarcza ON strzelec.id = tarcza.strzelec_id
+                            INNER JOIN trasa ON tarcza.trasa_id = trasa.id
+                            GROUP BY strzelec.id, trasa.id) as punkty
+                            INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
+                            INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
+                            SELECT avg(ranking.positions) AS averagePosition FROM ranking
+                            WHERE strzelec_id = {id};";
             double position = 0;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
@@ -408,7 +349,7 @@ namespace ProjektSemestrIV.DAL.Repositories
         }
 
         public static IEnumerable<ShooterWithStagePointsAndCompetitionPoints>
-            GetShooterWithStagePointsAndCompetitionPointsByIdFromDB(uint id)
+            GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(uint id)
         {
             string query = $@"WITH ranking AS (SELECT 
 	                        summing.strzelec_imie AS imie,
