@@ -94,7 +94,7 @@
                 SelectedIndex="{Binding SelectedCompetitionIndex, Mode=OneWayToSource}">
 
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding Id}"/>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Location}}" Binding="{Binding Location}"/>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StartDate}}" Binding="{Binding StartDate}"/>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.EndDate}}" Binding="{Binding EndDate}"/>
