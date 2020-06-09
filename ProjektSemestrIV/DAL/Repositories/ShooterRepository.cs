@@ -90,7 +90,7 @@ namespace ProjektSemestrIV.DAL.Repositories
         #region Auxiliary queries
         public static double GetShooterCompetitionGeneralAccuracyFromDB(uint id)
         {
-            string query = $@"SELECT (sum(alpha)+sum(charlie)+sum(delta)+sum(extra))/(sum(alpha)+sum(charlie)+sum(delta)+sum(miss)+sum('n-s')+sum(extra)) AS accuracy
+            string query = $@"SELECT cast((sum(alpha)+sum(charlie)+sum(delta)+sum(extra))/(sum(alpha)+sum(charlie)+sum(delta)+sum(miss)+sum('n-s')+sum(extra)) AS DECIMAL(10,9)) AS accuracy
                              FROM tarcza
                              INNER JOIN strzelec
                              ON strzelec.id = tarcza.strzelec_id
@@ -108,7 +108,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                 if (reader.Read())
                 {
                     var readValue = reader["accuracy"];
-                    accuracy = readValue is DBNull ?  0.0 : (double)readValue;
+                    accuracy = readValue is DBNull ?  0.0 : decimal.ToDouble((decimal)readValue);
                 }
                 connection.Close();
             }
@@ -117,7 +117,7 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static double GetShooterCompetitionAlphaAccuracyFromDB(uint id)
         {
-            string query = $@"SELECT sum(alpha)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS accuracy
+            string query = $@"SELECT cast(sum(alpha)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS DECIMAL(10,9)) AS accuracy
                              FROM tarcza
                              INNER JOIN strzelec
                              ON strzelec.id = tarcza.strzelec_id
@@ -145,7 +145,7 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static double GetShooterCompetitionCharlieAccuracyFromDB(uint id)
         {
-            string query = $@"SELECT sum(charlie)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS accuracy
+            string query = $@"SELECT cast(sum(charlie)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS DECIMAL(10,9)) AS accuracy
                              FROM tarcza
                              INNER JOIN strzelec
                              ON strzelec.id = tarcza.strzelec_id
@@ -173,7 +173,7 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static double GetShooterCompetitionDeltaAccuracyFromDB(uint id)
         {
-            string query = $@"SELECT sum(delta)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS accuracy
+            string query = $@"SELECT cast(sum(delta)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS DECIMAL(10,9)) AS accuracy
                             FROM tarcza
                             INNER JOIN strzelec
                             ON strzelec.id = tarcza.strzelec_id
@@ -214,7 +214,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             SELECT * FROM (SELECT strzelec_id AS shooterId, zawody_miejsce AS location, zawody_rozpoczecie AS startDate, RANK() OVER(ORDER BY sum(punktacja.pkt) DESC) AS position, sum(punktacja.pkt) AS points 
                             FROM punktacja
                             GROUP BY punktacja.strzelec_id, zawody_miejsce, zawody_rozpoczecie) as subQuery
-                            WHERE shooterId = 2;";
+                            WHERE shooterId = {id};";
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
@@ -391,8 +391,6 @@ namespace ProjektSemestrIV.DAL.Repositories
                                                                                 reader.GetDouble("competitionPoints")));
                 connection.Close();
             }
-            foreach (var shooter in shooters)
-                Console.WriteLine(shooter.Name + shooter.Surname);
             return shooters;
         }
         #endregion
