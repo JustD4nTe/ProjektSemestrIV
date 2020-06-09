@@ -264,19 +264,14 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static double GetShooterGeneralSumOfPointsFromDB(uint id)
         {
-            string query = $@"SELECT sum(points) AS sumOfPoints
-                            FROM (SELECT ((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))/czas AS points
-                            FROM tarcza
-                            INNER JOIN strzelec
-                            ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa
-                            ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody
-                            ON zawody.id = trasa.id_zawody
-                            INNER JOIN przebieg
-                            ON trasa.id = przebieg.id_trasa AND strzelec.id = przebieg.id_strzelec
-                            WHERE strzelec.id = {id}
-                            GROUP BY trasa.id) AS subQuery;";
+            string query = $@"SELECT sum(subQuery.points/przebieg.czas) AS sumOfPoints
+                            FROM (SELECT trasa.id as trasa_id, strzelec.id as strzelec_id, ((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra))) AS points
+                                FROM tarcza INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
+                                INNER JOIN trasa ON trasa.id = tarcza.trasa_id
+                                INNER JOIN zawody ON zawody.id = trasa.id_zawody
+                                WHERE strzelec.id = {id}
+                                GROUP BY trasa.id) AS subQuery
+                            inner join przebieg on przebieg.id_trasa=subQuery.trasa_id and przebieg.id_strzelec=subQuery.strzelec_id;";
             double points = 0;
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {

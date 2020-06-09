@@ -502,6 +502,24 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Sum of points.
+        /// </summary>
+        public static string SumOfPoints {
+            get {
+                return ResourceManager.GetString("SumOfPoints", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sum of times.
+        /// </summary>
+        public static string SumOfTimes {
+            get {
+                return ResourceManager.GetString("SumOfTimes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User.
         /// </summary>
         public static string User {
