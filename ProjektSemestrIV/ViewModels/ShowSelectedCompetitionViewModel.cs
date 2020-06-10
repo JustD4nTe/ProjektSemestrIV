@@ -13,27 +13,35 @@ namespace ProjektSemestrIV.ViewModels
     {
         private readonly ShowSelectedCompetitionModel model;
 
+        public uint Id { get; private set; }
+
         public string DurationDate { get; private set; }
         public string Location { get; private set; }
         public uint ShootersCount { get; private set; }
         public string FastestShooter { get; private set; }
         public string Podium { get; private set; }
+
         public ObservableCollection<StageWithBestPlayerOverview> Stages { get; private set; }
         public ObservableCollection<ShooterWithPointsOverview> Shooters { get; private set; }
 
         public StageWithBestPlayerOverview SelectedStage { get; set; }
+        public ShooterWithPointsOverview SelectedShooter { get; set; }
 
-        public ICommand SwitchViewCommand { get; }
+        public ICommand SwitchViewToStageCommand { get; }
+        public ICommand SwitchViewToShooterCommand { get; }
 
         public ShowSelectedCompetitionViewModel()
         {
             model = new ShowSelectedCompetitionModel();
-            SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => SelectedStage != null);
+            SwitchViewToStageCommand = new RelayCommand(x => OnSwitchViewToStage(), x => SelectedStage != null);
+            SwitchViewToShooterCommand = new RelayCommand(x => OnSwitchViewToShooter(), x => SelectedShooter != null);
         }
 
         public override IBaseViewModel GetViewModel(params uint[] id)
         {
             model.SetNewId(id[0]);
+
+            Id = id[0];
 
             DurationDate = model.GetDurationDate();
             Location = model.GetLocation();
@@ -47,9 +55,14 @@ namespace ProjektSemestrIV.ViewModels
             return this;
         }
 
-        private void OnSwitchView()
+        private void OnSwitchViewToStage()
         => SwitchView(this, new SwitchViewEventArgs(
                                     ViewTypeEnum.ShowSelectedStage,
                                     SelectedStage.Id));
+
+        private void OnSwitchViewToShooter()
+        => SwitchView(this, new SwitchViewEventArgs(
+                                    ViewTypeEnum.ShowSelectedShooterInCompetition,
+                                    SelectedShooter.Id));
     }
 }

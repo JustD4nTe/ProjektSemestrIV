@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"
              xmlns:local="clr-namespace:ProjektSemestrIV.Views"
+             xmlns:viewType="clr-namespace:ProjektSemestrIV.Models"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -42,7 +43,7 @@
                        Content="{Binding Source={x:Static resx:Resources.FastestRun}}"/>
                 <Label Grid.Row="3" Grid.Column="1"
                        Content="{Binding FastestShooter, Mode=OneWay}"/>
-                
+
                 <Label Grid.Row="4" Grid.Column="0"
                        Content="{Binding Source={x:Static resx:Resources.Podium}}"/>
                 <Label Grid.Row="4" Grid.Column="1"
@@ -61,19 +62,26 @@
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
-                        <i:InvokeCommandAction Command="{Binding SwitchViewCommand}"/>
+                        <i:InvokeCommandAction Command="{Binding SwitchViewToStageCommand}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
             </DataGrid>
         </TabItem>
         <TabItem Header="{Binding Source={x:Static resx:Resources.ListShooters}}">
             <DataGrid ItemsSource="{Binding Shooters}" AutoGenerateColumns="False"
-                      AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True">
+                      AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
+                      SelectedItem="{Binding SelectedShooter}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterName}}" Binding="{Binding Name}"/>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterSurname}}" Binding="{Binding Surname}"/>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Points}}" Binding="{Binding Points}"/>
                 </DataGrid.Columns>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding SwitchViewToShooterCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </DataGrid>
         </TabItem>
     </TabControl>
