@@ -765,7 +765,7 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static IEnumerable<ShooterStatsOnStage> GetShooterStatsOnStages(uint shooterId, uint competitionId)
         {
-            string query = $@"SELECT trasa.nazwa as nazwaTrasy, subQuery.points as punkty, przebieg.czas, subQuery.points/przebieg.czas as punktyNaTrasie
+            string query = $@"SELECT trasa.id as trasaId, trasa.nazwa as nazwaTrasy, subQuery.points as punkty, przebieg.czas, subQuery.points/przebieg.czas as punktyNaTrasie
                                 FROM (SELECT trasa.id as trasa_id, strzelec.id as strzelec_id, ((sum(alpha) * 5 + sum(charlie) * 3 + sum(delta)) - 10 * (sum(miss) + sum(tarcza.`n-s`) + sum(proc) + sum(extra))) AS points 
                                 FROM tarcza INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id 
                                 INNER JOIN trasa ON trasa.id = tarcza.trasa_id 

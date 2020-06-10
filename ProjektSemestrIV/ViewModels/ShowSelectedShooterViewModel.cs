@@ -55,6 +55,6 @@ namespace ProjektSemestrIV.ViewModels
         }
 
         public void OnSwitchView()
-        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(Id, SelectedCompetition.CompetitionId));
+        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(navigation, Id, SelectedCompetition.CompetitionId));
     }
 }

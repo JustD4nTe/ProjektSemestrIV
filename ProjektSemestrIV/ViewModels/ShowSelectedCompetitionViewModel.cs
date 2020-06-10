@@ -53,6 +53,6 @@ namespace ProjektSemestrIV.ViewModels
         => navigation.Navigate(new ShowSelectedStageViewModel(navigation, SelectedStage.Id));
 
         private void OnSwitchViewToShooter()
-        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(SelectedShooter.Id, Id));
+        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(navigation, SelectedShooter.Id, Id));
     }
 }

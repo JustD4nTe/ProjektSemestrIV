@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
@@ -59,13 +60,20 @@
             </StackPanel>
         </Grid>
         <DataGrid x:Name="DataGridCompetitions" ItemsSource="{Binding StageStats}" Grid.Row="1"
-            AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False">
+                  AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedStage}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StageName}}" Binding="{Binding StageName}" Width="100"/>
                 <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StagePoints}}" Binding="{Binding StagePoints}" Width="150"/>
                 <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Time}}" Binding="{Binding Time}" Width="150"/>
                 <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Points}}" Binding="{Binding Points}" Width="150"/>
             </DataGrid.Columns>
+            
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding SwitchViewCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
         </DataGrid>
     </Grid>
 </Page>

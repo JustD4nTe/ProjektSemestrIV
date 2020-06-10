@@ -1,12 +1,17 @@
 ﻿using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace ProjektSemestrIV.ViewModels
 {
     class ShowSelectedShooterInCompetitionViewModel 
     {
         private readonly ShowSelectedShooterInCompetitionModel model;
+        private readonly NavigationService navigation;
+        private readonly uint shooterId;
 
         public string ShooterName { get;  }
         public string CompetitionName { get; }
@@ -21,9 +26,16 @@ namespace ProjektSemestrIV.ViewModels
 
         public ObservableCollection<StatsAtStageOverview> StageStats { get; }
 
-        public ShowSelectedShooterInCompetitionViewModel(uint shooterId, uint competitionId)
+        public StatsAtStageOverview SelectedStage { get; set; }
+
+        public ICommand SwitchViewCommand { get; }
+
+        public ShowSelectedShooterInCompetitionViewModel(NavigationService _navigation, uint _shooterId, uint _competitionId)
         {
-            model = new ShowSelectedShooterInCompetitionModel(shooterId, competitionId);
+            navigation = _navigation;
+            shooterId = _shooterId;
+
+            model = new ShowSelectedShooterInCompetitionModel(_shooterId, _competitionId);
 
             ShooterName = model.GetShooterName();
             CompetitionName = model.GetCompetitionName();
@@ -37,6 +49,12 @@ namespace ProjektSemestrIV.ViewModels
             DeltaAccuracy = model.GetDeltaAccuracy();
 
             StageStats = model.GetShooterStatsOnStages();
+
+            SwitchViewCommand = new RelayCommand(x => OnSwitchView(), 
+                                                 x => SelectedStage != null);
         }
+
+        private void OnSwitchView()
+        => navigation.Navigate(new ShowShooterOnStageViewModel(shooterId, SelectedStage.StageId));
     }
 }
