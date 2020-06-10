@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Entities.AuxiliaryEntities;
 using ProjektSemestrIV.Models.ShowModels;
@@ -213,8 +213,9 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
                             SELECT * FROM (SELECT strzelec_id AS shooterId, zawody_miejsce AS location, zawody_rozpoczecie AS startDate, RANK() OVER(ORDER BY sum(punktacja.pkt) DESC) AS position, sum(punktacja.pkt) AS points 
                             FROM punktacja
-                            GROUP BY punktacja.strzelec_id, zawody_miejsce, zawody_rozpoczecie) as subQuery
-                            WHERE shooterId = 2;";
+                            GROUP BY punktacja.strzelec_id, zawody_id) as subQuery
+                            WHERE shooterId = {id};";
+
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
