@@ -17,6 +17,14 @@
             <Label Content="{Binding Surname}"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.SumOfPoints}}"/>
+            <Label Content="{Binding SumOfPoints}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.SumOfTimes}}"/>
+            <Label Content="{Binding SumOfTimes}"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.GeneralAccuracy}}"/>
             <Label Content="{Binding GeneralAccuracy}"/>
         </StackPanel>

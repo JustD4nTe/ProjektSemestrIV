@@ -33,7 +33,14 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public string GetShooterGeneralAveragePosition()
             => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
-        
+
+        public string GetShooterGeneralSumOfPoints()
+            => String.Format("{0:N3}", ShooterRepository.GetShooterGeneralSumOfPointsFromDB(shooter.ID));
+
+        public string GetShooterGeneralSumOfTimes()
+            => TimeSpan.FromSeconds(ShooterRepository.GetShooterGeneralSumOfTimesFromDB(shooter.ID))
+                       .ToString(@"hh\h\:mm\m\:ss\s\:fff\m\s");
+
         public void SetNewId(uint id)
             => shooter = ShooterRepository.GetShooterByIdFromDB(id);
     }

@@ -270,6 +270,12 @@
   <data name="Time" xml:space="preserve">
     <value>Time</value>
   </data>
+  <data name="SumOfPoints" xml:space="preserve">
+    <value>Sum of points</value>
+  </data>
+  <data name="SumOfTimes" xml:space="preserve">
+    <value>Sum of times</value>
+  </data>
   <data name="User" xml:space="preserve">
     <value>User</value>
   </data>

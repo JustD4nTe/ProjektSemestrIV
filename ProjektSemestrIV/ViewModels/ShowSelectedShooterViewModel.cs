@@ -21,6 +21,10 @@ namespace ProjektSemestrIV.ViewModels
 
         public string Surname { get; private set; }
 
+        public string SumOfPoints { get; private set; }
+
+        public string SumOfTimes { get; private set; }
+
         public string GeneralAccuracy { get; private set; }
 
         public string AlphaAccuracy { get; private set; }
@@ -53,6 +57,8 @@ namespace ProjektSemestrIV.ViewModels
 
             Name = model.GetShooterName();
             Surname = model.GetShooterSurname();
+            SumOfPoints = model.GetShooterGeneralSumOfPoints();
+            SumOfTimes = model.GetShooterGeneralSumOfTimes();
             GeneralAccuracy = model.GetShooterCompetitionGeneralAccuracy();
             AlphaAccuracy = model.GetShooterCompetitionAlphaAccuracy();
             CharlieAccuracy = model.GetShooterCompetitionCharlieAccuracy();
