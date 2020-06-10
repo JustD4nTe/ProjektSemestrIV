@@ -139,6 +139,7 @@
     <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
     <Compile Include="Events\SwitchViewEventArgs.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedStageModel.cs" />
+    <Compile Include="Models\ComplexModels\ShowShooterOnStageModel.cs" />
     <Compile Include="Models\ShowModels\ShooterWithPointsOverview.cs" />
     <Compile Include="Models\ShowModels\ShooterWithStagePointsAndCompetitionPointsOverview.cs" />
     <Compile Include="Models\ShowModels\StageWithBestPlayerOverview.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="ViewModels\ShowCompetitionsViewModel.cs" />
     <Compile Include="ViewModels\ShowSelectedCompetitionViewModel.cs" />
     <Compile Include="ViewModels\ShowSelectedStageViewModel.cs" />
+    <Compile Include="ViewModels\ShowShooterOnStageViewModel.cs" />
     <Compile Include="ViewModels\ShowShootersViewModel.cs" />
     <Compile Include="ViewModels\ShowSelectedShooterViewModel.cs" />
     <Compile Include="Views\ShowSelectedCompetitionView.xaml.cs">
@@ -204,6 +206,9 @@
     </Compile>
     <Compile Include="Views\ShowSelectedStageView.xaml.cs">
       <DependentUpon>ShowSelectedStageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowShooterOnStageView.xaml.cs">
+      <DependentUpon>ShowShooterOnStageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShowShootersView.xaml.cs">
       <DependentUpon>ShowShootersView.xaml</DependentUpon>
@@ -253,6 +258,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShowSelectedStageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowShooterOnStageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

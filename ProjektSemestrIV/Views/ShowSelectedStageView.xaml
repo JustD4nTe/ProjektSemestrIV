@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:ProjektSemestrIV.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
@@ -38,7 +39,8 @@
         </TabItem>
         <TabItem Header="{Binding Source={x:Static resx:Resources.StageRanking}}">
             <DataGrid x:Name="DataGridShooters" CanUserAddRows="True"  ItemsSource="{Binding Shooters}"
-            AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False">
+            AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False"
+            SelectedItem="{Binding SelectedShooter}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Position}}" Binding="{Binding Position}" Width="70"/>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterName}}" Binding="{Binding Name}" Width="120"/>
@@ -46,6 +48,12 @@
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StagePoints}}" Binding="{Binding StagePoints}" Width="120"/>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.CompetitionPoints}}" Binding="{Binding CompetitionPoints}" Width="120"/>
                 </DataGrid.Columns>
+
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseDoubleClick">
+                        <i:InvokeCommandAction Command="{Binding SwitchViewCommand}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
             </DataGrid>
         </TabItem>
     </TabControl>
