@@ -1,45 +1,28 @@
-﻿using ProjektSemestrIV.Extensions;
-using ProjektSemestrIV.Models.ComplexModels;
-using ProjektSemestrIV.Models.ShowModels;
-using ProjektSemestrIV.ViewModels.BaseClass;
-using System;
-using System.Collections.ObjectModel;
+﻿using ProjektSemestrIV.Models.ComplexModels;
 
-namespace ProjektSemestrIV.ViewModels {
-    class ShowShooterOnStageViewModel : SwitchViewModel {
+namespace ProjektSemestrIV.ViewModels
+{
+    class ShowShooterOnStageViewModel
+    {
         #region Fields and properties
         private readonly ShowShooterOnStageModel model;
 
-        public string Name { get; private set; }
-
-        public string Surname { get; private set; }
-
-        public string Competition { get; private set; }
-
-        public string StageName { get; private set; }
-
-        public string SumOfPoints { get; private set; }
-
-        public string Time { get; private set; }
-
-        public string GeneralAccuracy { get; private set; }
-
-        public string AlphaAccuracy { get; private set; }
-
-        public string CharlieAccuracy { get; private set; }
-
-        public string DeltaAccuracy { get; private set; }
-
-        public uint Position { get; private set; }
+        public string Name { get; }
+        public string Surname { get; }
+        public string Competition { get; }
+        public string StageName { get; }
+        public string SumOfPoints { get; }
+        public string Time { get; }
+        public string GeneralAccuracy { get; }
+        public string AlphaAccuracy { get; }
+        public string CharlieAccuracy { get; }
+        public string DeltaAccuracy { get; }
+        public uint Position { get; }
         #endregion
 
-        public ShowShooterOnStageViewModel() {
-            model = new ShowShooterOnStageModel();
-        }
-
-        public override IBaseViewModel GetViewModel( params uint[] id ) {
-            model.SetNewShooterId(id[0]);
-            model.SetNewStageId(id[1]);
+        public ShowShooterOnStageViewModel(uint shooterId, uint stageId)
+        {
+            model = new ShowShooterOnStageModel(shooterId, stageId);
 
             Name = model.GetShooterName();
             Surname = model.GetShooterSurname();
@@ -52,8 +35,6 @@ namespace ProjektSemestrIV.ViewModels {
             CharlieAccuracy = model.GetShooterOnStageCharlieAccuracy();
             DeltaAccuracy = model.GetShooterOnStageDeltaAccuracy();
             Position = model.GetShooterOnStagePosition();
-
-            return this;
         }
     }
 }

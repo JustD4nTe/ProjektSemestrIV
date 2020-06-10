@@ -1,10 +1,9 @@
-﻿using ProjektSemestrIV.ViewModels.BaseClass;
-using System;
+﻿using System;
 using System.ComponentModel;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    abstract class BaseViewModel : INotifyPropertyChanged, IBaseViewModel
+    abstract class BaseViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

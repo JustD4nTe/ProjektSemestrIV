@@ -18,7 +18,7 @@ namespace ProjektSemestrIV.Views
     /// <summary>
     /// Interaction logic for SelectedShooterView.xaml
     /// </summary>
-    public partial class SelectedShooterView : UserControl
+    public partial class SelectedShooterView : Page
     {
         public SelectedShooterView()
         {

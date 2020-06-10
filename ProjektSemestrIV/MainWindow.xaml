@@ -44,7 +44,9 @@
             <Button Content="{Binding Source={x:Static resx:Resources.ListShooters}}"
                     Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.ShowShooters}"/>
         </StackPanel>
-        
-        <ContentControl Grid.Row="0" Grid.Column="1" Content="{Binding SelectedViewModel}"/>
+
+        <DockPanel Grid.Row="0" Grid.Column="1">
+            <Frame x:Name="MainFrame"/>
+        </DockPanel>
     </Grid>
 </Window>

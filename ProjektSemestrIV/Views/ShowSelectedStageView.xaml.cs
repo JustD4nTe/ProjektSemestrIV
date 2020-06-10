@@ -18,7 +18,7 @@ namespace ProjektSemestrIV.Views
     /// <summary>
     /// Interaction logic for ShowSelectedStageView.xaml
     /// </summary>
-    public partial class ShowSelectedStageView : UserControl
+    public partial class ShowSelectedStageView : Page
     {
         public ShowSelectedStageView()
         {
