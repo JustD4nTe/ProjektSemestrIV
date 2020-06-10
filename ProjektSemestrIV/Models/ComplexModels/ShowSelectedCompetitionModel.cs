@@ -41,7 +41,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public IEnumerable<ShooterWithPointsOverview> GetShootersFromCompetition()
         => CompetitionRepository.GetShootersWithPointsFromStage(competition.Id)
-                                .Select(x => new ShooterWithPointsOverview(x.Name, x.Surname, x.Points));
+                                .Select(x => new ShooterWithPointsOverview(x.Id, x.Name, x.Surname, x.Points));
 
         public IEnumerable<StageWithBestPlayerOverview> GetStageWithBestShooters()
         => CompetitionRepository.GetStagesWithBestShooter(competition.Id)

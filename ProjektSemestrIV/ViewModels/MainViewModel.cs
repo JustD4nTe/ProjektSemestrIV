@@ -32,6 +32,7 @@ namespace ProjektSemestrIV.ViewModels {
         private readonly ISwitchViewModel showShootersViewModel;
         private readonly ISwitchViewModel showSelectedShooterViewModel;
         private readonly ISwitchViewModel showSelectedStageViewModel;
+        private readonly ISwitchViewModel showSelectedShooterInCompetitionViewModel;
 
         public MainViewModel()
         {
@@ -40,10 +41,12 @@ namespace ProjektSemestrIV.ViewModels {
             showShootersViewModel = new ShowShootersViewModel();
             showSelectedShooterViewModel = new ShowSelectedShooterViewModel();
             showSelectedStageViewModel = new ShowSelectedStageViewModel();
+            showSelectedShooterInCompetitionViewModel = new ShowSelectedShooterInCompetitionViewModel();
 
             showCompetitionsViewModel.SwitchView += SwitchToSubView;
             showSelectedCompetitionViewModel.SwitchView += SwitchToSubView;
             showShootersViewModel.SwitchView += SwitchToSubView;
+            showSelectedShooterViewModel.SwitchView += SwitchToSubView;
         }
 
         public void ChooseGeneralView( object parameter ) {
@@ -87,6 +90,18 @@ namespace ProjektSemestrIV.ViewModels {
                     break;
                 case ViewTypeEnum.ShowSelectedStage:
                     SelectedViewModel = showSelectedStageViewModel.GetViewModel(e.NextViewId);
+                    break;
+                case ViewTypeEnum.ShowSelectedShooterInCompetition:
+                    if(sender is ShowSelectedCompetitionViewModel)
+                    {
+                        var selectedCompetition = sender as ShowSelectedCompetitionViewModel;
+                        SelectedViewModel = showSelectedShooterInCompetitionViewModel.GetViewModel(e.NextViewId, selectedCompetition.Id);
+                    }
+                    if(sender is ShowSelectedShooterViewModel)
+                    {
+                        var SelectedShooter = sender as ShowSelectedShooterViewModel;
+                        SelectedViewModel = showSelectedShooterInCompetitionViewModel.GetViewModel(SelectedShooter.Id, e.NextViewId);
+                    }
                     break;
                 default:
                     break;
