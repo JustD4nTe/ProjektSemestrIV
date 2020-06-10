@@ -12,6 +12,7 @@
 		ShowSelectedCompetition,
 		ShowSelectedShooter,
 		ShowSelectedStage,
-		ShowShooterOnStage
+		ShowShooterOnStage,
+		ShowSelectedShooterInCompetition
 	}
 }

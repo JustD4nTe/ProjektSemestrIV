@@ -39,5 +39,9 @@
         <DataTemplate DataType="{x:Type viewmodels:ShowShootersViewModel}">
             <views:ShowShootersView/>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewmodels:ShowSelectedShooterInCompetitionViewModel}">
+            <views:ShowSelectedShooterInCompetition/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

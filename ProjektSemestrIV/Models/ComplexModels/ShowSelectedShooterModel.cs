@@ -29,7 +29,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public IEnumerable<ShooterCompetitionOverview> GetShooterCompetitions()
             => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID)
-                                .Select(x => new ShooterCompetitionOverview(x.Location, x.StartDate, x.Position,x.Points));
+                                .Select(x => new ShooterCompetitionOverview(x.CompetitionId, x.Location, x.StartDate, x.Position,x.Points));
 
         public string GetShooterGeneralAveragePosition()
             => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
