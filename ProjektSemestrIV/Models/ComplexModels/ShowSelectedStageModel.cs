@@ -29,7 +29,8 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public IEnumerable<ShooterWithStagePointsAndCompetitionPointsOverview> GetShooters()
             => ShooterRepository.GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(stage.ID)
-                                .Select(x => new ShooterWithStagePointsAndCompetitionPointsOverview(x.Position,
+                                .Select(x => new ShooterWithStagePointsAndCompetitionPointsOverview(x.Id,
+                                                                                                    x.Position,
                                                                                                     x.Name,
                                                                                                     x.Surname,
                                                                                                     x.StagePoints,

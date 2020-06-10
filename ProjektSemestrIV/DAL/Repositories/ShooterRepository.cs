@@ -115,6 +115,24 @@ namespace ProjektSemestrIV.DAL.Repositories
             return accuracy;
         }
 
+        public static double GetShooterOnStageGeneralAccuracyFromDB( uint ShooterId , uint StageId ) {
+            string query = $@"SELECT cast((sum(alpha)+sum(charlie)+sum(delta)+sum(extra))/(sum(alpha)+sum(charlie)+sum(delta)+sum(miss)+sum('n-s')+sum(extra)) AS DECIMAL(10,9)) AS accuracy
+                              FROM tarcza
+                              WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
+            double accuracy = 0;
+            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if(reader.Read()) {
+                    var readValue = reader["accuracy"];
+                    accuracy = readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
+                }
+                connection.Close();
+            }
+            return accuracy;
+        }
+
         public static double GetShooterCompetitionAlphaAccuracyFromDB(uint id)
         {
             string query = $@"SELECT cast(sum(alpha)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS DECIMAL(10,9)) AS accuracy
@@ -135,6 +153,26 @@ namespace ProjektSemestrIV.DAL.Repositories
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
+                    var readValue = reader["accuracy"];
+                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
+                }
+                connection.Close();
+            }
+            return accuracy;
+        }
+
+        public static double GetShooterOnStageAlphaAccuracyFromDB( uint ShooterId, uint StageId )
+        {
+            string query = $@"SELECT cast(sum(alpha)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS DECIMAL(10,9)) AS accuracy
+                             FROM tarcza
+                             WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
+            double accuracy = 0;
+            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if(reader.Read()) {
                     var readValue = reader["accuracy"];
                     accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
                 }
@@ -171,6 +209,25 @@ namespace ProjektSemestrIV.DAL.Repositories
             return accuracy;
         }
 
+        public static double GetShooterOnStageCharlieAccuracyFromDB( uint ShooterId, uint StageId ) {
+            string query = $@"SELECT cast(sum(charlie)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS DECIMAL(10,9)) AS accuracy
+                             FROM tarcza
+                             WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
+            double accuracy = 0;
+            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if(reader.Read()) {
+                    var readValue = reader["accuracy"];
+                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
+                }
+                connection.Close();
+            }
+            return accuracy;
+        }
+
         public static double GetShooterCompetitionDeltaAccuracyFromDB(uint id)
         {
             string query = $@"SELECT cast(sum(delta)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS DECIMAL(10,9)) AS accuracy
@@ -191,6 +248,25 @@ namespace ProjektSemestrIV.DAL.Repositories
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                 {
+                    var readValue = reader["accuracy"];
+                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
+                }
+                connection.Close();
+            }
+            return accuracy;
+        }
+
+        public static double GetShooterOnStageDeltaAccuracyFromDB( uint ShooterId, uint StageId ) {
+            string query = $@"SELECT cast(sum(delta)/(sum(alpha)+sum(charlie)+sum(delta)+sum(extra)) AS DECIMAL(10,9)) AS accuracy
+                            FROM tarcza
+                            WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
+            double accuracy = 0;
+            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if(reader.Read()) {
                     var readValue = reader["accuracy"];
                     accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
                 }
@@ -259,6 +335,31 @@ namespace ProjektSemestrIV.DAL.Repositories
             return position;
         }
 
+        public static uint GetShooterOnStagePosition( uint ShooterId, uint StageId ) {
+            string query = $@"SELECT strzelec_id, trasa_id, (sum(alpha)*5+sum(charlie)*3+sum(delta)-10*(sum(miss)+sum(`n-s`)+sum(proc)+sum(extra)))/(SELECT czas FROM przebieg WHERE id_strzelec=strzelec_id and id_trasa=trasa_id) as points
+                              FROM tarcza
+                              WHERE trasa_id = {StageId}
+                              GROUP BY strzelec_id, trasa_id
+                              ORDER BY points DESC;";
+            uint position = 0;
+            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                while(reader.Read()) {
+                    position++;
+                    var shooter_id = UInt32.Parse(reader["strzelec_id"].ToString());
+                    var stage_id = UInt32.Parse(reader["trasa_id"].ToString());
+                    if(shooter_id == ShooterId) {
+                        break;
+                    }
+                }
+                connection.Close();
+            }
+            return position;
+        }
+
         public static double GetShooterGeneralSumOfPointsFromDB(uint id)
         {
             string query = $@"SELECT sum(subQuery.points/przebieg.czas) AS sumOfPoints
@@ -277,6 +378,23 @@ namespace ProjektSemestrIV.DAL.Repositories
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                     points = reader.GetDouble("sumOfPoints");
+                connection.Close();
+            }
+            return points;
+        }
+
+        public static double GetShooterOnStageSumOfPointsFromDB( uint ShooterId, uint StageId ) {
+            string query = $@"SELECT (sum(alpha)*5+sum(charlie)*3+sum(delta)-10*(sum(miss)+sum(`n-s`)+sum(proc)+sum(extra)))/(SELECT czas FROM przebieg WHERE id_strzelec = 1 and id_trasa = 1) as points
+                              FROM tarcza
+                              WHERE tarcza.strzelec_id = {ShooterId} and tarcza.trasa_id = {StageId}
+                              GROUP BY tarcza.strzelec_id, tarcza.trasa_id;";
+            double points = 0;
+            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if(reader.Read())
+                    points = reader.GetDouble("points");
                 connection.Close();
             }
             return points;
@@ -304,6 +422,21 @@ namespace ProjektSemestrIV.DAL.Repositories
                 MySqlDataReader reader = command.ExecuteReader();
                 if (reader.Read())
                     time = reader.GetDouble("sumOfTimes");
+                connection.Close();
+            }
+            return time;
+        }
+
+        public static double GetShooterOnStageTime( uint ShooterId, uint StageId ) {
+            string query = $@"SELECT czas FROM przebieg WHERE id_strzelec = {ShooterId} and id_trasa = {StageId};";
+            double time = 0;
+            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if(reader.Read())
+                    time = reader.GetTimeSpan("czas").TotalSeconds;
                 connection.Close();
             }
             return time;
@@ -340,6 +473,23 @@ namespace ProjektSemestrIV.DAL.Repositories
             return shooter;
         }
 
+        public static string getShooterOnStageCompetition( uint ShooterId, uint StageId ) {
+            string query = $@"SELECT CONCAT(miejsce, ' ', DATE(rozpoczecie)) as zawody
+                              FROM trasa INNER JOIN zawody on trasa.id_zawody=zawody.id
+                              WHERE trasa.id={StageId}";
+            string competition = "";
+            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                MySqlDataReader reader = command.ExecuteReader();
+                if(reader.Read())
+                    competition = reader.GetString("zawody");
+                connection.Close();
+            }
+            return competition;
+        }
+
         public static IEnumerable<ShooterWithStagePointsAndCompetitionPoints>
             GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(uint id)
         {
@@ -355,7 +505,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             ) AS punkty
                             INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
                             INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
-                            SELECT subQuery.zawody_id, subQuery.trasa_id, subQuery.zawody_miejsce AS location, subQuery.strzelec_imie AS name, subQuery.strzelec_nazwisko AS surname, subQuery.position, subQuery.stagePoints, sum(compQuery.compPoints) AS competitionPoints  
+                            SELECT subQuery.strzelec_id, subQuery.zawody_id, subQuery.trasa_id, subQuery.zawody_miejsce AS location, subQuery.strzelec_imie AS name, subQuery.strzelec_nazwisko AS surname, subQuery.position, subQuery.stagePoints, sum(compQuery.compPoints) AS competitionPoints  
                             FROM (SELECT punktacja.strzelec_imie, punktacja.strzelec_nazwisko, punktacja.strzelec_id, punktacja.zawody_miejsce, punktacja.zawody_rozpoczecie AS startDate, sum(pkt) AS compPoints, punktacja.trasa_id, punktacja.zawody_id
                             FROM punktacja
                             GROUP BY strzelec_id, zawody_miejsce, zawody_rozpoczecie, trasa_id, zawody_id) as compQuery,
@@ -368,7 +518,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             compQuery.zawody_id = subQuery.zawody_id
                             AND 
                             compQuery.strzelec_id = subQuery.strzelec_id
-                            GROUP BY subQuery.zawody_id, subQuery.trasa_id,location,name,surname, subQuery.position, subQuery.stagePoints;";
+                            GROUP BY subQuery.zawody_id, subQuery.trasa_id, location, strzelec_id, subQuery.position, subQuery.stagePoints;";
             var shooters = new List<ShooterWithStagePointsAndCompetitionPoints>();
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
@@ -376,7 +526,8 @@ namespace ProjektSemestrIV.DAL.Repositories
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
-                    shooters.Add(new ShooterWithStagePointsAndCompetitionPoints((uint)reader.GetUInt64("position"),
+                    shooters.Add(new ShooterWithStagePointsAndCompetitionPoints((uint)reader.GetUInt32("strzelec_id"),
+                                                                                (uint)reader.GetUInt64("position"),
                                                                                 reader.GetString("name"),
                                                                                 reader.GetString("surname"),
                                                                                 reader.GetDouble("stagePoints"),
