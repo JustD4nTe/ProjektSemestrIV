@@ -3,11 +3,11 @@
     class StatsAtStageOverview
     {
         public string StageName { get; }
-        public int StagePoints { get; }
-        public double Time { get; }
+        public double StagePoints { get; }
+        public string Time { get; }
         public double Points { get; }
 
-        public StatsAtStageOverview(string stageName, int stagePoints, double time, double points)
+        public StatsAtStageOverview(string stageName, double stagePoints, string time, double points)
         {
             StageName = stageName;
             StagePoints = stagePoints;

@@ -1,9 +1,11 @@
+﻿using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
+using ProjektSemestrIV.ViewModels.BaseClass;
 using System.Collections.ObjectModel;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedShooterInCompetitionViewModel 
+    class ShowSelectedShooterInCompetitionViewModel : SwitchViewModel
     {
         private readonly ShowSelectedShooterInCompetitionModel model;
 
@@ -24,6 +26,25 @@ namespace ProjektSemestrIV.ViewModels
         {
             model = new ShowSelectedShooterInCompetitionModel();
         }
+
+        public override IBaseViewModel GetViewModel(params uint[] id)
+        {
+            model.SetNewId(shooterId: id[0],competitionId: id[1]);
+
+            ShooterName = model.GetShooterName();
+            CompetitionName = model.GetCompetitionName();
+            Position = model.GetPosition();
+            Points = model.GetPoints();
+            Time = model.GetTime();
+
+            Accuracy = model.GetGeneralAccuracy();
+            AlphaAccuracy = model.GetAlphaAccuracy();
+            CharlieAccuracy = model.GetCharlieAccuracy();
+            DeltaAccuracy = model.GetDeltaAccuracy();
+
+            StageStats = model.GetShooterStatsOnStages();
+
+            return this;
         }
     }
 }
