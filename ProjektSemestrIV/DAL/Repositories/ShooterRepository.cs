@@ -1,4 +1,4 @@
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Entities.AuxiliaryEntities;
 using ProjektSemestrIV.Models.ShowModels;
@@ -202,7 +202,7 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static IEnumerable<ShooterCompetition> GetShooterAccomplishedCompetitionsFromDB(uint id)
         {
             var results = new List<ShooterCompetition>();
-            string query = $@"WITH punktacja as (SELECT punkty.suma/przebieg.czas AS pkt , punkty.strzelec_id, punkty.trasa_id, punkty.zawody_miejsce, punkty.zawody_rozpoczecie 
+            string query = $@"WITH punktacja as (SELECT  punkty.zawody_id, punkty.suma/przebieg.czas AS pkt , punkty.strzelec_id, punkty.trasa_id, punkty.zawody_miejsce, punkty.zawody_rozpoczecie 
                             FROM (SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, zawody.id AS zawody_id, zawody.miejsce AS zawody_miejsce, zawody.rozpoczecie AS zawody_rozpoczecie, ((sum(alpha) * 5 + sum(charlie) * 3 + sum(delta)) - 10 * (sum(miss) + sum(`n-s`) + sum(proc) + sum(extra))) AS suma
                             FROM strzelec
                             INNER JOIN tarcza ON strzelec.id = tarcza.strzelec_id
@@ -211,7 +211,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             GROUP BY strzelec.id, zawody.id,trasa.id) AS punkty
                             INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
                             INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
-                            SELECT * FROM (SELECT strzelec_id AS shooterId, zawody_miejsce AS location, zawody_rozpoczecie AS startDate, RANK() OVER(ORDER BY sum(punktacja.pkt) DESC) AS position, sum(punktacja.pkt) AS points 
+                            SELECT  zawody_id as competitionId, location, startdate, position, points FROM (SELECT zawody_id, strzelec_id AS shooterId, zawody_miejsce AS location, zawody_rozpoczecie AS startDate, RANK() OVER(ORDER BY sum(punktacja.pkt) DESC) AS position, sum(punktacja.pkt) AS points 
                             FROM punktacja
                             GROUP BY punktacja.strzelec_id, zawody_id) as subQuery
                             WHERE shooterId = {id};";

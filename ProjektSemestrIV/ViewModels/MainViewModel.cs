@@ -46,6 +46,7 @@ namespace ProjektSemestrIV.ViewModels {
             showCompetitionsViewModel.SwitchView += SwitchToSubView;
             showSelectedCompetitionViewModel.SwitchView += SwitchToSubView;
             showShootersViewModel.SwitchView += SwitchToSubView;
+            showSelectedShooterViewModel.SwitchView += SwitchToSubView;
         }
 
         public void ChooseGeneralView( object parameter ) {
@@ -91,8 +92,16 @@ namespace ProjektSemestrIV.ViewModels {
                     SelectedViewModel = showSelectedStageViewModel.GetViewModel(e.NextViewId);
                     break;
                 case ViewTypeEnum.ShowSelectedShooterInCompetition:
-                    var selectedCompetition = sender as ShowSelectedCompetitionViewModel;
-                    SelectedViewModel = showSelectedShooterInCompetitionViewModel.GetViewModel(e.NextViewId, selectedCompetition.Id);
+                    if(sender is ShowSelectedCompetitionViewModel)
+                    {
+                        var selectedCompetition = sender as ShowSelectedCompetitionViewModel;
+                        SelectedViewModel = showSelectedShooterInCompetitionViewModel.GetViewModel(e.NextViewId, selectedCompetition.Id);
+                    }
+                    if(sender is ShowSelectedShooterViewModel)
+                    {
+                        var SelectedShooter = sender as ShowSelectedShooterViewModel;
+                        SelectedViewModel = showSelectedShooterInCompetitionViewModel.GetViewModel(SelectedShooter.Id, e.NextViewId);
+                    }
                     break;
                 default:
                     break;
