@@ -445,6 +445,7 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static ShooterWithPoints GetShooterWithPointsByStageIdFromDB(uint id)
         {
             string query = $@"WITH ranking AS (SELECT 
+                                summing.strzelec_id as strzelec_id,
 	                            summing.strzelec_imie AS imie,
                                 summing.strzelec_nazwisko AS nazwisko,
                                 summing.suma/przebieg.czas AS sumaPunktow,
@@ -456,7 +457,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                                     group by strzelec.id, trasa.id) as summing
                                 inner join przebieg on przebieg.id_strzelec = summing.strzelec_id and przebieg.id_trasa = summing.trasa_id
                                 inner join trasa on trasa.id=summing.trasa_id)
-                            SELECT imie, nazwisko, sumaPunktow FROM ranking
+                            SELECT strzelec_id as Id, imie, nazwisko, sumaPunktow FROM ranking
                             WHERE trasaId = {id}
                             LIMIT 1;";
             ShooterWithPoints shooter = null;
