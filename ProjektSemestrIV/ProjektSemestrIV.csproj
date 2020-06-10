@@ -213,6 +213,7 @@
     </Compile>
     <Compile Include="Views\ShowShooterOnStageView.xaml.cs">
       <DependentUpon>ShowShooterOnStageView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ShowSelectedShooterInCompetition.xaml.cs">
       <DependentUpon>ShowSelectedShooterInCompetition.xaml</DependentUpon>
     </Compile>
@@ -268,6 +269,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ShowShooterOnStageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ShowSelectedShooterInCompetition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
