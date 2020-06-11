@@ -13,7 +13,7 @@ namespace ProjektSemestrIV.ViewModels
     {
         private readonly ShowSelectedCompetitionModel model;
         private readonly NavigationService navigation;
-        private readonly uint Id;
+        private readonly uint id;
 
         public string DurationDate { get; }
         public string Location { get; }
@@ -30,11 +30,11 @@ namespace ProjektSemestrIV.ViewModels
         public ICommand SwitchViewToStageCommand { get; }
         public ICommand SwitchViewToShooterCommand { get; }
 
-        public ShowSelectedCompetitionViewModel(NavigationService _navigation, uint id)
+        public ShowSelectedCompetitionViewModel(NavigationService navigation, uint id)
         {
-            navigation = _navigation;
+            this.navigation = navigation;
 
-            Id = id;
+            this.id = id;
 
             model = new ShowSelectedCompetitionModel(id);
 
@@ -53,6 +53,6 @@ namespace ProjektSemestrIV.ViewModels
         => navigation.Navigate(new ShowSelectedStageViewModel(navigation, SelectedStage.Id));
 
         private void OnSwitchViewToShooter()
-        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(navigation, SelectedShooter.Id, Id));
+        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(navigation, SelectedShooter.Id, id));
     }
 }

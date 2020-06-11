@@ -25,11 +25,11 @@ namespace ProjektSemestrIV.ViewModels
 
         public ICommand SwitchViewCommand { get; }
 
-        public ShowSelectedStageViewModel(NavigationService _navigation, uint _stageId)
+        public ShowSelectedStageViewModel(NavigationService navigation, uint stageId)
         {
-            stageId = _stageId;
-            navigation = _navigation;
-            model = new ShowSelectedStageModel(_stageId);
+            this.stageId = stageId;
+            this.navigation = navigation;
+            model = new ShowSelectedStageModel(stageId);
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => SelectedShooter != null);
 
             CompetitionLocation = model.GetCompetitionLocation();

@@ -11,13 +11,13 @@ namespace ProjektSemestrIV.ViewModels
         private readonly ShooterModel model;
         private readonly NavigationService navigation;
 
-        public ObservableCollection<Shooter> Shooters { get; private set; }
+        public ObservableCollection<Shooter> Shooters { get; }
         public Shooter SelectedShooter { get; set; }
         public ICommand SwitchViewCommand { get; }
 
-        public ShowShootersViewModel(NavigationService _navigation)
+        public ShowShootersViewModel(NavigationService navigation)
         {
-            navigation = _navigation;
+            this.navigation = navigation;
 
             model = new ShooterModel();
             Shooters = model.GetAllShooters();

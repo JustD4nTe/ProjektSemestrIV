@@ -13,7 +13,7 @@ namespace ProjektSemestrIV.ViewModels
         #region Fields and properties
         private readonly ShowSelectedShooterModel model;
         private readonly NavigationService navigation;
-        private readonly uint Id;
+        private readonly uint id;
 
         public string Name { get; }
         public string Surname { get; }
@@ -32,10 +32,10 @@ namespace ProjektSemestrIV.ViewModels
         public ICommand SwitchViewCommand { get; }
         #endregion
 
-        public ShowSelectedShooterViewModel(NavigationService _navigation, uint id)
+        public ShowSelectedShooterViewModel(NavigationService navigation, uint id)
         {
-            navigation = _navigation;
-            Id = id;
+            this.navigation = navigation;
+            this.id = id;
 
             model = new ShowSelectedShooterModel(id);
 
@@ -55,6 +55,6 @@ namespace ProjektSemestrIV.ViewModels
         }
 
         public void OnSwitchView()
-        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(navigation, Id, SelectedCompetition.CompetitionId));
+        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(navigation, id, SelectedCompetition.CompetitionId));
     }
 }

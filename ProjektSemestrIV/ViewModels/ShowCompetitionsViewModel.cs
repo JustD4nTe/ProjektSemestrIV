@@ -18,9 +18,9 @@ namespace ProjektSemestrIV.ViewModels
         public ICommand SwitchViewCommand { get; }
 
 
-        public ShowCompetitionsViewModel(NavigationService _navigation)
+        public ShowCompetitionsViewModel(NavigationService navigation)
         {
-            navigation = _navigation;
+            this.navigation = navigation;
 
             model = new CompetitionModel();
 

@@ -30,12 +30,12 @@ namespace ProjektSemestrIV.ViewModels
 
         public ICommand SwitchViewCommand { get; }
 
-        public ShowSelectedShooterInCompetitionViewModel(NavigationService _navigation, uint _shooterId, uint _competitionId)
+        public ShowSelectedShooterInCompetitionViewModel(NavigationService navigation, uint shooterId, uint competitionId)
         {
-            navigation = _navigation;
-            shooterId = _shooterId;
+            this.navigation = navigation;
+            this.shooterId = shooterId;
 
-            model = new ShowSelectedShooterInCompetitionModel(_shooterId, _competitionId);
+            model = new ShowSelectedShooterInCompetitionModel(shooterId, competitionId);
 
             ShooterName = model.GetShooterName();
             CompetitionName = model.GetCompetitionName();
