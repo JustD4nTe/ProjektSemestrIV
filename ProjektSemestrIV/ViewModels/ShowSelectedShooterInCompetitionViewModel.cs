@@ -1,35 +1,41 @@
 ﻿using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
-using ProjektSemestrIV.ViewModels.BaseClass;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedShooterInCompetitionViewModel : SwitchViewModel
+    class ShowSelectedShooterInCompetitionViewModel 
     {
         private readonly ShowSelectedShooterInCompetitionModel model;
+        private readonly NavigationService navigation;
+        private readonly uint shooterId;
 
-        public string ShooterName { get; private set; }
-        public string CompetitionName { get; private set; }
-        public uint Position { get; private set; }
-        public double Points { get; private set; }
-        public double Time { get; private set; }
+        public string ShooterName { get;  }
+        public string CompetitionName { get; }
+        public uint Position { get; }
+        public double Points { get; }
+        public double Time { get; }
 
-        public double Accuracy { get; private set; }
-        public double AlphaAccuracy { get; private set; }
-        public double CharlieAccuracy { get; private set; }
-        public double DeltaAccuracy { get; private set; }
+        public double Accuracy { get; }
+        public double AlphaAccuracy { get;  }
+        public double CharlieAccuracy { get;  }
+        public double DeltaAccuracy { get;  }
 
-        public ObservableCollection<StatsAtStageOverview> StageStats { get; private set; }
+        public ObservableCollection<StatsAtStageOverview> StageStats { get; }
 
-        public ShowSelectedShooterInCompetitionViewModel()
+        public StatsAtStageOverview SelectedStage { get; set; }
+
+        public ICommand SwitchViewCommand { get; }
+
+        public ShowSelectedShooterInCompetitionViewModel(NavigationService navigation, uint shooterId, uint competitionId)
         {
-            model = new ShowSelectedShooterInCompetitionModel();
-        }
+            this.navigation = navigation;
+            this.shooterId = shooterId;
 
-        public override IBaseViewModel GetViewModel(params uint[] id)
-        {
-            model.SetNewId(shooterId: id[0],competitionId: id[1]);
+            model = new ShowSelectedShooterInCompetitionModel(shooterId, competitionId);
 
             ShooterName = model.GetShooterName();
             CompetitionName = model.GetCompetitionName();
@@ -44,7 +50,11 @@ namespace ProjektSemestrIV.ViewModels
 
             StageStats = model.GetShooterStatsOnStages();
 
-            return this;
+            SwitchViewCommand = new RelayCommand(x => OnSwitchView(), 
+                                                 x => SelectedStage != null);
         }
+
+        private void OnSwitchView()
+        => navigation.Navigate(new ShowShooterOnStageViewModel(shooterId, SelectedStage.StageId));
     }
 }

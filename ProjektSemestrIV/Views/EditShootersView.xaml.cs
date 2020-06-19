@@ -19,7 +19,7 @@ namespace ProjektSemestrIV.Views {
     /// <summary>
     /// Interaction logic for AddShooterView.xaml
     /// </summary>
-    public partial class EditShootersView : UserControl {
+    public partial class EditShootersView : Page {
         public EditShootersView() {
             InitializeComponent();
         }

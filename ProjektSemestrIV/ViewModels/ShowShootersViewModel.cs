@@ -1,38 +1,32 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
-using ProjektSemestrIV.Events;
 using ProjektSemestrIV.Models;
-using ProjektSemestrIV.ViewModels.BaseClass;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowShootersViewModel : SwitchViewModel
+    class ShowShootersViewModel
     {
         private readonly ShooterModel model;
+        private readonly NavigationService navigation;
 
-        public ObservableCollection<Shooter> Shooters { get; private set; }
+        public ObservableCollection<Shooter> Shooters { get; }
         public Shooter SelectedShooter { get; set; }
         public ICommand SwitchViewCommand { get; }
 
-        public ShowShootersViewModel()
+        public ShowShootersViewModel(NavigationService navigation)
         {
-            model = new ShooterModel();            
+            this.navigation = navigation;
 
-            SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => true);
-        }
-
-        public override IBaseViewModel GetViewModel(params uint[] id)
-        {
+            model = new ShooterModel();
             Shooters = model.GetAllShooters();
 
-            return this;
+            SwitchViewCommand = new RelayCommand(x => OnSwitchView(), 
+                                                 x => SelectedShooter != null);
         }
 
-
         private void OnSwitchView()
-        => SwitchView(this, new SwitchViewEventArgs(
-                                    ViewTypeEnum.ShowSelectedShooter,
-                                    SelectedShooter.ID));
+        => navigation.Navigate(new ShowSelectedShooterViewModel(navigation, SelectedShooter.ID));
     }
 }

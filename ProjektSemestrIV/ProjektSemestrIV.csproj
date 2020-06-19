@@ -138,7 +138,6 @@
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithPoints.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithCompetitionTime.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
-    <Compile Include="Events\SwitchViewEventArgs.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedShooterInCompetitionModel.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedStageModel.cs" />
     <Compile Include="Models\ComplexModels\ShowShooterOnStageModel.cs" />
@@ -166,9 +165,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.pl-PL.resx</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\BaseClass\IBaseViewModel.cs" />
-    <Compile Include="ViewModels\BaseClass\ISwitchViewModel.cs" />
-    <Compile Include="ViewModels\BaseClass\SwitchViewModel.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />

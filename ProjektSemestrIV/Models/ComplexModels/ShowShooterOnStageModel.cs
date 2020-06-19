@@ -10,6 +10,13 @@ namespace ProjektSemestrIV.Models.ComplexModels {
         private Shooter shooter;
         private Stage stage;
 
+
+        public ShowShooterOnStageModel(uint shooterId, uint stageId)
+        {
+            shooter = ShooterRepository.GetShooterByIdFromDB(shooterId);
+            stage = StageRepository.GetStageByIdFromDB(stageId);
+        }
+
         public string GetShooterName() => shooter.Name;
 
         public string GetShooterSurname() => shooter.Surname;
@@ -44,11 +51,5 @@ namespace ProjektSemestrIV.Models.ComplexModels {
 
         public uint GetShooterOnStagePosition()
             => ShooterRepository.GetShooterOnStagePosition(shooter.ID, stage.ID);
-
-        public void SetNewShooterId( uint id )
-            => shooter = ShooterRepository.GetShooterByIdFromDB(id);
-
-        public void SetNewStageId( uint id )
-            => stage = StageRepository.GetStageByIdFromDB(id);
     }
 }

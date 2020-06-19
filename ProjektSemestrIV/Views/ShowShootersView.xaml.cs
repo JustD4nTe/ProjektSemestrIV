@@ -18,7 +18,7 @@ namespace ProjektSemestrIV.Views
     /// <summary>
     /// Interaction logic for ShowShootersView.xaml
     /// </summary>
-    public partial class ShowShootersView : UserControl
+    public partial class ShowShootersView : Page
     {
         public ShowShootersView()
         {   

@@ -11,6 +11,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
     {
         private Shooter shooter;
 
+        public ShowSelectedShooterModel(uint id)
+            => shooter = ShooterRepository.GetShooterByIdFromDB(id);
+
         public string GetShooterName() => shooter.Name;
 
         public string GetShooterSurname() => shooter.Surname;
@@ -40,8 +43,5 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public string GetShooterGeneralSumOfTimes()
             => TimeSpan.FromSeconds(ShooterRepository.GetShooterGeneralSumOfTimesFromDB(shooter.ID))
                        .ToString(@"hh\h\:mm\m\:ss\s\:fff\m\s");
-
-        public void SetNewId(uint id)
-            => shooter = ShooterRepository.GetShooterByIdFromDB(id);
     }
 }

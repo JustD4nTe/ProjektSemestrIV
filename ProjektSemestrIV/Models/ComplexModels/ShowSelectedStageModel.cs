@@ -11,6 +11,12 @@ namespace ProjektSemestrIV.Models.ComplexModels
         private Stage stage;
         private Competition competition;
 
+        public ShowSelectedStageModel(uint id)
+        {
+            stage = StageRepository.GetStageByIdFromDB(id);
+            competition = CompetitionRepository.GetCompetitionFromDB(stage.Competition_ID);
+        }
+
         public string GetCompetitionLocation() => competition.Location;
 
         public string GetStageName() => stage.Name;
@@ -35,10 +41,5 @@ namespace ProjektSemestrIV.Models.ComplexModels
                                                                                                     x.Surname,
                                                                                                     x.StagePoints,
                                                                                                     x.CompetitionPoints));
-        public  void SetNewId(uint id)
-        {
-            stage = StageRepository.GetStageByIdFromDB(id);
-            competition = CompetitionRepository.GetCompetitionFromDB(stage.Competition_ID);
-        }
     }
 }

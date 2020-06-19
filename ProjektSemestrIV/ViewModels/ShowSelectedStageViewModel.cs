@@ -1,42 +1,36 @@
-﻿using ProjektSemestrIV.Events;
-using ProjektSemestrIV.Extensions;
-using ProjektSemestrIV.Models;
+﻿using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
-using ProjektSemestrIV.ViewModels.BaseClass;
-using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedStageViewModel : SwitchViewModel
+    class ShowSelectedStageViewModel
     {
         private readonly ShowSelectedStageModel model;
+        private readonly NavigationService navigation;
+        private readonly uint stageId;
 
-        public string CompetitionLocation { get; private set; }
-        public string StageName { get; private set; }
-        public string StageRules { get; private set; }
-        public uint NumOfTargets { get; private set; }
-        public string BestShooter { get; private set; }
-        public double AverageTime { get; private set; }
-        public uint Id { get; private set; }
+        public string CompetitionLocation { get; }
+        public string StageName { get; }
+        public string StageRules { get; }
+        public uint NumOfTargets { get; }
+        public string BestShooter { get; }
+        public double AverageTime { get; }
 
-        public ObservableCollection<ShooterWithStagePointsAndCompetitionPointsOverview> Shooters { get; private set; }
-
+        public ObservableCollection<ShooterWithStagePointsAndCompetitionPointsOverview> Shooters { get; }
         public ShooterWithStagePointsAndCompetitionPointsOverview SelectedShooter { get; set; }
 
         public ICommand SwitchViewCommand { get; }
 
-        public ShowSelectedStageViewModel()
+        public ShowSelectedStageViewModel(NavigationService navigation, uint stageId)
         {
-            model = new ShowSelectedStageModel();
+            this.stageId = stageId;
+            this.navigation = navigation;
+            model = new ShowSelectedStageModel(stageId);
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => SelectedShooter != null);
-        }
-
-        public override IBaseViewModel GetViewModel(params uint[] id)
-        {
-            model.SetNewId(id[0]);
 
             CompetitionLocation = model.GetCompetitionLocation();
             StageName = model.GetStageName();
@@ -45,15 +39,11 @@ namespace ProjektSemestrIV.ViewModels
             BestShooter = model.GetShooterWithPoints();
             AverageTime = model.GetAverageTime();
             Shooters = model.GetShooters().Convert();
-            Id = id[0];
-
-            return this;
+            
         }
 
 
         private void OnSwitchView()
-        => SwitchView(this, new SwitchViewEventArgs(
-                                    ViewTypeEnum.ShowShooterOnStage,
-                                    SelectedShooter.Id));
+        => navigation.Navigate(new ShowShooterOnStageViewModel(SelectedShooter.Id, stageId));
     }
 }

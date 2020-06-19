@@ -18,7 +18,7 @@ namespace ProjektSemestrIV.Views
     /// <summary>
     /// Interaction logic for CompetitionView.xaml
     /// </summary>
-    public partial class ShowSelectedCompetitionView : UserControl
+    public partial class ShowSelectedCompetitionView : Page
     {
         public ShowSelectedCompetitionView()
         {

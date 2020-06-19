@@ -17,7 +17,7 @@ namespace ProjektSemestrIV.Views {
     /// <summary>
     /// Interaction logic for ScoreView.xaml
     /// </summary>
-    public partial class EditScoreView : UserControl {
+    public partial class EditScoreView : Page {
         public EditScoreView() {
             InitializeComponent();
         }

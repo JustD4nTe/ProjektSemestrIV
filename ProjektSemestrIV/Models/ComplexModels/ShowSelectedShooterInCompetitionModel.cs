@@ -12,6 +12,12 @@ namespace ProjektSemestrIV.Models.ComplexModels
         Shooter shooter;
         Competition competition;
 
+        public ShowSelectedShooterInCompetitionModel(uint shooterId, uint competitionId)
+        {
+            shooter = ShooterRepository.GetShooterFromDB(shooterId);
+            competition = CompetitionRepository.GetCompetitionFromDB(competitionId);
+        }
+
         public string GetShooterName()
         => shooter.Name + " " + shooter.Surname;
 
@@ -42,13 +48,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public ObservableCollection<StatsAtStageOverview> GetShooterStatsOnStages()
         => ShooterRepository.GetShooterStatsOnStages(shooter.ID, competition.Id)
-                            .Select(x => new StatsAtStageOverview(x.StageName, x.Points, x.Time, x.StagePoints))
+                            .Select(x => new StatsAtStageOverview(x.StageId, x.StageName, x.Points, x.Time, x.StagePoints))
                             .Convert();
 
-        public void SetNewId(uint shooterId, uint competitionId)
-        {
-            shooter = ShooterRepository.GetShooterFromDB(shooterId);
-            competition = CompetitionRepository.GetCompetitionFromDB(competitionId);
-        }
+
     }
 }
