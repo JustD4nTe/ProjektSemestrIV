@@ -133,6 +133,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;.
+        /// </summary>
+        public static string BackwardSign {
+            get {
+                return ResourceManager.GetString("BackwardSign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Best shooter.
         /// </summary>
         public static string BestShooter {
@@ -331,6 +340,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &gt;.
+        /// </summary>
+        public static string ForwardSign {
+            get {
+                return ResourceManager.GetString("ForwardSign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to General Accuracy.
         /// </summary>
         public static string GeneralAccuracy {
@@ -426,6 +444,15 @@ namespace ProjektSemestrIV.Properties {
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Navigation.
+        /// </summary>
+        public static string Navigation {
+            get {
+                return ResourceManager.GetString("Navigation", resourceCulture);
             }
         }
         
