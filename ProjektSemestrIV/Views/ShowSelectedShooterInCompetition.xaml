@@ -9,10 +9,15 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+               Content="{Binding Source={x:Static resx:Resources.ShooterOnCompetitionSummary}}" FontSize="30"/>
+        
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -59,7 +64,7 @@
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <DataGrid x:Name="DataGridCompetitions" ItemsSource="{Binding StageStats}" Grid.Row="1"
+        <DataGrid x:Name="DataGridCompetitions" ItemsSource="{Binding StageStats}" Grid.Row="2"
                   AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False"
                   SelectedItem="{Binding SelectedStage}">
             <DataGrid.Columns>
