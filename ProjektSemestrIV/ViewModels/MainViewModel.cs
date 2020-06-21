@@ -6,25 +6,19 @@ namespace ProjektSemestrIV.ViewModels
 {
     class MainViewModel : BaseViewModel 
     {
-        private ICommand updateFormView = null;
-        public ICommand UpdateFormView
-        {
-            get
-            {
-                if (updateFormView == null)
-                {
-                    updateFormView = new RelayCommand(ChooseGeneralView, null);
-                }
-
-                return updateFormView;
-            }
-        }
-
         private readonly NavigationService navigation;
 
-        public MainViewModel(NavigationService _navigation)
+        public ICommand UpdateFormView { get; }
+        public ICommand NavigateBackward { get; }
+        public ICommand NavigateForward { get; }
+
+        public MainViewModel(NavigationService navigation)
         {
-            navigation = _navigation;
+            this.navigation = navigation;
+
+            UpdateFormView = new RelayCommand(ChooseGeneralView, null);
+            NavigateBackward = new RelayCommand(arg=>this.navigation.GoBack(), arg=>this.navigation.CanGoBack);
+            NavigateForward = new RelayCommand(arg => this.navigation.GoForward(), arg => this.navigation.CanGoForward);
         }
 
         public void ChooseGeneralView(object parameter)
@@ -56,5 +50,7 @@ namespace ProjektSemestrIV.ViewModels
                     break;
             }
         }
+
+
     }
 }

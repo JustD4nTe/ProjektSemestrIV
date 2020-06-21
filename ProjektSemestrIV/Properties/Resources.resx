@@ -333,4 +333,7 @@
   <data name="StageSummary" xml:space="preserve">
     <value>Stage Summary</value>
   </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
 </root>

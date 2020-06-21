@@ -15,7 +15,7 @@
             <ColumnDefinition Width="3*"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.Column="0">
+        <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
             <Label Content="{Binding Source={x:Static resx:Resources.ConnectionConfiguration}}" HorizontalAlignment="Center"/>
             <Button Content="{Binding Source={x:Static resx:Resources.Configuration}}" 
                     Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.Configuration}"/>
@@ -43,10 +43,24 @@
             
             <Button Content="{Binding Source={x:Static resx:Resources.ListShooters}}"
                     Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.ShowShooters}"/>
+
+            <Label Content="{Binding Source={x:Static resx:Resources.Navigation}}" HorizontalAlignment="Center" Margin="0 20 0 0"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button Grid.Column="0" Content="&lt;"
+                        Command="{Binding NavigateBackward}" FontSize="20" Height="40" Width="70"/>
+
+                <Button Grid.Column="1" Content="&gt;"
+                        Command="{Binding NavigateForward}" FontSize="20" Height="40" Width="70"/>
+            </Grid>
         </StackPanel>
 
         <DockPanel Grid.Row="0" Grid.Column="1">
-            <Frame x:Name="MainFrame"/>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
         </DockPanel>
     </Grid>
 </Window>
