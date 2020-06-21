@@ -50,11 +50,11 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                
-                <Button Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.BackwardSign}}"
+
+                <Button Grid.Column="0" Content="&lt;"
                         Command="{Binding NavigateBackward}" FontSize="20" Height="40" Width="70"/>
-                
-                <Button Grid.Column="1" Content="{Binding Source={x:Static resx:Resources.ForwardSign}}"
+
+                <Button Grid.Column="1" Content="&gt;"
                         Command="{Binding NavigateForward}" FontSize="20" Height="40" Width="70"/>
             </Grid>
         </StackPanel>
