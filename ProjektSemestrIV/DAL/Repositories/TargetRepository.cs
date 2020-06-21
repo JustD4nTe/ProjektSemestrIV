@@ -8,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Repositories {
     class TargetRepository {
-        public static List<Target> GetTargetsWhere(UInt32 shooter_id, UInt32 stage_id ) {
+        #region CRUD
+        public static List<Target> GetTargetsWhere(uint shooter_id, uint stage_id ) {
             var query = $"SELECT * FROM tarcza WHERE strzelec_id = '{shooter_id}' and trasa_id = '{stage_id}'";
             List<Target> targets = new List<Target>();
 
@@ -24,8 +25,8 @@ namespace ProjektSemestrIV.DAL.Repositories {
             return targets;
         }
 
-        public static Boolean AddTargetToDatabase( Target target ) {
-            Boolean executed = false;
+        public static bool AddTargetToDatabase( Target target ) {
+            bool executed = false;
             var query = $@"INSERT INTO tarcza (`strzelec_id`, `trasa_id`, `alpha`, `charlie`, `delta`, `miss`, `n-s`, `proc`, `extra`)
                              VALUES {target.ToInsert()}";
 
@@ -38,7 +39,7 @@ namespace ProjektSemestrIV.DAL.Repositories {
             return executed;
         }
 
-        public static Boolean EditTargetInDatabase( Target target, UInt32 target_id) {
+        public static bool EditTargetInDatabase( Target target, uint target_id) {
             Boolean executed = false;
             var query = $@"UPDATE `tarcza` 
                             SET `strzelec_id` = '{target.Shooter_ID}', `trasa_id` = '{target.Stage_ID}, 
@@ -56,8 +57,9 @@ namespace ProjektSemestrIV.DAL.Repositories {
             return executed;
         }
 
-        public static bool DeleteTargetFromDatabase( UInt32 targetID ) {
-            Boolean executed = false;
+        public static bool DeleteTargetFromDatabase(uint targetID)
+        {
+            bool executed = false;
             var query = $"DELETE FROM tarcza WHERE (`id` = '{targetID}')";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection) {
@@ -68,5 +70,6 @@ namespace ProjektSemestrIV.DAL.Repositories {
             }
             return executed;
         }
+        #endregion
     }
 }

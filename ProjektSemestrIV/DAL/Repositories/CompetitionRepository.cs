@@ -8,6 +8,7 @@ namespace ProjektSemestrIV.DAL.Repositories
 {
     class CompetitionRepository
     {
+        #region CRUD
         public static List<Competition> GetAllCompetitionsFromDB()
         {
             var query = "SELECT * FROM zawody";
@@ -49,6 +50,77 @@ namespace ProjektSemestrIV.DAL.Repositories
             return competition;
         }
 
+        public static bool AddCompetitionToDatabase(Competition competition)
+        {
+            bool executed = false;
+
+            string start = DateTime.Parse(competition.StartDate).ToString("yyyy-MM-dd HH:mm:ss.fff");
+            string end = (competition.EndDate != null)
+                            ? "\"" + DateTime.Parse(competition.EndDate).ToString("yyyy-MM-dd HH:mm:ss.fff") + "\""
+                            : "NULL";
+
+
+            var query = $@"INSERT INTO zawody (`miejsce`, `rozpoczecie`, `zakonczenie`)
+                            VALUES ('{competition.Location}', '{start}', '{end}')";
+
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+
+                if (command.ExecuteNonQuery() == 1) executed = true;
+
+                connection.Close();
+            }
+            return executed;
+        }
+
+        public static bool EditCompetitionInDatabase(Competition competition, uint id)
+        {
+            bool executed = false;
+
+            var dateFromat = "yyyy-MM-dd HH:mm:ss.fff";
+
+            string start = DateTime.Parse(competition.StartDate).ToString(dateFromat);
+            string end = (competition.EndDate != null)
+                            ? "\"" + DateTime.Parse(competition.EndDate).ToString(dateFromat) + "\""
+                            : "NULL";
+
+            var query = $@"UPDATE zawody 
+                            SET `miejsce` = '{competition.Location}', `rozpoczecie` = '{start}', `zakonczenie` = {end} 
+                            WHERE (`id` = '{id}')";
+
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+
+                if (command.ExecuteNonQuery() == 1) executed = true;
+
+                connection.Close();
+            }
+            return executed;
+        }
+
+        public static bool DeleteCompetitionFromDatabase(uint competitionID)
+        {
+            bool executed = false;
+
+            var query = $@"DELETE FROM zawody WHERE (`id` = '{competitionID}')";
+
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                if (command.ExecuteNonQuery() == 1) executed = true;
+                connection.Close();
+            }
+            return executed;
+        }
+        #endregion
+
+        #region Auxiliary queries
         public static uint GetNumberOfShootersInCompetition(uint competitionId)
         {
             var query = $@"SELECT COUNT(distinct strzelec.id) AS count FROM strzelec 
@@ -107,17 +179,17 @@ namespace ProjektSemestrIV.DAL.Repositories
             var query = $@"SELECT strzelec.id AS id, strzelec.imie AS imie, strzelec.nazwisko AS nazwisko, 
                                     sum(sumowanieTarcz.suma/przebieg.czas) AS sumaPunktow
                             FROM (
-	                            SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, 
-			                            (((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))) AS suma 
-	                            FROM strzelec INNER JOIN tarcza ON strzelec.id=tarcza.strzelec_id
-	                            INNER JOIN trasa ON tarcza.trasa_id=trasa.id
-	                            WHERE trasa.id_zawody={competitionId}
-	                            GROUP BY strzelec.id, trasa.id) AS sumowanieTarcz
+                                SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, 
+                                        (((sum(alpha)*5 + sum(charlie)*3 + sum(delta))-10*(sum(miss)+sum(tarcza.`n-s`)+sum(proc)+sum(extra)))) AS suma 
+                                FROM strzelec INNER JOIN tarcza ON strzelec.id=tarcza.strzelec_id
+                                INNER JOIN trasa ON tarcza.trasa_id=trasa.id
+                                WHERE trasa.id_zawody={competitionId}
+                                GROUP BY strzelec.id, trasa.id) AS sumowanieTarcz
                             INNER JOIN przebieg ON przebieg.id_strzelec = sumowanieTarcz.strzelec_id and przebieg.id_trasa = sumowanieTarcz.trasa_id
                             INNER JOIN strzelec ON strzelec.id = sumowanieTarcz.strzelec_id 
                             GROUP BY sumowanieTarcz.strzelec_id
                             ORDER BY sumaPunktow desc ";
-            
+
             if (isPodium)
             {
                 query += "LIMIT 3";
@@ -175,67 +247,6 @@ namespace ProjektSemestrIV.DAL.Repositories
 
             return stages;
         }
-
-        public static Boolean AddCompetitionToDatabase( Competition competition ) {
-            Boolean executed = false;
-
-            String start = DateTime.Parse(competition.StartDate).ToString("yyyy-MM-dd HH:mm:ss.fff");
-            String end = (competition.EndDate != null) ? "\"" + DateTime.Parse(competition.EndDate).ToString("yyyy-MM-dd HH:mm:ss.fff") + "\"" : "NULL";
-
-
-            var query = $@"INSERT INTO zawody (`miejsce`, `rozpoczecie`, `zakonczenie`)
-                            VALUES ('{competition.Location}', '{start}', '{end}')";
-
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection) {
-                
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-
-                if(command.ExecuteNonQuery() == 1) executed = true;
-
-                connection.Close();
-            }
-            return executed;
-        }
-
-        public static bool EditCompetitionInDatabase( Competition competition, UInt32 id ) {
-            Boolean executed = false;
-
-            var dateFromat = "yyyy-MM-dd HH:mm:ss.fff";
-
-            String start = DateTime.Parse(competition.StartDate).ToString(dateFromat);
-            String end = (competition.EndDate != null) 
-                            ? "\"" + DateTime.Parse(competition.EndDate).ToString(dateFromat) + "\"" 
-                            : "NULL";
-
-            var query = $@"UPDATE zawody 
-                            SET `miejsce` = '{competition.Location}', `rozpoczecie` = '{start}', `zakonczenie` = {end} 
-                            WHERE (`id` = '{id}')";
-
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection) {
-                
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-
-                if(command.ExecuteNonQuery() == 1) executed = true;
-
-                connection.Close();
-            }
-            return executed;
-        }
-
-        public static Boolean DeleteCompetitionFromDatabase( UInt32 competitionID ) {
-            Boolean executed = false;
-
-            var query = $@"DELETE FROM zawody WHERE (`id` = '{competitionID}')";
-
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection) {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                if(command.ExecuteNonQuery() == 1) executed = true;
-                connection.Close();
-            }
-            return executed;
-        }
+        #endregion
     }
 }

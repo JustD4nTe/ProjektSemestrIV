@@ -45,9 +45,9 @@ namespace ProjektSemestrIV.DAL.Repositories
             return stage;
         }
 
-        public static Boolean AddStageToDatabase(Stage stage)
+        public static bool AddStageToDatabase(Stage stage)
         {
-            Boolean executed = false;
+            bool executed = false;
             var query = $"INSERT INTO trasa (`id_zawody`, `nazwa`, `zasady`) VALUES {stage.ToInsert()}";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
@@ -60,9 +60,9 @@ namespace ProjektSemestrIV.DAL.Repositories
             return executed;
         }
 
-        public static bool EditStageInDatabase(Stage stage, UInt32 id)
+        public static bool EditStageInDatabase(Stage stage, uint id)
         {
-            Boolean executed = false;
+            bool executed = false;
             var query = $@"UPDATE `trasa` 
                             SET `id_zawody` = '{stage.Competition_ID}', `nazwa` = '{stage.Name}',
                                 `zasady` = '{stage.Rules}' 
@@ -78,9 +78,9 @@ namespace ProjektSemestrIV.DAL.Repositories
             return executed;
         }
 
-        public static bool DeleteStageFromDatabase(UInt32 stageID)
+        public static bool DeleteStageFromDatabase(uint stageID)
         {
-            Boolean executed = false;
+            bool executed = false;
             var query = $"DELETE FROM trasa WHERE (`id` = '{stageID}')";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)

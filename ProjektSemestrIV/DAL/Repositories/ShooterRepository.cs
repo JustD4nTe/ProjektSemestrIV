@@ -12,10 +12,10 @@ namespace ProjektSemestrIV.DAL.Repositories
 {
     class ShooterRepository
     {
-        #region Basic CRUD
-        public static Boolean AddShooterToDB(Shooter shooter)
+        #region CRUD
+        public static bool AddShooterToDB(Shooter shooter)
         {
-            Boolean executed = false;
+            bool executed = false;
 
             string query = $@"INSERT INTO strzelec (`imie`, `nazwisko`)
                                 VALUES {shooter.ToInsert()}";
@@ -32,7 +32,7 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static bool EditShooterInDB(Shooter shooter, uint id)
         {
-            Boolean executed = false;
+            bool executed = false;
             var query = $@"UPDATE strzelec 
                             SET `imie` = '{shooter.Name}', `nazwisko` = '{shooter.Surname}' 
                             WHERE (`id` = '{id}')";
@@ -83,9 +83,9 @@ namespace ProjektSemestrIV.DAL.Repositories
             return shooter;
         }
 
-        public static Boolean DeleteShooterFromDB(UInt32 shooterID)
+        public static bool DeleteShooterFromDB(uint shooterID)
         {
-            Boolean executed = false;
+            bool executed = false;
             string query = $"DELETE FROM strzelec WHERE (`id` = '{shooterID}')";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
@@ -120,14 +120,15 @@ namespace ProjektSemestrIV.DAL.Repositories
                 if (reader.Read())
                 {
                     var readValue = reader["accuracy"];
-                    accuracy = readValue is DBNull ?  0.0 : decimal.ToDouble((decimal)readValue);
+                    accuracy = readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
                 }
                 connection.Close();
             }
             return accuracy;
         }
 
-        public static double GetShooterOnStageGeneralAccuracyFromDB( uint ShooterId , uint StageId ) {
+        public static double GetShooterOnStageGeneralAccuracyFromDB(uint ShooterId, uint StageId)
+        {
             var query = $@"SELECT CAST((SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra))
                                         /(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(miss)+SUM('n-s')+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
                             FROM tarcza
@@ -135,11 +136,13 @@ namespace ProjektSemestrIV.DAL.Repositories
 
             double accuracy = 0;
 
-            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                if(reader.Read()) {
+                if (reader.Read())
+                {
                     var readValue = reader["accuracy"];
                     accuracy = readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
                 }
@@ -174,7 +177,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return accuracy;
         }
 
-        public static double GetShooterOnStageAlphaAccuracyFromDB( uint ShooterId, uint StageId )
+        public static double GetShooterOnStageAlphaAccuracyFromDB(uint ShooterId, uint StageId)
         {
             var query = $@"SELECT cast(SUM(alpha)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
                             FROM tarcza
@@ -182,12 +185,14 @@ namespace ProjektSemestrIV.DAL.Repositories
 
             double accuracy = 0;
 
-            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                if(reader.Read()) {
+                if (reader.Read())
+                {
                     var readValue = reader["accuracy"];
                     accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
                 }
@@ -222,19 +227,22 @@ namespace ProjektSemestrIV.DAL.Repositories
             return accuracy;
         }
 
-        public static double GetShooterOnStageCharlieAccuracyFromDB( uint ShooterId, uint StageId ) {
+        public static double GetShooterOnStageCharlieAccuracyFromDB(uint ShooterId, uint StageId)
+        {
             var query = $@"SELECT cast(SUM(charlie)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
                             FROM tarcza
                             WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
 
             double accuracy = 0;
 
-            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                if(reader.Read()) {
+                if (reader.Read())
+                {
                     var readValue = reader["accuracy"];
                     accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
                 }
@@ -269,19 +277,22 @@ namespace ProjektSemestrIV.DAL.Repositories
             return accuracy;
         }
 
-        public static double GetShooterOnStageDeltaAccuracyFromDB( uint ShooterId, uint StageId ) {
+        public static double GetShooterOnStageDeltaAccuracyFromDB(uint ShooterId, uint StageId)
+        {
             var query = $@"SELECT cast(SUM(delta)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
                             FROM tarcza
                             WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
 
             double accuracy = 0;
 
-            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                if(reader.Read()) {
+                if (reader.Read())
+                {
                     var readValue = reader["accuracy"];
                     accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
                 }
@@ -314,7 +325,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                         FROM punktacja
                         GROUP BY punktacja.strzelec_id, zawody_id) AS subQuery
                         WHERE shooterId = {id};";
-          
+
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
@@ -332,16 +343,16 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static double GetShooterGeneralAveragePositionFromDB(uint id)
         {
             var query = $@"WITH ranking AS (
-	                        SELECT RANK() OVER(ORDER BY punkty.suma/przebieg.czas DESC) AS positions, 
+                            SELECT RANK() OVER(ORDER BY punkty.suma/przebieg.czas DESC) AS positions, 
                                     punkty.suma/przebieg.czas AS pkt , punkty.strzelec_id
                             FROM (
-		                        SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, 
+                                SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, 
                                         ((SUM(alpha) * 5 + SUM(charlie) * 3 + SUM(delta)) - 10 * (SUM(miss) + SUM(`n-s`) + SUM(proc) + SUM(extra))) AS suma
-		                        FROM strzelec
+                                FROM strzelec
                                 INNER JOIN tarcza ON strzelec.id = tarcza.strzelec_id
                                 INNER JOIN trasa ON tarcza.trasa_id = trasa.id
                                 GROUP BY strzelec.id, trasa.id) AS punkty
-	                        INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
+                            INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
                             INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
                         SELECT avg(ranking.positions) AS averagePosition FROM ranking
                         WHERE strzelec_id = {id};";
@@ -363,7 +374,8 @@ namespace ProjektSemestrIV.DAL.Repositories
             return position;
         }
 
-        public static uint GetShooterOnStagePosition( uint ShooterId, uint StageId ) {
+        public static uint GetShooterOnStagePosition(uint ShooterId, uint StageId)
+        {
             var query = $@"SELECT strzelec_id, trasa_id, 
                                 (SUM(alpha)*5+SUM(charlie)*3+SUM(delta)-10*(SUM(miss)+SUM(`n-s`)+SUM(proc)+SUM(extra)))
                                 /(SELECT czas FROM przebieg WHERE id_strzelec=strzelec_id and id_trasa=trasa_id) AS points
@@ -374,16 +386,19 @@ namespace ProjektSemestrIV.DAL.Repositories
 
             uint position = 0;
 
-            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                while(reader.Read()) {
+                while (reader.Read())
+                {
                     position++;
                     var shooter_id = UInt32.Parse(reader["strzelec_id"].ToString());
                     var stage_id = UInt32.Parse(reader["trasa_id"].ToString());
-                    if(shooter_id == ShooterId) {
+                    if (shooter_id == ShooterId)
+                    {
                         break;
                     }
                 }
@@ -396,7 +411,7 @@ namespace ProjektSemestrIV.DAL.Repositories
         {
             var query = $@"SELECT SUM(subQuery.points/przebieg.czas) AS sumOfPoints
                             FROM (
-	                            SELECT trasa.id AS trasa_id, strzelec.id AS strzelec_id, 
+                                SELECT trasa.id AS trasa_id, strzelec.id AS strzelec_id, 
                                         ((SUM(alpha)*5 + SUM(charlie)*3 + SUM(delta))-10*(SUM(miss)+SUM(tarcza.`n-s`)+SUM(proc)+SUM(extra))) AS points
                                 FROM tarcza INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
                                 INNER JOIN trasa ON trasa.id = tarcza.trasa_id
@@ -418,7 +433,8 @@ namespace ProjektSemestrIV.DAL.Repositories
             return points;
         }
 
-        public static double GetShooterOnStageSumOfPointsFromDB( uint ShooterId, uint StageId ) {
+        public static double GetShooterOnStageSumOfPointsFromDB(uint ShooterId, uint StageId)
+        {
             var query = $@"SELECT (SUM(alpha)*5+SUM(charlie)*3+SUM(delta)-10*(SUM(miss)+SUM(`n-s`)+SUM(proc)+SUM(extra)))
                                      /(SELECT czas FROM przebieg WHERE id_strzelec = 1 and id_trasa = 1) AS points
                             FROM tarcza
@@ -427,11 +443,12 @@ namespace ProjektSemestrIV.DAL.Repositories
 
             double points = 0;
 
-            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                if(reader.Read())
+                if (reader.Read())
                     points = reader.GetDouble("points");
                 connection.Close();
             }
@@ -464,17 +481,19 @@ namespace ProjektSemestrIV.DAL.Repositories
             return time;
         }
 
-        public static double GetShooterOnStageTime( uint ShooterId, uint StageId ) {
+        public static double GetShooterOnStageTime(uint ShooterId, uint StageId)
+        {
             var query = $@"SELECT czas FROM przebieg 
                              WHERE id_strzelec = {ShooterId} and id_trasa = {StageId};";
             double time = 0;
 
-            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                if(reader.Read())
+                if (reader.Read())
                     time = reader.GetTimeSpan("czas").TotalSeconds;
                 connection.Close();
             }
@@ -484,19 +503,19 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static ShooterWithPoints GetShooterWithPointsByStageIdFromDB(uint id)
         {
             var query = $@"WITH ranking AS (
-	                        SELECT summing.strzelec_id AS strzelec_id, summing.strzelec_imie AS imie, 
+                            SELECT summing.strzelec_id AS strzelec_id, summing.strzelec_imie AS imie, 
                                     summing.strzelec_nazwisko AS nazwisko, summing.suma/przebieg.czas AS sumaPunktow, 
                                     summing.trasa_id AS trasaId, 
                                     RANK() OVER ( PARTITION BY trasa.id ORDER BY summing.suma/przebieg.czas DESC) rankingGraczy 
-	                        FROM (
-		                        SELECT strzelec.imie AS strzelec_imie, strzelec.nazwisko AS strzelec_nazwisko, 
+                            FROM (
+                                SELECT strzelec.imie AS strzelec_imie, strzelec.nazwisko AS strzelec_nazwisko, 
                                         strzelec.id AS strzelec_id, trasa.id AS trasa_id, 
                                         (((SUM(alpha)*5 + SUM(charlie)*3 + SUM(delta))-10*(SUM(miss)+SUM(tarcza.`n-s`)+SUM(proc)+SUM(extra)))) AS suma 
                                 FROM strzelec
                                 INNER JOIN tarcza ON strzelec.id=tarcza.strzelec_id 
-		                        INNER JOIN trasa ON tarcza.trasa_id=trasa.id        
+                                INNER JOIN trasa ON tarcza.trasa_id=trasa.id        
                                 GROUP BY strzelec.id, trasa.id) AS summing
-	                        INNER JOIN przebieg ON przebieg.id_strzelec = summing.strzelec_id and przebieg.id_trasa = summing.trasa_id
+                            INNER JOIN przebieg ON przebieg.id_strzelec = summing.strzelec_id and przebieg.id_trasa = summing.trasa_id
                             INNER JOIN trasa ON trasa.id=summing.trasa_id)
                         SELECT strzelec_id AS Id, imie, nazwisko, sumaPunktow FROM ranking
                         WHERE trasaId = {id}
@@ -517,19 +536,21 @@ namespace ProjektSemestrIV.DAL.Repositories
             return shooter;
         }
 
-        public static string getShooterOnStageCompetition( uint ShooterId, uint StageId ) {
+        public static string getShooterOnStageCompetition(uint ShooterId, uint StageId)
+        {
             var query = $@"SELECT CONCAT(miejsce, ' ', DATE(rozpoczecie)) AS zawody
                             FROM trasa INNER JOIN zawody ON trasa.id_zawody=zawody.id
                             WHERE trasa.id={StageId}";
 
             string competition = "";
 
-            using(MySqlConnection connection = DatabaseConnection.Instance.Connection) {
+            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            {
 
                 MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
-                if(reader.Read())
+                if (reader.Read())
                     competition = reader.GetString("zawody");
                 connection.Close();
             }
@@ -540,34 +561,34 @@ namespace ProjektSemestrIV.DAL.Repositories
             GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(uint id)
         {
             var query = $@"WITH punktacja AS (
-	                        SELECT punkty.suma/przebieg.czas AS pkt ,punkty.strzelec_imie, punkty.strzelec_nazwisko, 
-		                            punkty.strzelec_id, punkty.trasa_id, punkty.zawody_miejsce, punkty.zawody_rozpoczecie, punkty.zawody_id
-	                        FROM (
-		                        SELECT strzelec.imie AS strzelec_imie, strzelec.nazwisko AS strzelec_nazwisko, strzelec.id AS strzelec_id, 
-				                        trasa.id AS trasa_id, zawody.id AS zawody_id, zawody.miejsce AS zawody_miejsce, zawody.rozpoczecie AS zawody_rozpoczecie, 
-				                        ((SUM(alpha) * 5 + SUM(charlie) * 3 + SUM(delta)) - 10 * (SUM(miss) + SUM(`n-s`) + SUM(proc) + SUM(extra))) AS suma
-		                        FROM strzelec
-		                        INNER JOIN tarcza ON strzelec.id = tarcza.strzelec_id
+                            SELECT punkty.suma/przebieg.czas AS pkt ,punkty.strzelec_imie, punkty.strzelec_nazwisko, 
+                                    punkty.strzelec_id, punkty.trasa_id, punkty.zawody_miejsce, punkty.zawody_rozpoczecie, punkty.zawody_id
+                            FROM (
+                                SELECT strzelec.imie AS strzelec_imie, strzelec.nazwisko AS strzelec_nazwisko, strzelec.id AS strzelec_id, 
+                                        trasa.id AS trasa_id, zawody.id AS zawody_id, zawody.miejsce AS zawody_miejsce, zawody.rozpoczecie AS zawody_rozpoczecie, 
+                                        ((SUM(alpha) * 5 + SUM(charlie) * 3 + SUM(delta)) - 10 * (SUM(miss) + SUM(`n-s`) + SUM(proc) + SUM(extra))) AS suma
+                                FROM strzelec
+                                INNER JOIN tarcza ON strzelec.id = tarcza.strzelec_id
                                 INNER JOIN trasa ON tarcza.trasa_id = trasa.id
                                 INNER JOIN zawody ON zawody.id = trasa.id_zawody
                                 WHERE trasa.id = trasa_id
                                 GROUP BY strzelec.id, zawody.id,trasa.id) AS punkty
-	                        INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
+                            INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
                             INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
                         SELECT subQuery.strzelec_id, subQuery.zawody_id, subQuery.trasa_id, subQuery.zawody_miejsce AS location, 
-		                        subQuery.strzelec_imie AS name, subQuery.strzelec_nazwisko AS surname, subQuery.position, 
-		                        subQuery.stagePoints, SUM(compQuery.compPoints) AS competitionPoints  
+                                subQuery.strzelec_imie AS name, subQuery.strzelec_nazwisko AS surname, subQuery.position, 
+                                subQuery.stagePoints, SUM(compQuery.compPoints) AS competitionPoints  
                         FROM (
-	                        SELECT punktacja.strzelec_imie, punktacja.strzelec_nazwisko, punktacja.strzelec_id, punktacja.zawody_miejsce, 
-	                        punktacja.zawody_rozpoczecie AS startDate, SUM(pkt) AS compPoints, punktacja.trasa_id, punktacja.zawody_id
+                            SELECT punktacja.strzelec_imie, punktacja.strzelec_nazwisko, punktacja.strzelec_id, punktacja.zawody_miejsce, 
+                            punktacja.zawody_rozpoczecie AS startDate, SUM(pkt) AS compPoints, punktacja.trasa_id, punktacja.zawody_id
                             FROM punktacja
                             GROUP BY strzelec_id, zawody_miejsce, zawody_rozpoczecie, trasa_id, zawody_id) AS compQuery,
-	                        (SELECT punktacja.strzelec_imie, punktacja.strzelec_nazwisko, punktacja.strzelec_id, punktacja.zawody_miejsce, 
-			                        punktacja.zawody_rozpoczecie AS startDate, RANK() OVER(ORDER BY SUM(punktacja.pkt) DESC) AS position, 
-			                        SUM(pkt) AS stagePoints, punktacja.trasa_id, punktacja.zawody_id
-	                        FROM punktacja
+                            (SELECT punktacja.strzelec_imie, punktacja.strzelec_nazwisko, punktacja.strzelec_id, punktacja.zawody_miejsce, 
+                                    punktacja.zawody_rozpoczecie AS startDate, RANK() OVER(ORDER BY SUM(punktacja.pkt) DESC) AS position, 
+                                    SUM(pkt) AS stagePoints, punktacja.trasa_id, punktacja.zawody_id
+                            FROM punktacja
                             WHERE trasa_id = {id}
-	                        GROUP BY strzelec_id, zawody_miejsce, zawody_rozpoczecie, trasa_id, zawody_id) AS subQuery
+                            GROUP BY strzelec_id, zawody_miejsce, zawody_rozpoczecie, trasa_id, zawody_id) AS subQuery
                         WHERE compQuery.zawody_id = subQuery.zawody_id AND compQuery.strzelec_id = subQuery.strzelec_id
                         GROUP BY subQuery.zawody_id, subQuery.trasa_id, location, strzelec_id, subQuery.position, subQuery.stagePoints;";
 
@@ -605,7 +626,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                 {
                     shooter = new Shooter(reader);
                 }
-                    
+
                 connection.Close();
             }
 
@@ -616,13 +637,13 @@ namespace ProjektSemestrIV.DAL.Repositories
         {
             var query = $@"SELECT SUM(subQuery.points/przebieg.czas) AS sumOfPoints
                             FROM (
-	                            SELECT trasa.id AS trasa_id, strzelec.id AS strzelec_id, 
-			                            ((SUM(alpha) * 5 + SUM(charlie) * 3 + SUM(delta)) - 10 * (SUM(miss) + SUM(`n-s`) + SUM(proc) + SUM(extra))) AS points
-	                            FROM tarcza INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
-	                            INNER JOIN trasa ON trasa.id = tarcza.trasa_id
-	                            INNER JOIN zawody ON zawody.id = trasa.id_zawody
-	                            WHERE strzelec.id = {shooterId} and zawody.id = {competitionId}
-	                            GROUP BY trasa.id) AS subQuery
+                                SELECT trasa.id AS trasa_id, strzelec.id AS strzelec_id, 
+                                        ((SUM(alpha) * 5 + SUM(charlie) * 3 + SUM(delta)) - 10 * (SUM(miss) + SUM(`n-s`) + SUM(proc) + SUM(extra))) AS points
+                                FROM tarcza INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
+                                INNER JOIN trasa ON trasa.id = tarcza.trasa_id
+                                INNER JOIN zawody ON zawody.id = trasa.id_zawody
+                                WHERE strzelec.id = {shooterId} and zawody.id = {competitionId}
+                                GROUP BY trasa.id) AS subQuery
                             INNER JOIN przebieg ON przebieg.id_trasa = subQuery.trasa_id and przebieg.id_strzelec = subQuery.strzelec_id; ";
 
             double points = 0;
@@ -649,7 +670,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN trasa ON przebieg.id_trasa=trasa.id
                             INNER JOIN zawody ON trasa.id_zawody=zawody.id
                             WHERE strzelec.id={shooterId} AND zawody.id={competitionId};";
-            
+
             double time = 0;
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
@@ -672,17 +693,17 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static uint GetShooterPositionAtCompetitionFromDB(uint shooterId, uint competitionId)
         {
             var query = $@"WITH ranking AS (
-	                        SELECT strzelec.id AS strzelec_id, 
+                            SELECT strzelec.id AS strzelec_id, 
                                     SUM(sumowanieTarcz.suma/przebieg.czas) AS sumaPunktow, 
                                     RANK() OVER (ORDER BY SUM(sumowanieTarcz.suma/przebieg.czas) desc) AS pozycja
                             FROM (
-		                        SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, 
+                                SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, 
                                         (((SUM(alpha)*5 + SUM(charlie)*3 + SUM(delta))-10*(SUM(miss)+SUM(tarcza.`n-s`)+SUM(proc)+SUM(extra)))) AS suma
                                 FROM strzelec INNER JOIN tarcza ON strzelec.id=tarcza.strzelec_id
                                 INNER JOIN trasa ON tarcza.trasa_id=trasa.id
                                 WHERE trasa.id_zawody={competitionId}
                                 GROUP BY strzelec.id, trasa.id) AS sumowanieTarcz
-	                        INNER JOIN przebieg ON przebieg.id_strzelec = sumowanieTarcz.strzelec_id and przebieg.id_trasa = sumowanieTarcz.trasa_id 
+                            INNER JOIN przebieg ON przebieg.id_strzelec = sumowanieTarcz.strzelec_id and przebieg.id_trasa = sumowanieTarcz.trasa_id 
                             INNER JOIN strzelec ON strzelec.id = sumowanieTarcz.strzelec_id 
                             GROUP BY sumowanieTarcz.strzelec_id 
                             ORDER BY sumaPunktow desc)
@@ -761,7 +782,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             }
             return accuracy;
         }
-        
+
         public static double GetShooterCharlieAccuracyAtCompetitionFromDB(uint shooterId, uint competitionId)
         {
             var query = $@"SELECT SUM(charlie)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS accuracy
@@ -797,9 +818,9 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN trasa ON trasa.id = tarcza.trasa_id
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {shooterId} and zawody.id={competitionId};";
-         
+
             double accuracy = 0;
-            
+
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
@@ -821,13 +842,13 @@ namespace ProjektSemestrIV.DAL.Repositories
             var query = $@"SELECT trasa.id AS trasaId, trasa.nazwa AS nazwaTrasy, subQuery.points AS punkty, 
                                  przebieg.czas, subQuery.points/przebieg.czas AS punktyNaTrasie
                             FROM (
-	                            SELECT trasa.id AS trasa_id, strzelec.id AS strzelec_id, 
+                                SELECT trasa.id AS trasa_id, strzelec.id AS strzelec_id, 
                                     ((SUM(alpha) * 5 + SUM(charlie) * 3 + SUM(delta)) - 10 * (SUM(miss) + SUM(tarcza.`n-s`) + SUM(proc) + SUM(extra))) AS points 
-	                            FROM tarcza INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id 
-	                            INNER JOIN trasa ON trasa.id = tarcza.trasa_id 
-	                            INNER JOIN zawody ON zawody.id = trasa.id_zawody 
-	                            WHERE strzelec.id = {shooterId} and zawody.id={competitionId}
-	                            GROUP BY trasa.id) AS subQuery 
+                                FROM tarcza INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id 
+                                INNER JOIN trasa ON trasa.id = tarcza.trasa_id 
+                                INNER JOIN zawody ON zawody.id = trasa.id_zawody 
+                                WHERE strzelec.id = {shooterId} and zawody.id={competitionId}
+                                GROUP BY trasa.id) AS subQuery 
                             INNER JOIN przebieg ON przebieg.id_trasa = subQuery.trasa_id and przebieg.id_strzelec = subQuery.strzelec_id
                             INNER JOIN trasa ON trasa.id=subQuery.trasa_id;";
 
