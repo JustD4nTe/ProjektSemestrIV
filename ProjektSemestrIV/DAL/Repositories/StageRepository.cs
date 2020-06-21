@@ -11,10 +11,12 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static List<Stage> GetAllStages()
         {
+            var query = "SELECT * FROM trasa";
             List<Stage> stages = new List<Stage>();
+
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
-                MySqlCommand command = new MySqlCommand("SELECT * FROM trasa", connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 MySqlDataReader reader = command.ExecuteReader();
                 while (reader.Read())
@@ -28,8 +30,9 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static Stage GetStageByIdFromDB(uint id)
         {
-            string query = $"SELECT * FROM trasa WHERE trasa.id = {id}";
+            var query = $"SELECT * FROM trasa WHERE trasa.id = {id}";
             Stage stage = null;
+
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
@@ -45,9 +48,11 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static Boolean AddStageToDatabase(Stage stage)
         {
             Boolean executed = false;
+            var query = $"INSERT INTO trasa (`id_zawody`, `nazwa`, `zasady`) VALUES {stage.ToInsert()}";
+
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
-                MySqlCommand command = new MySqlCommand($"INSERT INTO trasa (`id_zawody`, `nazwa`, `zasady`) VALUES {stage.ToInsert()}", connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1) executed = true;
                 connection.Close();
@@ -58,9 +63,14 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static bool EditStageInDatabase(Stage stage, UInt32 id)
         {
             Boolean executed = false;
+            var query = $@"UPDATE `trasa` 
+                            SET `id_zawody` = '{stage.Competition_ID}', `nazwa` = '{stage.Name}',
+                                `zasady` = '{stage.Rules}' 
+                            WHERE (`id` = '{id}');";
+
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
-                MySqlCommand command = new MySqlCommand($"UPDATE `trasa` SET `id_zawody` = '{stage.Competition_ID}', `nazwa` = '{stage.Name}', `zasady` = '{stage.Rules}' WHERE (`id` = '{id}');", connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1) executed = true;
                 connection.Close();
@@ -71,9 +81,11 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static bool DeleteStageFromDatabase(UInt32 stageID)
         {
             Boolean executed = false;
+            var query = $"DELETE FROM trasa WHERE (`id` = '{stageID}')";
+
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
-                MySqlCommand command = new MySqlCommand($"DELETE FROM trasa WHERE (`id` = '{stageID}')", connection);
+                MySqlCommand command = new MySqlCommand(query, connection);
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1) executed = true;
                 connection.Close();
@@ -87,11 +99,12 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static uint GetNumOfTargetsOnStageFromDB(uint id)
         {
-            string query = $@"SELECT count(tarcza.id) AS numOfTargets FROM trasa
-                            INNER JOIN tarcza
-                            ON trasa.id = tarcza.trasa_id
+            var query = $@"SELECT count(tarcza.id) AS numOfTargets FROM trasa
+                            INNER JOIN tarcza ON trasa.id = tarcza.trasa_id
                             WHERE trasa.id = {id};";
+
             uint numOfTargets = 0;
+
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
@@ -106,11 +119,12 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static double GetAverageTimeOnStageByIdFromDB(uint id)
         {
-            string query = $@"SELECT avg(przebieg.czas) AS averageTime FROM przebieg
-                            INNER JOIN trasa
-                            ON trasa.id = przebieg.id_trasa
+            var query = $@"SELECT avg(przebieg.czas) AS averageTime FROM przebieg
+                            INNER JOIN trasa ON trasa.id = przebieg.id_trasa
                             WHERE trasa.id = {id};";
+
             double averageTime = 0;
+
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
