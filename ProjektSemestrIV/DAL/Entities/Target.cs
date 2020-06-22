@@ -43,8 +43,18 @@ namespace ProjektSemestrIV.DAL.Entities {
             Extra = extra;
         }
 
-        public string ToInsert() {
-            return $"('{Shooter_ID}', '{Stage_ID}', '{Alpha}', '{Charlie}', '{Delta}', '{Miss}', '{NoShoot}', '{Procedure}', '{Extra}')";
-        }
+        public IEnumerable<MySqlParameter> GetParameters()
+        => new List<MySqlParameter>()
+            {
+                new MySqlParameter("@strzelec_id", Shooter_ID),
+                new MySqlParameter("@trasa_id", Stage_ID),
+                new MySqlParameter("@alpha", Alpha),
+                new MySqlParameter("@charlie", Charlie),
+                new MySqlParameter("@delta", Delta),
+                new MySqlParameter("@miss", Miss),
+                new MySqlParameter("@n-s", NoShoot),
+                new MySqlParameter("@proc", Procedure),
+                new MySqlParameter("@extra", Extra)
+            };
     }
 }

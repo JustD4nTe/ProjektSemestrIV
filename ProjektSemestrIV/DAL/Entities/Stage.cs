@@ -25,9 +25,12 @@ namespace ProjektSemestrIV.DAL.Entities {
             Rules = rules;
         }
 
-        public string ToInsert() {
-            return $"('{Competition_ID}', '{Name}', '{Rules}')";
-        }
-
+        public IEnumerable<MySqlParameter> GetParameters()
+        => new List<MySqlParameter>()
+            {
+                new MySqlParameter("@id_zawody", Competition_ID),
+                new MySqlParameter("@nazwa", Name),
+                new MySqlParameter("@zasady", Rules)
+            };
     }
 }

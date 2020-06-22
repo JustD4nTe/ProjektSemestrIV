@@ -15,12 +15,16 @@ namespace ProjektSemestrIV.DAL.Repositories
         {
             bool executed = false;
 
-            var query = $@"INSERT INTO przebieg (`czas`, `id_strzelec`, `id_trasa`)
-                            VALUES {run.ToInsert()}";
+            var query = @"INSERT INTO przebieg (`czas`, `id_strzelec`, `id_trasa`)
+                            VALUES (@czas, @id_strzelec, @id_trasa)";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
+
+                foreach (var parameter in run.GetParameters())
+                    command.Parameters.Add(parameter);
+
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1) executed = true;
                 connection.Close();
@@ -32,12 +36,16 @@ namespace ProjektSemestrIV.DAL.Repositories
         {
             bool executed = false;
             var query = $@"UPDATE przebieg 
-                            SET `czas` = '{run.RunTime}', `id_strzelec` = '{run.Shooter_ID}', `id_trasa` = '{run.Stage_ID}' 
+                            SET `czas` = @czas, `id_strzelec` = @id_strzelec, `id_trasa` = @id_trasa 
                             WHERE (`id_strzelec` = '{shooter_id}' and `id_trasa` = '{stage_id}')";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
+
+                foreach (var parameter in run.GetParameters())
+                    command.Parameters.Add(parameter);
+
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1) executed = true;
                 connection.Close();

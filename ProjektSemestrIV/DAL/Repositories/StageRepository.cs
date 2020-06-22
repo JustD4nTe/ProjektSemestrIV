@@ -48,11 +48,18 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static bool AddStageToDatabase(Stage stage)
         {
             bool executed = false;
-            var query = $"INSERT INTO trasa (`id_zawody`, `nazwa`, `zasady`) VALUES {stage.ToInsert()}";
+            var query = @"INSERT INTO trasa (`id_zawody`, `nazwa`, `zasady`) 
+                            VALUES (@id_zawody, @nazwa, @zasady)";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
+
+                foreach (var parameter in stage.GetParameters())
+                {
+                    command.Parameters.Add(parameter);
+                }
+
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1) executed = true;
                 connection.Close();
@@ -64,13 +71,19 @@ namespace ProjektSemestrIV.DAL.Repositories
         {
             bool executed = false;
             var query = $@"UPDATE `trasa` 
-                            SET `id_zawody` = '{stage.Competition_ID}', `nazwa` = '{stage.Name}',
-                                `zasady` = '{stage.Rules}' 
+                            SET `id_zawody` = @id_zawody, `nazwa` = @nazwa,
+                                `zasady` = @zasady 
                             WHERE (`id` = '{id}');";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
+
+                foreach (var parameter in stage.GetParameters())
+                {
+                    command.Parameters.Add(parameter);
+                }
+
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1) executed = true;
                 connection.Close();

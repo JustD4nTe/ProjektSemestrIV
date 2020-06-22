@@ -25,8 +25,12 @@ namespace ProjektSemestrIV.DAL.Entities {
             Stage_ID = stage_id;
         }
 
-        public string ToInsert() {
-            return $"('{RunTime}', '{Shooter_ID}', '{Stage_ID}'";
-        }
+        public IEnumerable<MySqlParameter> GetParameters()
+        => new List<MySqlParameter>()
+            {
+                new MySqlParameter("@czas", RunTime),
+                new MySqlParameter("@id_strzelec", Shooter_ID),
+                new MySqlParameter("@id_trasa", Stage_ID)
+            };
     }
 }

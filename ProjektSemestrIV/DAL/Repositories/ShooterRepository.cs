@@ -1,4 +1,4 @@
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
 using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Entities.AuxiliaryEntities;
 using ProjektSemestrIV.Models.ShowModels;
@@ -17,12 +17,18 @@ namespace ProjektSemestrIV.DAL.Repositories
         {
             bool executed = false;
 
-            string query = $@"INSERT INTO strzelec (`imie`, `nazwisko`)
-                                VALUES {shooter.ToInsert()}";
+            string query = @"INSERT INTO strzelec (`imie`, `nazwisko`)
+                             VALUES (@imie, @nazwisko)";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
+
+                foreach (var parameter in shooter.GetParameters())
+                {
+                    command.Parameters.Add(parameter);
+                }
+
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1) executed = true;
                 connection.Close();
@@ -34,12 +40,18 @@ namespace ProjektSemestrIV.DAL.Repositories
         {
             bool executed = false;
             var query = $@"UPDATE strzelec 
-                            SET `imie` = '{shooter.Name}', `nazwisko` = '{shooter.Surname}' 
+                            SET `imie` = @imie, `nazwisko` = @nazwisko 
                             WHERE (`id` = '{id}')";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
+
+                foreach (var parameter in shooter.GetParameters())
+                {
+                    command.Parameters.Add(parameter);
+                }
+
                 connection.Open();
                 if (command.ExecuteNonQuery() == 1) executed = true;
                 connection.Close();

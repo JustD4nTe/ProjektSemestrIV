@@ -23,8 +23,11 @@ namespace ProjektSemestrIV.DAL.Entities {
             Surname = surname;
         }
 
-        public string ToInsert() {
-            return $"('{Name}', '{Surname}')";
-        }
+        public IEnumerable<MySqlParameter> GetParameters()
+            => new List<MySqlParameter>()
+            {
+                new MySqlParameter("@imie", Name),
+                new MySqlParameter("@nazwisko", Surname)
+            };
     }
 }

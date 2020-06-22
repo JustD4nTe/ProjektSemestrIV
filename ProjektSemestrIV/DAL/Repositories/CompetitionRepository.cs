@@ -60,13 +60,17 @@ namespace ProjektSemestrIV.DAL.Repositories
                             : "NULL";
 
 
-            var query = $@"INSERT INTO zawody (`miejsce`, `rozpoczecie`, `zakonczenie`)
-                            VALUES ('{competition.Location}', '{start}', '{end}')";
+            var query = @"INSERT INTO zawody (`miejsce`, `rozpoczecie`, `zakonczenie`)
+                            VALUES (@miejsce, @rozpoczecie, @zakonczenie)";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
-
                 MySqlCommand command = new MySqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@miejsce", competition.Location);
+                command.Parameters.AddWithValue("@rozpoczecie", start);
+                command.Parameters.AddWithValue("@zakonczenie", end);
+
                 connection.Open();
 
                 if (command.ExecuteNonQuery() == 1) executed = true;
@@ -88,12 +92,17 @@ namespace ProjektSemestrIV.DAL.Repositories
                             : "NULL";
 
             var query = $@"UPDATE zawody 
-                            SET `miejsce` = '{competition.Location}', `rozpoczecie` = '{start}', `zakonczenie` = {end} 
+                            SET `miejsce` = @miejsce, `rozpoczecie` = @rozpoczenie, `zakonczenie` = @zakonczenie 
                             WHERE (`id` = '{id}')";
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
                 MySqlCommand command = new MySqlCommand(query, connection);
+
+                command.Parameters.AddWithValue("@miejsce", competition.Location);
+                command.Parameters.AddWithValue("@rozpoczenie", start);
+                command.Parameters.AddWithValue("@zakonczenie", end);
+
                 connection.Open();
 
                 if (command.ExecuteNonQuery() == 1) executed = true;
