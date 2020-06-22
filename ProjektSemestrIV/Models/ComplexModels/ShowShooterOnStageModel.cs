@@ -22,16 +22,16 @@ namespace ProjektSemestrIV.Models.ComplexModels {
         public string GetShooterSurname() => shooter.Surname;
 
         public string GetShooterOnStageGeneralAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetShooterOnStageGeneralAccuracyFromDB(shooter.ID, stage.ID));
+            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.General,shooter.ID, stage.ID));
 
         public string GetShooterOnStageAlphaAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetShooterOnStageAlphaAccuracyFromDB(shooter.ID, stage.ID));
+            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Alpha, shooter.ID, stage.ID));
 
         public string GetShooterOnStageCharlieAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetShooterOnStageCharlieAccuracyFromDB(shooter.ID, stage.ID));
+            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Charlie, shooter.ID, stage.ID));
 
         public string GetShooterOnStageDeltaAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetShooterOnStageDeltaAccuracyFromDB(shooter.ID, stage.ID));
+            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID, stage.ID));
 
         public string GetShooterGeneralAveragePosition()
             => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));

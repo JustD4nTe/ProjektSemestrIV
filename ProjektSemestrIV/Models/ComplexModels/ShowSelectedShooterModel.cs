@@ -19,20 +19,24 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public string GetShooterSurname() => shooter.Surname;
 
         public string GetShooterCompetitionGeneralAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionGeneralAccuracyFromDB(shooter.ID));
+            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.General, shooter.ID));
 
         public string GetShooterCompetitionAlphaAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionAlphaAccuracyFromDB(shooter.ID));
+            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Alpha, shooter.ID));
 
         public string GetShooterCompetitionCharlieAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionCharlieAccuracyFromDB(shooter.ID));
+            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Charlie, shooter.ID));
 
         public string GetShooterCompetitionDeltaAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetShooterCompetitionDeltaAccuracyFromDB(shooter.ID));
+            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID));
 
         public IEnumerable<ShooterCompetitionOverview> GetShooterCompetitions()
             => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID)
-                                .Select(x => new ShooterCompetitionOverview(x.CompetitionId, x.Location, x.StartDate, x.Position,x.Points));
+                                .Select(x => new ShooterCompetitionOverview(x.CompetitionId,
+                                                                            x.Location,
+                                                                            x.StartDate,
+                                                                            x.Position,
+                                                                            x.Points));
 
         public string GetShooterGeneralAveragePosition()
             => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));

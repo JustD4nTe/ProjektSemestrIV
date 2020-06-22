@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Entities.AuxiliaryEntities;
+using ProjektSemestrIV.Models;
 using ProjektSemestrIV.Models.ShowModels;
 using System;
 using System.Collections.Generic;
@@ -63,130 +64,52 @@ namespace ProjektSemestrIV.DAL.Repositories
         #endregion
 
         #region Auxiliary queries
-        public static double GetShooterCompetitionGeneralAccuracyFromDB(uint id)
+        /// <summary>
+        /// Get specified accuracy achieved by Shooter in general, stage or competition.
+        /// </summary>
+        /// <param name="accuracyType">Type of accuracy</param>
+        /// <param name="shooterId">Id of the shooter</param>
+        /// <param name="stageId">Id of the stage. If 0 it doesn't take this parameter in consideration</param>
+        /// <param name="competitionId">Id of the competition. If 0 it doesn't take this parameter in consideration</param>  
+        public static double GetAccuracy(AccuracyTypeEnum accuracyType, uint shooterId, uint stageId = 0, uint competitionId = 0)
         {
-            var query = $@"SELECT CAST((SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra))
-                                        /(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(miss)+SUM('n-s')+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
+            string sumQuery;
+            switch (accuracyType)
+            {
+                case AccuracyTypeEnum.General:
+                    sumQuery = "SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)";
+                    break;
+                case AccuracyTypeEnum.Alpha:
+                    sumQuery = "SUM(alpha)";
+                    break;
+                case AccuracyTypeEnum.Charlie:
+                    sumQuery = "SUM(charlie)";
+                    break;
+                case AccuracyTypeEnum.Delta:
+                    sumQuery = "SUM(delta)";
+                    break;
+                default:
+                    return 0.0;
+            }
+
+            string additionalwhereStatement = "";
+            if (stageId != 0)
+                additionalwhereStatement = $"AND trasa.id = {stageId}";
+            else if (competitionId != 0)
+                additionalwhereStatement = $"AND zawody.id = {competitionId}";
+
+            var query = $@"SELECT ({sumQuery}) / (SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(miss)+SUM('n-s')+SUM(extra)) AS accuracy
                             FROM tarcza
                             INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
                             INNER JOIN trasa ON trasa.id = tarcza.trasa_id
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
-                            WHERE strzelec.id = {id};";
+                            WHERE strzelec.id = {shooterId} {additionalwhereStatement};";
 
             DataTable resultOfQuery = ExecuteSelectQuery(query);
 
             var readValue = resultOfQuery.Rows[0]["accuracy"];
 
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-        }
-
-        public static double GetShooterOnStageGeneralAccuracyFromDB(uint ShooterId, uint StageId)
-        {
-            var query = $@"SELECT CAST((SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra))
-                                        /(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(miss)+SUM('n-s')+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
-                            FROM tarcza
-                            WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-        }
-
-        public static double GetShooterCompetitionAlphaAccuracyFromDB(uint id)
-        {
-            var query = $@"SELECT cast(SUM(alpha)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
-                            FROM tarcza
-                            INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody ON zawody.id = trasa.id_zawody
-                            WHERE strzelec.id = {id};";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-        }
-
-        public static double GetShooterOnStageAlphaAccuracyFromDB(uint ShooterId, uint StageId)
-        {
-            var query = $@"SELECT cast(SUM(alpha)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
-                            FROM tarcza
-                            WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-        }
-
-        public static double GetShooterCompetitionCharlieAccuracyFromDB(uint id)
-        {
-            var query = $@"SELECT cast(SUM(charlie)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
-                            FROM tarcza
-                            INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody ON zawody.id = trasa.id_zawody
-                            WHERE strzelec.id = {id};";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-        }
-
-        public static double GetShooterOnStageCharlieAccuracyFromDB(uint ShooterId, uint StageId)
-        {
-            var query = $@"SELECT cast(SUM(charlie)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
-                            FROM tarcza
-                            WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-        }
-
-        public static double GetShooterCompetitionDeltaAccuracyFromDB(uint id)
-        {
-            var query = $@"SELECT cast(SUM(delta)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
-                            FROM tarcza
-                            INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody ON zawody.id = trasa.id_zawody
-                            WHERE strzelec.id = {id};";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-        }
-
-        public static double GetShooterOnStageDeltaAccuracyFromDB(uint ShooterId, uint StageId)
-        {
-            var query = $@"SELECT cast(SUM(delta)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
-                            FROM tarcza
-                            WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
+            return readValue is DBNull ? 0.0 : double.Parse(readValue.ToString());
         }
 
         public static IEnumerable<ShooterCompetition> GetShooterAccomplishedCompetitionsFromDB(uint id)
@@ -487,75 +410,6 @@ namespace ProjektSemestrIV.DAL.Repositories
             DataTable resultsOfQuery = ExecuteSelectQuery(query);
 
             return uint.Parse(resultsOfQuery.Rows[0]["pozycja"].ToString());
-        }
-
-        public static double GetShooterGeneralAccuracyAtCompetitionFromDB(uint shooterId, uint competitionId)
-        {
-            var query = $@"SELECT (SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra))/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(miss)+SUM('n-s')+SUM(extra)) AS accuracy
-                            FROM tarcza
-                            INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody ON zawody.id = trasa.id_zawody
-                            WHERE strzelec.id = {shooterId} and zawody.id={competitionId};";
-
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : (double)readValue;
-        }
-
-        public static double GetShooterAlphaAccuracyAtCompetitionFromDB(uint shooterId, uint competitionId)
-        {
-            var query = $@"SELECT SUM(alpha)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS accuracy
-                            FROM tarcza
-                            INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody ON zawody.id = trasa.id_zawody
-                            WHERE strzelec.id = {shooterId} and zawody.id={competitionId};";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-        }
-
-        public static double GetShooterCharlieAccuracyAtCompetitionFromDB(uint shooterId, uint competitionId)
-        {
-            var query = $@"SELECT SUM(charlie)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS accuracy
-                            FROM tarcza
-                            INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody ON zawody.id = trasa.id_zawody
-                            WHERE strzelec.id = {shooterId} and zawody.id={competitionId};";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-        }
-
-        public static double GetShooterDeltaAccuracyAtCompetitionFromDB(uint shooterId, uint competitionId)
-        {
-            var query = $@"SELECT SUM(delta)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS accuracy
-                            FROM tarcza
-                            INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasa ON trasa.id = tarcza.trasa_id
-                            INNER JOIN zawody ON zawody.id = trasa.id_zawody
-                            WHERE strzelec.id = {shooterId} and zawody.id={competitionId};";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static IEnumerable<ShooterStatsOnStage> GetShooterStatsOnStages(uint shooterId, uint competitionId)
