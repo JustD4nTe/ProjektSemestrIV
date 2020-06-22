@@ -26,7 +26,7 @@ namespace ProjektSemestrIV.DAL.Entities {
         }
 
         public string ToInsert() {
-            return $"('{RunTime}', '{Shooter_ID}', '{Stage_ID}'";
+            return $"('{RunTime}', '{Shooter_ID}', '{Stage_ID}')";
         }
     }
 }
