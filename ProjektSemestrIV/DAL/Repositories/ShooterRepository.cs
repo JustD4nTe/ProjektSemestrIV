@@ -4,110 +4,61 @@ using ProjektSemestrIV.DAL.Entities.AuxiliaryEntities;
 using ProjektSemestrIV.Models.ShowModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Repositories
 {
-    class ShooterRepository
+    class ShooterRepository : BaseRepository
     {
         #region CRUD
         public static bool AddShooterToDB(Shooter shooter)
         {
-            bool executed = false;
+            var query = @"INSERT INTO strzelec (`imie`, `nazwisko`)
+                            VALUES (@imie, @nazwisko)";
 
-            string query = @"INSERT INTO strzelec (`imie`, `nazwisko`)
-                             VALUES (@imie, @nazwisko)";
-
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-
-                foreach (var parameter in shooter.GetParameters())
-                {
-                    command.Parameters.Add(parameter);
-                }
-
-                connection.Open();
-                if (command.ExecuteNonQuery() == 1) executed = true;
-                connection.Close();
-            }
-            return executed;
+            return ExecuteAddQuery(query, shooter.GetParameters());
         }
 
         public static bool EditShooterInDB(Shooter shooter, uint id)
         {
-            bool executed = false;
             var query = $@"UPDATE strzelec 
                             SET `imie` = @imie, `nazwisko` = @nazwisko 
                             WHERE (`id` = '{id}')";
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-
-                foreach (var parameter in shooter.GetParameters())
-                {
-                    command.Parameters.Add(parameter);
-                }
-
-                connection.Open();
-                if (command.ExecuteNonQuery() == 1) executed = true;
-                connection.Close();
-            }
-            return executed;
+            return ExecuteUpdateQuery(query, shooter.GetParameters());
         }
 
-        public static List<Shooter> GetAllShootersFromDB()
+        public static IEnumerable<Shooter> GetAllShootersFromDB()
         {
             var query = "SELECT * FROM strzelec";
 
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
             List<Shooter> shooters = new List<Shooter>();
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    shooters.Add(new Shooter(reader));
-                }
-                connection.Close();
-            }
+
+            foreach (DataRow row in resultOfQuery.Rows)
+                shooters.Add(new Shooter(row));
+
             return shooters;
         }
 
         public static Shooter GetShooterByIdFromDB(uint id)
         {
             string query = $"SELECT * FROM strzelec WHERE strzelec.id = {id}";
-            Shooter shooter = null;
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                    shooter = new Shooter(reader);
-                connection.Close();
-            }
-            return shooter;
+            // when result contains single shooter
+            // return new Shooter object
+            // otherwise return null
+            return resultOfQuery.Rows.Count == 1 ? new Shooter(resultOfQuery.Rows[0]) : null;
         }
 
         public static bool DeleteShooterFromDB(uint shooterID)
         {
-            bool executed = false;
             string query = $"DELETE FROM strzelec WHERE (`id` = '{shooterID}')";
-
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                if (command.ExecuteNonQuery() == 1) executed = true;
-                connection.Close();
-            }
-            return executed;
+            return ExecuteDeleteQuery(query);
         }
         #endregion
 
@@ -122,21 +73,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {id};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-                }
-                connection.Close();
-            }
-            return accuracy;
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
+
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static double GetShooterOnStageGeneralAccuracyFromDB(uint ShooterId, uint StageId)
@@ -146,21 +88,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             FROM tarcza
                             WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
-                }
-                connection.Close();
-            }
-            return accuracy;
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
+
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static double GetShooterCompetitionAlphaAccuracyFromDB(uint id)
@@ -172,21 +105,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {id};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
-                }
-                connection.Close();
-            }
-            return accuracy;
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
+
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static double GetShooterOnStageAlphaAccuracyFromDB(uint ShooterId, uint StageId)
@@ -195,22 +119,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             FROM tarcza
                             WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
-                }
-                connection.Close();
-            }
-            return accuracy;
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static double GetShooterCompetitionCharlieAccuracyFromDB(uint id)
@@ -222,21 +136,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {id};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
-                }
-                connection.Close();
-            }
-            return accuracy;
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
+
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static double GetShooterOnStageCharlieAccuracyFromDB(uint ShooterId, uint StageId)
@@ -245,22 +150,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             FROM tarcza
                             WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
-                }
-                connection.Close();
-            }
-            return accuracy;
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static double GetShooterCompetitionDeltaAccuracyFromDB(uint id)
@@ -272,21 +167,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {id};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
-                }
-                connection.Close();
-            }
-            return accuracy;
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
+
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static double GetShooterOnStageDeltaAccuracyFromDB(uint ShooterId, uint StageId)
@@ -295,22 +181,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             FROM tarcza
                             WHERE strzelec_id = {ShooterId} and trasa_id = {StageId};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
-                }
-                connection.Close();
-            }
-            return accuracy;
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static IEnumerable<ShooterCompetition> GetShooterAccomplishedCompetitionsFromDB(uint id)
@@ -366,56 +242,41 @@ namespace ProjektSemestrIV.DAL.Repositories
                                 GROUP BY strzelec.id, trasa.id) AS punkty
                             INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
                             INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
-                        SELECT avg(ranking.positions) AS averagePosition FROM ranking
+                        SELECT avg(ranking.positions) AS averagePosition 
+                        FROM ranking
                         WHERE strzelec_id = {id};";
 
-            double position = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    var readValue = reader["averagePosition"];
-                    position = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
-                }
-                connection.Close();
-            }
-            return position;
+            var readValue = resultOfQuery.Rows[0]["averagePosition"];
+
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static uint GetShooterOnStagePosition(uint ShooterId, uint StageId)
         {
             var query = $@"SELECT strzelec_id, trasa_id, 
                                 (SUM(alpha)*5+SUM(charlie)*3+SUM(delta)-10*(SUM(miss)+SUM(`n-s`)+SUM(proc)+SUM(extra)))
-                                /(SELECT czas FROM przebieg WHERE id_strzelec=strzelec_id and id_trasa=trasa_id) AS points
+                                    /(SELECT czas FROM przebieg WHERE id_strzelec=strzelec_id and id_trasa=trasa_id) AS points
                             FROM tarcza
                             WHERE trasa_id = {StageId}
                             GROUP BY strzelec_id, trasa_id
                             ORDER BY points DESC;";
 
+            DataTable resultsOfQuery = ExecuteSelectQuery(query);
             uint position = 0;
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
+            for (int i = 0; i < resultsOfQuery.Rows.Count; i++)
             {
+                position++;
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    position++;
-                    var shooter_id = UInt32.Parse(reader["strzelec_id"].ToString());
-                    var stage_id = UInt32.Parse(reader["trasa_id"].ToString());
-                    if (shooter_id == ShooterId)
-                    {
-                        break;
-                    }
-                }
-                connection.Close();
+                var shooter_id = uint.Parse(resultsOfQuery.Rows[i]["strzelec_id"].ToString());
+
+                if (shooter_id == ShooterId)
+                    break;
             }
+
             return position;
         }
 
@@ -431,18 +292,10 @@ namespace ProjektSemestrIV.DAL.Repositories
                                 WHERE strzelec.id = {id}
                                 GROUP BY trasa.id) AS subQuery
                             INNER JOIN przebieg ON przebieg.id_trasa=subQuery.trasa_id and przebieg.id_strzelec=subQuery.strzelec_id;";
-            double points = 0;
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                    points = reader.GetDouble("sumOfPoints");
-                connection.Close();
-            }
-            return points;
+            DataTable resultsOfQuery = ExecuteSelectQuery(query);
+
+            return double.Parse(resultsOfQuery.Rows[0]["sumOfPoints"].ToString());
         }
 
         public static double GetShooterOnStageSumOfPointsFromDB(uint ShooterId, uint StageId)
@@ -453,18 +306,9 @@ namespace ProjektSemestrIV.DAL.Repositories
                             WHERE tarcza.strzelec_id = {ShooterId} and tarcza.trasa_id = {StageId}
                             GROUP BY tarcza.strzelec_id, tarcza.trasa_id;";
 
-            double points = 0;
+            DataTable resultsOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                    points = reader.GetDouble("points");
-                connection.Close();
-            }
-            return points;
+            return double.Parse(resultsOfQuery.Rows[0]["points"].ToString());
         }
 
         public static double GetShooterGeneralSumOfTimesFromDB(uint id)
@@ -478,38 +322,19 @@ namespace ProjektSemestrIV.DAL.Repositories
                                 AND strzelec.id = przebieg.id_strzelec
                             WHERE strzelec.id = {id};";
 
-            double time = 0;
+            DataTable resultsOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                    time = reader.GetDouble("sumOfTimes");
-                connection.Close();
-            }
-            return time;
+            return double.Parse(resultsOfQuery.Rows[0]["sumOfTimes"].ToString());
         }
 
         public static double GetShooterOnStageTime(uint ShooterId, uint StageId)
         {
             var query = $@"SELECT czas FROM przebieg 
                              WHERE id_strzelec = {ShooterId} and id_trasa = {StageId};";
-            double time = 0;
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
+            DataTable resultsOfQuery = ExecuteSelectQuery(query);
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                    time = reader.GetTimeSpan("czas").TotalSeconds;
-                connection.Close();
-            }
-            return time;
+            return TimeSpan.Parse(resultsOfQuery.Rows[0]["czas"].ToString()).TotalSeconds;
         }
 
         public static ShooterWithPoints GetShooterWithPointsByStageIdFromDB(uint id)
@@ -533,19 +358,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                         WHERE trasaId = {id}
                         LIMIT 1;";
 
-            ShooterWithPoints shooter = null;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                    shooter = new ShooterWithPoints(reader);
-                connection.Close();
-            }
-            return shooter;
+            // when result contains only one row of stage
+            // return new Stage object
+            // otherwise return null
+            return resultOfQuery.Rows.Count == 1 ? new ShooterWithPoints(resultOfQuery.Rows[0]) : null;
         }
 
         public static string getShooterOnStageCompetition(uint ShooterId, uint StageId)
@@ -554,19 +372,9 @@ namespace ProjektSemestrIV.DAL.Repositories
                             FROM trasa INNER JOIN zawody ON trasa.id_zawody=zawody.id
                             WHERE trasa.id={StageId}";
 
-            string competition = "";
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                    competition = reader.GetString("zawody");
-                connection.Close();
-            }
-            return competition;
+            return resultOfQuery.Rows[0]["zawody"].ToString();
         }
 
         public static IEnumerable<ShooterWithStagePointsAndCompetitionPoints>
@@ -605,44 +413,24 @@ namespace ProjektSemestrIV.DAL.Repositories
                         GROUP BY subQuery.zawody_id, subQuery.trasa_id, location, strzelec_id, subQuery.position, subQuery.stagePoints;";
 
             var shooters = new List<ShooterWithStagePointsAndCompetitionPoints>();
+            DataTable resultsOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                    shooters.Add(new ShooterWithStagePointsAndCompetitionPoints((uint)reader.GetUInt32("strzelec_id"),
-                                                                                (uint)reader.GetUInt64("position"),
-                                                                                reader.GetString("name"),
-                                                                                reader.GetString("surname"),
-                                                                                reader.GetDouble("stagePoints"),
-                                                                                reader.GetDouble("competitionPoints")));
-                connection.Close();
-            }
+            foreach (DataRow row in resultsOfQuery.Rows)
+                shooters.Add(new ShooterWithStagePointsAndCompetitionPoints(row));
+
             return shooters;
         }
 
         public static Shooter GetShooterFromDB(uint id)
         {
             var query = $"SELECT * FROM strzelec WHERE strzelec.id={id}";
-            Shooter shooter = null;
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-                while (reader.Read())
-                {
-                    shooter = new Shooter(reader);
-                }
-
-                connection.Close();
-            }
-
-            return shooter;
+            // when result contains only one row of shooter
+            // return new Shooter object
+            // otherwise return null
+            return resultOfQuery.Rows.Count == 1 ? new Shooter(resultOfQuery.Rows[0]) : null;
         }
 
         public static double GetShooterSumOfPointsAtCompetitionFromDB(uint shooterId, uint competitionId)
@@ -658,20 +446,9 @@ namespace ProjektSemestrIV.DAL.Repositories
                                 GROUP BY trasa.id) AS subQuery
                             INNER JOIN przebieg ON przebieg.id_trasa = subQuery.trasa_id and przebieg.id_strzelec = subQuery.strzelec_id; ";
 
-            double points = 0;
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+            DataTable resultsOfQuery = ExecuteSelectQuery(query);
 
-                if (reader.Read())
-                {
-                    points = reader.GetDouble("sumOfPoints");
-                }
-                connection.Close();
-            }
-            return points;
+            return double.Parse(resultsOfQuery.Rows[0]["sumOfPoints"].ToString());
         }
 
         public static double GetShooterSumOfTimesAtCompetitionFromDB(uint shooterId, uint competitionId)
@@ -683,23 +460,9 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON trasa.id_zawody=zawody.id
                             WHERE strzelec.id={shooterId} AND zawody.id={competitionId};";
 
-            double time = 0;
+            DataTable resultsOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    time = reader.GetDouble("sumOfTimes");
-                }
-
-                connection.Close();
-            }
-
-            return time;
+            return double.Parse(resultsOfQuery.Rows[0]["sumOfTimes"].ToString());
         }
 
         public static uint GetShooterPositionAtCompetitionFromDB(uint shooterId, uint competitionId)
@@ -721,23 +484,9 @@ namespace ProjektSemestrIV.DAL.Repositories
                             ORDER BY sumaPunktow desc)
                         SELECT ranking.pozycja FROM ranking WHERE strzelec_id={shooterId}";
 
-            uint position = 0;
+            DataTable resultsOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    position = reader.GetUInt32("pozycja");
-                }
-
-                connection.Close();
-            }
-
-            return position;
+            return uint.Parse(resultsOfQuery.Rows[0]["pozycja"].ToString());
         }
 
         public static double GetShooterGeneralAccuracyAtCompetitionFromDB(uint shooterId, uint competitionId)
@@ -749,22 +498,13 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {shooterId} and zawody.id={competitionId};";
 
-            double accuracy = 0;
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue is DBNull ? 0.0 : (double)readValue;
-                }
-                connection.Close();
-            }
-            return accuracy;
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
+
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : (double)readValue;
         }
 
         public static double GetShooterAlphaAccuracyAtCompetitionFromDB(uint shooterId, uint competitionId)
@@ -776,23 +516,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {shooterId} and zawody.id={competitionId};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
 
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
-                }
-                connection.Close();
-            }
-            return accuracy;
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static double GetShooterCharlieAccuracyAtCompetitionFromDB(uint shooterId, uint competitionId)
@@ -804,22 +533,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {shooterId} and zawody.id={competitionId};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
 
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
-                }
-                connection.Close();
-            }
-            return accuracy;
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static double GetShooterDeltaAccuracyAtCompetitionFromDB(uint shooterId, uint competitionId)
@@ -831,22 +550,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {shooterId} and zawody.id={competitionId};";
 
-            double accuracy = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
+            var readValue = resultOfQuery.Rows[0]["accuracy"];
 
-                if (reader.Read())
-                {
-                    var readValue = reader["accuracy"];
-                    accuracy = readValue != DBNull.Value ? decimal.ToDouble((decimal)readValue) : 0.0;
-                }
-                connection.Close();
-            }
-            return accuracy;
+            // when db has not enough data to calculate accuracy => it returns DBNull
+            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
         public static IEnumerable<ShooterStatsOnStage> GetShooterStatsOnStages(uint shooterId, uint competitionId)
@@ -865,20 +574,10 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN trasa ON trasa.id=subQuery.trasa_id;";
 
             var shooters = new List<ShooterStatsOnStage>();
+            DataTable resultsOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    shooters.Add(new ShooterStatsOnStage(reader));
-                }
-
-                connection.Close();
-            }
+            foreach (DataRow row in resultsOfQuery.Rows)
+                shooters.Add(new ShooterStatsOnStage(row));
 
             return shooters;
         }

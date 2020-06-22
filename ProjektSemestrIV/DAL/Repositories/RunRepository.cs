@@ -2,55 +2,31 @@
 using ProjektSemestrIV.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Repositories
 {
-    class RunRepository
+    class RunRepository : BaseRepository
     {
         #region CRUD
         public static bool AddRunToDatabase(Run run)
         {
-            bool executed = false;
-
             var query = @"INSERT INTO przebieg (`czas`, `id_strzelec`, `id_trasa`)
                             VALUES (@czas, @id_strzelec, @id_trasa)";
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-
-                foreach (var parameter in run.GetParameters())
-                    command.Parameters.Add(parameter);
-
-                connection.Open();
-                if (command.ExecuteNonQuery() == 1) executed = true;
-                connection.Close();
-            }
-            return executed;
+            return ExecuteAddQuery(query, run.GetParameters());
         }
 
         public static bool EditRunInDatabase(Run run, uint shooter_id, uint stage_id)
         {
-            bool executed = false;
             var query = $@"UPDATE przebieg 
                             SET `czas` = @czas, `id_strzelec` = @id_strzelec, `id_trasa` = @id_trasa 
                             WHERE (`id_strzelec` = '{shooter_id}' and `id_trasa` = '{stage_id}')";
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-
-                foreach (var parameter in run.GetParameters())
-                    command.Parameters.Add(parameter);
-
-                connection.Open();
-                if (command.ExecuteNonQuery() == 1) executed = true;
-                connection.Close();
-            }
-            return executed;
+            return ExecuteUpdateQuery(query, run.GetParameters());
         }
 
         public static Run GetRunWhere(uint shooter_id, uint stage_id)
@@ -58,37 +34,20 @@ namespace ProjektSemestrIV.DAL.Repositories
             var query = $@"SELECT * FROM przebieg 
                            WHERE (`id_strzelec` = '{shooter_id}' and `id_trasa` = '{stage_id}')";
 
-            Run run = null;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    run = new Run(reader);
-                }
-                connection.Close();
-            }
-            return run;
+            // when result contains only one row of run
+            // return new Run object
+            // otherwise return null
+            return resultOfQuery.Rows.Count == 1 ? new Run(resultOfQuery.Rows[0]) : null;
         }
 
-        public static bool DeleteRunFromDatabase(uint runID)
+        public static bool DeleteRunFromDatabase(uint run_id)
         {
-            var query = $@"DELETE FROM przebieg WHERE (`id` = '{runID}')";
+            var query = $@"DELETE FROM przebieg WHERE (`id` = '{run_id}')";
 
-            bool executed = false;
-
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                if (command.ExecuteNonQuery() == 1) executed = true;
-                connection.Close();
-            }
-            return executed;
+            return ExecuteDeleteQuery(query);
         }
-        #endregion 
+        #endregion
     }
 }

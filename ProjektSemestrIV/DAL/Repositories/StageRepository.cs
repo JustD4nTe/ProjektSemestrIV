@@ -2,108 +2,63 @@
 using ProjektSemestrIV.DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics;
 
 namespace ProjektSemestrIV.DAL.Repositories
 {
-    internal class StageRepository
+    internal class StageRepository : BaseRepository
     {
         #region CRUD
 
-        public static List<Stage> GetAllStages()
+        public static IEnumerable<Stage> GetAllStages()
         {
             var query = "SELECT * FROM trasa";
+
             List<Stage> stages = new List<Stage>();
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    stages.Add(new Stage(reader));
-                }
-                connection.Close();
-            }
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
+
+            foreach (DataRow row in resultOfQuery.Rows)
+                stages.Add(new Stage(row));
+
             return stages;
         }
 
         public static Stage GetStageByIdFromDB(uint id)
         {
             var query = $"SELECT * FROM trasa WHERE trasa.id = {id}";
-            Stage stage = null;
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                    stage = new Stage(reader);
-                connection.Close();
-            }
-            return stage;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
+
+            // when result contains only one row of stage
+            // return new Stage object
+            // otherwise return null
+            return resultOfQuery.Rows.Count == 1 ? new Stage(resultOfQuery.Rows[0]) : null;
         }
 
         public static bool AddStageToDatabase(Stage stage)
         {
-            bool executed = false;
             var query = @"INSERT INTO trasa (`id_zawody`, `nazwa`, `zasady`) 
                             VALUES (@id_zawody, @nazwa, @zasady)";
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-
-                foreach (var parameter in stage.GetParameters())
-                {
-                    command.Parameters.Add(parameter);
-                }
-
-                connection.Open();
-                if (command.ExecuteNonQuery() == 1) executed = true;
-                connection.Close();
-            }
-            return executed;
+            return ExecuteAddQuery(query, stage.GetParameters());
         }
 
         public static bool EditStageInDatabase(Stage stage, uint id)
         {
-            bool executed = false;
             var query = $@"UPDATE `trasa` 
                             SET `id_zawody` = @id_zawody, `nazwa` = @nazwa,
                                 `zasady` = @zasady 
                             WHERE (`id` = '{id}');";
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-
-                foreach (var parameter in stage.GetParameters())
-                {
-                    command.Parameters.Add(parameter);
-                }
-
-                connection.Open();
-                if (command.ExecuteNonQuery() == 1) executed = true;
-                connection.Close();
-            }
-            return executed;
+            return ExecuteUpdateQuery(query, stage.GetParameters());
         }
 
         public static bool DeleteStageFromDatabase(uint stageID)
         {
-            bool executed = false;
             var query = $"DELETE FROM trasa WHERE (`id` = '{stageID}')";
-
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                if (command.ExecuteNonQuery() == 1) executed = true;
-                connection.Close();
-            }
-            return executed;
+            return ExecuteDeleteQuery(query);
         }
 
         #endregion CRUD
@@ -116,18 +71,13 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN tarcza ON trasa.id = tarcza.trasa_id
                             WHERE trasa.id = {id};";
 
-            uint numOfTargets = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                    numOfTargets = (uint)reader.GetInt64("numOfTargets");
-                connection.Close();
-            }
-            return numOfTargets;
+            // when result contains only one row 
+            // return first value, otherwise 0
+            return resultOfQuery.Rows.Count == 1 
+                    ? uint.Parse((resultOfQuery.Rows[0]["numOfTargets"].ToString())) 
+                    : 0;
         }
 
         public static double GetAverageTimeOnStageByIdFromDB(uint id)
@@ -136,18 +86,13 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN trasa ON trasa.id = przebieg.id_trasa
                             WHERE trasa.id = {id};";
 
-            double averageTime = 0;
+            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                    averageTime = reader.GetDouble("averageTime");
-                connection.Close();
-            }
-            return averageTime;
+            // when result contains only one row 
+            // return first value, otherwise 0
+            return resultOfQuery.Rows.Count == 1 
+                    ? double.Parse((resultOfQuery.Rows[0]["averageTime"].ToString()))
+                    : 0.0;
         }
 
         #endregion Auxiliary queries

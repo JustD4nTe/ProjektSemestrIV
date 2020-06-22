@@ -1,5 +1,6 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 
 namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
@@ -16,6 +17,14 @@ namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
             Name = reader.GetString("imie");
             Surname = reader.GetString("nazwisko");
             Points = reader.GetDouble("sumaPunktow");
+        }
+
+        public ShooterWithPoints(DataRow data)
+        {
+            Id = uint.Parse(data["Id"].ToString());
+            Name = data["imie"].ToString();
+            Surname = data["nazwisko"].ToString();
+            Points = double.Parse(data["sumaPunktow"].ToString());
         }
     }
 }

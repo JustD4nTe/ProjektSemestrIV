@@ -1,4 +1,6 @@
-﻿namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
+﻿using System.Data;
+
+namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
     class ShooterWithStagePointsAndCompetitionPoints
     {
@@ -9,14 +11,14 @@
         public double StagePoints { get; }
         public double CompetitionPoints { get; }
 
-        public ShooterWithStagePointsAndCompetitionPoints( uint id, uint position, string name, string surname, double stagePoints, double competitionPoints)
+        public ShooterWithStagePointsAndCompetitionPoints(DataRow data)
         {
-            Id = id;
-            Position = position;
-            Name = name;
-            Surname = surname;
-            StagePoints = stagePoints;
-            CompetitionPoints = competitionPoints;
+            Id = uint.Parse(data["strzelec_id"].ToString());
+            Position = uint.Parse(data["position"].ToString());
+            Name = data["name"].ToString();
+            Surname = data["surname"].ToString();
+            StagePoints = double.Parse(data["stagePoints"].ToString());
+            CompetitionPoints = double.Parse(data["competitionPoints"].ToString());
         }
     }
 }

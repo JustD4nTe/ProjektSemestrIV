@@ -138,6 +138,7 @@
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithPoints.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithCompetitionTime.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
+    <Compile Include="DAL\Repositories\BaseRepository.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedShooterInCompetitionModel.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedStageModel.cs" />
     <Compile Include="Models\ComplexModels\ShowShooterOnStageModel.cs" />

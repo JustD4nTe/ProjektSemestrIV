@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
@@ -10,13 +11,13 @@ namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
         public string Time { get; }
         public double StagePoints { get; }
 
-        public ShooterStatsOnStage(MySqlDataReader reader)
+        public ShooterStatsOnStage(DataRow data)
         {
-            StageId = reader.GetUInt32("trasaId");
-            StageName = reader.GetString("nazwaTrasy");
-            Points = reader.GetDouble("punkty");
-            Time = reader.GetTimeSpan("czas").ToString();
-            StagePoints = reader.GetDouble("punktyNaTrasie");
+            StageId = uint.Parse(data["trasaId"].ToString());
+            StageName = data["nazwaTrasy"].ToString();
+            Points = double.Parse(data["punkty"].ToString());
+            Time = data["czas"].ToString();
+            StagePoints = double.Parse(data["punktyNaTrasie"].ToString());
         }
     }
 }
