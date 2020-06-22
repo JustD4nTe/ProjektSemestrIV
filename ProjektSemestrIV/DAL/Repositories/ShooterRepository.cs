@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Entities.AuxiliaryEntities;
 using ProjektSemestrIV.Models.ShowModels;
@@ -156,7 +156,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             var query = $@"SELECT cast(SUM(alpha)/(SUM(alpha)+SUM(charlie)+SUM(delta)+SUM(extra)) AS DECIMAL(10,9)) AS accuracy
                             FROM tarcza
                             INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
-                            INNER JOIN trasaON trasa.id = tarcza.trasa_id
+                            INNER JOIN trasa ON trasa.id = tarcza.trasa_id
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {id};";
 
