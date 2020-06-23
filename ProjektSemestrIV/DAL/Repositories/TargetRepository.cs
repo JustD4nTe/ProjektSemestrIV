@@ -28,7 +28,7 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static bool AddTargetToDatabase(Target target)
         {
             var query = @"INSERT INTO tarcza (`strzelec_id`, `trasa_id`, `alpha`, `charlie`, `delta`, `miss`, `n-s`, `proc`, `extra`)
-                            VALUES (@strzelec_id, @trasa_id, @alpha, @charlie, @delta, @miss, @n-s, @proc, @extra)";
+                            VALUES (@strzelec_id, @trasa_id, @alpha, @charlie, @delta, @miss, @ns, @proc, @extra)";
 
             return ExecuteAddQuery(query, target.GetParameters());
         }
@@ -38,9 +38,9 @@ namespace ProjektSemestrIV.DAL.Repositories
             var query = $@"UPDATE `tarcza` 
                             SET `strzelec_id` = @strzelec_id, `trasa_id` = @trasa_id, 
                                 `alpha` = @alpha, `charlie` = @charlie, 
-                                `delta` = @delta, `miss` = @miss, `n-s` = @n-s, 
+                                `delta` = @delta, `miss` = @miss, `n-s` = @ns, 
                                 `proc` = @proc, `extra` = @extra 
-                            WHERE strzelec_id = '{target_id}'";
+                            WHERE id = '{target_id}'";
 
             return ExecuteUpdateQuery(query, target.GetParameters());
         }

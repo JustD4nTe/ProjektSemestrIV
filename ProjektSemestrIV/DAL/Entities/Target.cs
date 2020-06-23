@@ -57,7 +57,7 @@ namespace ProjektSemestrIV.DAL.Entities
                 new MySqlParameter("@charlie", Charlie),
                 new MySqlParameter("@delta", Delta),
                 new MySqlParameter("@miss", Miss),
-                new MySqlParameter("@n-s", NoShoot),
+                new MySqlParameter("@ns", NoShoot),
                 new MySqlParameter("@proc", Procedure),
                 new MySqlParameter("@extra", Extra)
             };
