@@ -9,20 +9,15 @@ using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Entities
 {
-    public class Shooter
+    public class Shooter : IBaseEntity
     {
-        public UInt32 ID { get; set; }
-        public String Name { get; set; }
-        public String Surname { get; set; }
+        public uint ID { get; set; }
+        public string Name { get; set; }
+        public string Surname { get; set; }
 
-        public Shooter(DataRow data)
-        {
-            ID = UInt32.Parse(data["id"].ToString());
-            Name = data["imie"].ToString();
-            Surname = data["nazwisko"].ToString();
-        }
+        public Shooter() { }
 
-        public Shooter(String name, String surname)
+        public Shooter(string name, string surname)
         {
             Name = name;
             Surname = surname;
@@ -34,5 +29,15 @@ namespace ProjektSemestrIV.DAL.Entities
                 new MySqlParameter("@imie", Name),
                 new MySqlParameter("@nazwisko", Surname)
             };
+
+        public void SetData(IDataReader dataReader)
+        {
+            ID = uint.Parse(dataReader["id"].ToString());
+            Name = dataReader["imie"].ToString();
+            Surname = dataReader["nazwisko"].ToString();
+        }
+
+        // shallow copy
+        public object Clone() => this.MemberwiseClone();
     }
 }

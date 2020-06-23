@@ -16,13 +16,7 @@ namespace ProjektSemestrIV.DAL.Repositories
         {
             var query = $"SELECT * FROM tarcza WHERE strzelec_id = '{shooter_id}' AND trasa_id = '{stage_id}'";
 
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-            List<Target> targets = new List<Target>();
-
-            foreach (DataRow row in resultOfQuery.Rows)
-                targets.Add(new Target(row));
-
-            return targets;
+            return ExecuteSelectQuery<Target>(query);
         }
 
         public static bool AddTargetToDatabase(Target target)
@@ -30,7 +24,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             var query = @"INSERT INTO tarcza (`strzelec_id`, `trasa_id`, `alpha`, `charlie`, `delta`, `miss`, `n-s`, `proc`, `extra`)
                             VALUES (@strzelec_id, @trasa_id, @alpha, @charlie, @delta, @miss, @ns, @proc, @extra)";
 
-            return ExecuteAddQuery(query, target.GetParameters());
+            return ExecuteModifyQuery(query, target.GetParameters());
         }
 
         public static bool EditTargetInDatabase(Target target, uint target_id)
@@ -42,13 +36,14 @@ namespace ProjektSemestrIV.DAL.Repositories
                                 `proc` = @proc, `extra` = @extra 
                             WHERE id = '{target_id}'";
 
-            return ExecuteUpdateQuery(query, target.GetParameters());
+            return ExecuteModifyQuery(query, target.GetParameters());
         }
 
         public static bool DeleteTargetFromDatabase(uint targetID)
         {
             var query = $"DELETE FROM tarcza WHERE (`id` = '{targetID}')";
-            return ExecuteDeleteQuery(query);
+
+            return ExecuteModifyQuery(query);
         }
         #endregion
     }

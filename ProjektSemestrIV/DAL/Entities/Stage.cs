@@ -8,22 +8,16 @@ using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Entities
 {
-    class Stage
+    class Stage : IBaseEntity
     {
-        public UInt32 ID { get; set; }
-        public UInt32 Competition_ID { get; set; }
-        public String Name { get; set; }
-        public String Rules { get; set; }
+        public uint ID { get; private set; }
+        public uint Competition_ID { get; private set; }
+        public string Name { get; private set; }
+        public string Rules { get; private set; }
 
-        public Stage(DataRow data)
-        {
-            ID = UInt32.Parse(data["id"].ToString());
-            Competition_ID = UInt32.Parse(data["id_zawody"].ToString());
-            Name = data["nazwa"].ToString();
-            Rules = data["zasady"].ToString();
-        }
+        public Stage() { }
 
-        public Stage(UInt32 competition_ID, String name, String rules)
+        public Stage(uint competition_ID, string name, string rules)
         {
             Competition_ID = competition_ID;
             Name = name;
@@ -37,5 +31,16 @@ namespace ProjektSemestrIV.DAL.Entities
                 new MySqlParameter("@nazwa", Name),
                 new MySqlParameter("@zasady", Rules)
             };
+
+        public void SetData(IDataReader dataReader)
+        {
+            ID = UInt32.Parse(dataReader["id"].ToString());
+            Competition_ID = UInt32.Parse(dataReader["id_zawody"].ToString());
+            Name = dataReader["nazwa"].ToString();
+            Rules = dataReader["zasady"].ToString();
+        }
+
+        // shallow copy
+        public object Clone() => this.MemberwiseClone();
     }
 }

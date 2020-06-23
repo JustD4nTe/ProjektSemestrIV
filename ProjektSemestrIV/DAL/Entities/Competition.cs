@@ -8,23 +8,16 @@ using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Entities
 {
-    class Competition
+    class Competition : IBaseEntity
     {
         #region Properties
-        public uint Id { get; set; }
-        public string Location { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        public uint Id { get; private set; }
+        public string Location { get; private set; }
+        public string StartDate { get; private set; }
+        public string EndDate { get; private set; }
         #endregion
 
-        #region Constructors
-        public Competition(DataRow data)
-        {
-            Id = uint.Parse(data["id"].ToString());
-            Location = data["miejsce"].ToString();
-            StartDate = data["rozpoczecie"].ToString();
-            EndDate = data["zakonczenie"].ToString();
-        }
+        public Competition() { }
 
         public Competition(string location, string startDate, string endDate)
         {
@@ -33,7 +26,6 @@ namespace ProjektSemestrIV.DAL.Entities
             StartDate = startDate.Trim();
             EndDate = string.IsNullOrWhiteSpace(endDate) ? null : endDate.Trim();
         }
-        #endregion
 
         public IEnumerable<MySqlParameter> GetParameters()
             => new List<MySqlParameter>()
@@ -42,6 +34,16 @@ namespace ProjektSemestrIV.DAL.Entities
                 new MySqlParameter("@rozpoczecie", GetMySQLFormatDate(StartDate)),
                 new MySqlParameter("@zakonczenie", GetMySQLFormatDate(EndDate))
             };
+        public void SetData(IDataReader dataReader)
+        {
+            Id = uint.Parse(dataReader["id"].ToString());
+            Location = dataReader["miejsce"].ToString();
+            StartDate = dataReader["rozpoczecie"].ToString();
+            EndDate = dataReader["zakonczenie"].ToString();
+        }
+
+        // shallow copy
+        public object Clone() => this.MemberwiseClone();
 
         private object GetMySQLFormatDate(string date)
         {
@@ -50,5 +52,6 @@ namespace ProjektSemestrIV.DAL.Entities
             else
                 return DateTime.Parse(date).ToString("yyyy-MM-dd HH:mm:ss.fff");
         }
+
     }
 }

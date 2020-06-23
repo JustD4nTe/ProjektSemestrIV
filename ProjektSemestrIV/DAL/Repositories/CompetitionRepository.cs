@@ -4,6 +4,7 @@ using ProjektSemestrIV.DAL.Entities.AuxiliaryEntities;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace ProjektSemestrIV.DAL.Repositories
 {
@@ -14,22 +15,14 @@ namespace ProjektSemestrIV.DAL.Repositories
         {
             var query = "SELECT * FROM zawody";
 
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-            List<Competition> competitions = new List<Competition>();
-
-            foreach (DataRow row in resultOfQuery.Rows)
-                competitions.Add(new Competition(row));
-
-            return competitions;
+            return ExecuteSelectQuery<Competition>(query);
         }
 
         public static Competition GetCompetitionFromDB(uint id)
         {
             var query = $"SELECT * FROM zawody WHERE id={id}";
 
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            return resultOfQuery.Rows.Count == 1 ? new Competition(resultOfQuery.Rows[0]) : null;
+            return ExecuteSelectQuery<Competition>(query).FirstOrDefault();
         }
 
         public static bool AddCompetitionToDatabase(Competition competition)
@@ -37,7 +30,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             var query = @"INSERT INTO zawody (`miejsce`, `rozpoczecie`, `zakonczenie`)
                             VALUES (@miejsce, @rozpoczecie, @zakonczenie)";
 
-            return ExecuteAddQuery(query, competition.GetParameters());
+            return ExecuteModifyQuery(query, competition.GetParameters());
         }
 
         public static bool EditCompetitionInDatabase(Competition competition, uint id)
@@ -46,14 +39,14 @@ namespace ProjektSemestrIV.DAL.Repositories
                             SET `miejsce` = @miejsce, `rozpoczecie` = @rozpoczenie, `zakonczenie` = @zakonczenie 
                             WHERE (`id` = '{id}')";
 
-            return ExecuteUpdateQuery(query,competition.GetParameters());
+            return ExecuteModifyQuery(query,competition.GetParameters());
         }
 
         public static bool DeleteCompetitionFromDatabase(uint competitionID)
         {
             var query = $@"DELETE FROM zawody WHERE (`id` = '{competitionID}')";
 
-            return ExecuteDeleteQuery(query);
+            return ExecuteModifyQuery(query);
         }
         #endregion
 
@@ -65,11 +58,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN trasa ON tarcza.trasa_id=trasa.id
                             WHERE trasa.id_zawody={competitionId}";
 
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["count"];
-
-            return readValue is DBNull ? 0 : uint.Parse(readValue.ToString());
+            return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
 
         public static ShooterWithCompetitionTime GetFastestShooterOfCompetition(uint competitionId)
@@ -80,23 +69,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             WHERE trasa.id_zawody={competitionId}
                             GROUP BY strzelec.id ORDER BY czas LIMIT 1;";
 
-            ShooterWithCompetitionTime shooterNameWithTime = null;
-
-            using (var connection = DatabaseConnection.Instance.Connection)
-            {
-                var command = new MySqlCommand(query, connection);
-                connection.Open();
-
-                var reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    shooterNameWithTime = new ShooterWithCompetitionTime(reader);
-                }
-
-                connection.Close();
-            }
-
-            return shooterNameWithTime;
+            return ExecuteSelectQuery<ShooterWithCompetitionTime>(query).FirstOrDefault();
         }
 
         public static IEnumerable<ShooterWithPoints> GetShootersWithPointsFromStage(uint competitionId, bool isPodium = false)
@@ -116,24 +89,9 @@ namespace ProjektSemestrIV.DAL.Repositories
                             ORDER BY sumaPunktow desc ";
 
             if (isPodium)
-            {
                 query += "LIMIT 3";
-            }
 
-            var shooters = new List<ShooterWithPoints>();
-            using (var connection = DatabaseConnection.Instance.Connection)
-            {
-                var command = new MySqlCommand(query, connection);
-                connection.Open();
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    shooters.Add(new ShooterWithPoints(reader));
-                }
-                connection.Close();
-            }
-
-            return shooters;
+            return ExecuteSelectQuery<ShooterWithPoints>(query);
         }
 
         public static IEnumerable<StageWithBestShooter> GetStagesWithBestShooter(uint competitionId)
@@ -156,21 +114,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                         INNER JOIN strzelec ON strzelec.id = strzelec_id
                         WHERE rankingGraczy = 1";
 
-            var stages = new List<StageWithBestShooter>();
-
-            using (var connection = DatabaseConnection.Instance.Connection)
-            {
-                var command = new MySqlCommand(query, connection);
-                connection.Open();
-                var reader = command.ExecuteReader();
-                while (reader.Read())
-                {
-                    stages.Add(new StageWithBestShooter(reader));
-                }
-                connection.Close();
-            }
-
-            return stages;
+            return ExecuteSelectQuery<StageWithBestShooter>(query);
         }
         #endregion
     }

@@ -2,23 +2,26 @@
 
 namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
-    class ShooterWithStagePointsAndCompetitionPoints
+    class ShooterWithStagePointsAndCompetitionPoints : IBaseEntity
     {
-        public uint Id { get; }
-        public uint Position { get; }
-        public string Name { get; }
-        public string Surname { get; }
-        public double StagePoints { get; }
-        public double CompetitionPoints { get; }
+        public uint Id { get; private set; }
+        public uint Position { get; private set; }
+        public string Name { get; private set; }
+        public string Surname { get; private set; }
+        public double StagePoints { get; private set; }
+        public double CompetitionPoints { get; private set; }
 
-        public ShooterWithStagePointsAndCompetitionPoints(DataRow data)
+        public void SetData(IDataReader dataReader)
         {
-            Id = uint.Parse(data["strzelec_id"].ToString());
-            Position = uint.Parse(data["position"].ToString());
-            Name = data["name"].ToString();
-            Surname = data["surname"].ToString();
-            StagePoints = double.Parse(data["stagePoints"].ToString());
-            CompetitionPoints = double.Parse(data["competitionPoints"].ToString());
+            Id = uint.Parse(dataReader["strzelec_id"].ToString());
+            Position = uint.Parse(dataReader["position"].ToString());
+            Name = dataReader["name"].ToString();
+            Surname = dataReader["surname"].ToString();
+            StagePoints = double.Parse(dataReader["stagePoints"].ToString());
+            CompetitionPoints = double.Parse(dataReader["competitionPoints"].ToString());
         }
+
+        // shallow copy
+        public object Clone() => this.MemberwiseClone();
     }
 }

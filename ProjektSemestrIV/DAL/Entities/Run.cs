@@ -8,22 +8,17 @@ using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.DAL.Entities
 {
-    class Run
+    class Run : IBaseEntity
     {
-        public UInt32 ID { get; set; }
-        public String RunTime { get; set; }
-        public UInt32 Shooter_ID { get; set; }
-        public UInt32 Stage_ID { get; set; }
+        public uint ID { get; private set; }
+        public string RunTime { get; private set; }
+        public uint Shooter_ID { get; private set; }
+        public uint Stage_ID { get; private set; }
 
-        public Run(DataRow data)
-        {
-            ID = UInt32.Parse(data["id"].ToString());
-            RunTime = data["czas"].ToString();
-            Shooter_ID = UInt32.Parse(data["id_strzelec"].ToString());
-            Stage_ID = UInt32.Parse(data["id_trasa"].ToString());
-        }
 
-        public Run(String runTime, UInt32 shooter_id, UInt32 stage_id)
+        public Run() { }
+
+        public Run(string runTime, uint shooter_id, uint stage_id)
         {
             RunTime = runTime;
             Shooter_ID = shooter_id;
@@ -37,5 +32,16 @@ namespace ProjektSemestrIV.DAL.Entities
                 new MySqlParameter("@id_strzelec", Shooter_ID),
                 new MySqlParameter("@id_trasa", Stage_ID)
             };
+
+        public void SetData(IDataReader dataReader)
+        {
+            ID = uint.Parse(dataReader["id"].ToString());
+            RunTime = dataReader["czas"].ToString();
+            Shooter_ID = uint.Parse(dataReader["id_strzelec"].ToString());
+            Stage_ID = uint.Parse(dataReader["id_trasa"].ToString());
+        }
+
+        // shallow copy
+        public object Clone() => this.MemberwiseClone();
     }
 }

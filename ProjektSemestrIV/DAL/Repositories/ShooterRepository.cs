@@ -20,7 +20,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             var query = @"INSERT INTO strzelec (`imie`, `nazwisko`)
                             VALUES (@imie, @nazwisko)";
 
-            return ExecuteAddQuery(query, shooter.GetParameters());
+            return ExecuteModifyQuery(query, shooter.GetParameters());
         }
 
         public static bool EditShooterInDB(Shooter shooter, uint id)
@@ -29,37 +29,28 @@ namespace ProjektSemestrIV.DAL.Repositories
                             SET `imie` = @imie, `nazwisko` = @nazwisko 
                             WHERE (`id` = '{id}')";
 
-            return ExecuteUpdateQuery(query, shooter.GetParameters());
+            return ExecuteModifyQuery(query, shooter.GetParameters());
         }
 
         public static IEnumerable<Shooter> GetAllShootersFromDB()
         {
             var query = "SELECT * FROM strzelec";
 
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-            List<Shooter> shooters = new List<Shooter>();
-
-            foreach (DataRow row in resultOfQuery.Rows)
-                shooters.Add(new Shooter(row));
-
-            return shooters;
+            return ExecuteSelectQuery<Shooter>(query);
         }
 
         public static Shooter GetShooterByIdFromDB(uint id)
         {
             string query = $"SELECT * FROM strzelec WHERE strzelec.id = {id}";
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            // when result contains single shooter
-            // return new Shooter object
-            // otherwise return null
-            return resultOfQuery.Rows.Count == 1 ? new Shooter(resultOfQuery.Rows[0]) : null;
+            return ExecuteSelectQuery<Shooter>(query).FirstOrDefault();
         }
 
         public static bool DeleteShooterFromDB(uint shooterID)
         {
             string query = $"DELETE FROM strzelec WHERE (`id` = '{shooterID}')";
-            return ExecuteDeleteQuery(query);
+
+            return ExecuteModifyQuery(query);
         }
         #endregion
 
@@ -105,16 +96,13 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             WHERE strzelec.id = {shooterId} {additionalwhereStatement};";
 
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
 
-            var readValue = resultOfQuery.Rows[0]["accuracy"];
 
-            return readValue is DBNull ? 0.0 : double.Parse(readValue.ToString());
+            return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
         public static IEnumerable<ShooterCompetition> GetShooterAccomplishedCompetitionsFromDB(uint id)
         {
-            var results = new List<ShooterCompetition>();
             var query = $@"WITH punktacja AS (
                             SELECT  punkty.zawody_id, punkty.suma/przebieg.czas AS pkt , 
                                     punkty.strzelec_id, punkty.trasa_id, punkty.zawody_miejsce, 
@@ -137,18 +125,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                         GROUP BY punktacja.strzelec_id, zawody_id) AS subQuery
                         WHERE shooterId = {id};";
 
-            using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
-            {
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                MySqlDataReader reader = command.ExecuteReader();
-                if (reader.Read())
-                {
-                    results.Add(new ShooterCompetition(reader));
-                }
-                connection.Close();
-            }
-            return results;
+            return ExecuteSelectQuery<ShooterCompetition>(query);
         }
 
         public static double GetShooterGeneralAveragePositionFromDB(uint id)
@@ -169,12 +146,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                         FROM ranking
                         WHERE strzelec_id = {id};";
 
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            var readValue = resultOfQuery.Rows[0]["averagePosition"];
-
-            // when db has not enough data to calculate accuracy => it returns DBNull
-            return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
+            return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
         public static uint GetShooterOnStagePosition(uint shooterId, uint stageId)
@@ -190,9 +162,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             GROUP BY strzelec.id)
                             SELECT pozycja FROM ranking WHERE strzelec_id = {shooterId}";
 
-            DataTable resultsOfQuery = ExecuteSelectQuery(query);
-
-            return uint.Parse(resultsOfQuery.Rows[0]["pozycja"].ToString());
+            return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
 
         public static double GetShooterGeneralSumOfPointsFromDB(uint id)
@@ -208,9 +178,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                                 GROUP BY trasa.id) AS subQuery
                             INNER JOIN przebieg ON przebieg.id_trasa=subQuery.trasa_id and przebieg.id_strzelec=subQuery.strzelec_id;";
 
-            DataTable resultsOfQuery = ExecuteSelectQuery(query);
-
-            return double.Parse(resultsOfQuery.Rows[0]["sumOfPoints"].ToString());
+            return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
         public static double GetShooterOnStageSumOfPointsFromDB(uint ShooterId, uint StageId)
@@ -221,9 +189,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             WHERE tarcza.strzelec_id = {ShooterId} and tarcza.trasa_id = {StageId}
                             GROUP BY tarcza.strzelec_id, tarcza.trasa_id;";
 
-            DataTable resultsOfQuery = ExecuteSelectQuery(query);
-
-            return double.Parse(resultsOfQuery.Rows[0]["points"].ToString());
+            return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
         public static double GetShooterGeneralSumOfTimesFromDB(uint id)
@@ -237,9 +203,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                                 AND strzelec.id = przebieg.id_strzelec
                             WHERE strzelec.id = {id};";
 
-            DataTable resultsOfQuery = ExecuteSelectQuery(query);
-
-            return double.Parse(resultsOfQuery.Rows[0]["sumOfTimes"].ToString());
+            return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
         public static double GetShooterOnStageTime(uint ShooterId, uint StageId)
@@ -247,9 +211,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             var query = $@"SELECT czas FROM przebieg 
                              WHERE id_strzelec = {ShooterId} and id_trasa = {StageId};";
 
-            DataTable resultsOfQuery = ExecuteSelectQuery(query);
-
-            return TimeSpan.Parse(resultsOfQuery.Rows[0]["czas"].ToString()).TotalSeconds;
+            return ExecuteSelectQuery<TimeSpan>(query).FirstOrDefault().TotalSeconds;
         }
 
         public static ShooterWithPoints GetShooterWithPointsByStageIdFromDB(uint id)
@@ -272,13 +234,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                         SELECT strzelec_id AS Id, imie, nazwisko, sumaPunktow FROM ranking
                         WHERE trasaId = {id}
                         LIMIT 1;";
-
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            // when result contains only one row of stage
-            // return new Stage object
-            // otherwise return null
-            return resultOfQuery.Rows.Count == 1 ? new ShooterWithPoints(resultOfQuery.Rows[0]) : null;
+            return ExecuteSelectQuery<ShooterWithPoints>(query).FirstOrDefault();
         }
 
         public static string GetShooterOnStageCompetition(uint shooterId, uint stageId)
@@ -289,9 +245,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN przebieg ON trasa.id=przebieg.id_trasa
                             WHERE trasa.id = {stageId} AND przebieg.id_strzelec = {shooterId}";
 
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            return resultOfQuery.Rows[0]["zawody"].ToString();
+            return ExecuteSelectQuery<object>(query).FirstOrDefault()?.ToString();
         }
 
         public static IEnumerable<ShooterWithStagePointsAndCompetitionPoints>
@@ -329,25 +283,14 @@ namespace ProjektSemestrIV.DAL.Repositories
                         WHERE compQuery.zawody_id = subQuery.zawody_id AND compQuery.strzelec_id = subQuery.strzelec_id
                         GROUP BY subQuery.zawody_id, subQuery.trasa_id, location, strzelec_id, subQuery.position, subQuery.stagePoints;";
 
-            var shooters = new List<ShooterWithStagePointsAndCompetitionPoints>();
-            DataTable resultsOfQuery = ExecuteSelectQuery(query);
-
-            foreach (DataRow row in resultsOfQuery.Rows)
-                shooters.Add(new ShooterWithStagePointsAndCompetitionPoints(row));
-
-            return shooters;
+            return ExecuteSelectQuery<ShooterWithStagePointsAndCompetitionPoints>(query);
         }
 
         public static Shooter GetShooterFromDB(uint id)
         {
             var query = $"SELECT * FROM strzelec WHERE strzelec.id={id}";
 
-            DataTable resultOfQuery = ExecuteSelectQuery(query);
-
-            // when result contains only one row of shooter
-            // return new Shooter object
-            // otherwise return null
-            return resultOfQuery.Rows.Count == 1 ? new Shooter(resultOfQuery.Rows[0]) : null;
+            return ExecuteSelectQuery<Shooter>(query).FirstOrDefault();
         }
 
         public static double GetShooterSumOfPointsAtCompetitionFromDB(uint shooterId, uint competitionId)
@@ -363,9 +306,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                                 GROUP BY trasa.id) AS subQuery
                             INNER JOIN przebieg ON przebieg.id_trasa = subQuery.trasa_id and przebieg.id_strzelec = subQuery.strzelec_id; ";
 
-            DataTable resultsOfQuery = ExecuteSelectQuery(query);
-
-            return double.Parse(resultsOfQuery.Rows[0]["sumOfPoints"].ToString());
+            return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
         public static double GetShooterSumOfTimesAtCompetitionFromDB(uint shooterId, uint competitionId)
@@ -377,9 +318,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON trasa.id_zawody=zawody.id
                             WHERE strzelec.id={shooterId} AND zawody.id={competitionId};";
 
-            DataTable resultsOfQuery = ExecuteSelectQuery(query);
-
-            return double.Parse(resultsOfQuery.Rows[0]["sumOfTimes"].ToString());
+            return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
         public static uint GetShooterPositionAtCompetitionFromDB(uint shooterId, uint competitionId)
@@ -401,9 +340,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             ORDER BY sumaPunktow desc)
                         SELECT ranking.pozycja FROM ranking WHERE strzelec_id={shooterId}";
 
-            DataTable resultsOfQuery = ExecuteSelectQuery(query);
-
-            return uint.Parse(resultsOfQuery.Rows[0]["pozycja"].ToString());
+            return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
 
         public static IEnumerable<ShooterStatsOnStage> GetShooterStatsOnStages(uint shooterId, uint competitionId)
@@ -421,13 +358,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN przebieg ON przebieg.id_trasa = subQuery.trasa_id and przebieg.id_strzelec = subQuery.strzelec_id
                             INNER JOIN trasa ON trasa.id=subQuery.trasa_id;";
 
-            var shooters = new List<ShooterStatsOnStage>();
-            DataTable resultsOfQuery = ExecuteSelectQuery(query);
-
-            foreach (DataRow row in resultsOfQuery.Rows)
-                shooters.Add(new ShooterStatsOnStage(row));
-
-            return shooters;
+            return ExecuteSelectQuery<ShooterStatsOnStage>(query);
         }
         #endregion
     }

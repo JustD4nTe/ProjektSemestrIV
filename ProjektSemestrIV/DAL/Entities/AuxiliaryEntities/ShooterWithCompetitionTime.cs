@@ -1,19 +1,23 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 
 namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
-    class ShooterWithCompetitionTime
+    class ShooterWithCompetitionTime : IBaseEntity
     {
-        public String Name { get;}
-        public String Surname { get;}
-        public double TimeInSeconds { get;}
+        public string Name { get; private set; }
+        public string Surname { get; private set; }
+        public double TimeInSeconds { get; private set; }
 
-        public ShooterWithCompetitionTime(MySqlDataReader reader)
+        public void SetData(IDataReader dataReader)
         {
-            Name = reader["imie"].ToString();
-            Surname = reader["nazwisko"].ToString();
-            TimeInSeconds = double.Parse(reader["czas"].ToString());
+            Name = dataReader["imie"].ToString();
+            Surname = dataReader["nazwisko"].ToString();
+            TimeInSeconds = double.Parse(dataReader["czas"].ToString());
         }
+
+        // shallow copy
+        public object Clone() => this.MemberwiseClone();
     }
 }

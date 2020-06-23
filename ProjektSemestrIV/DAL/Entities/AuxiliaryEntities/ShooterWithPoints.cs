@@ -4,27 +4,22 @@ using System.Data;
 
 namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
-    class ShooterWithPoints
+    class ShooterWithPoints : IBaseEntity
     {
-        public uint Id { get; }
-        public String Name { get; }
-        public String Surname { get; }
-        public double Points { get; }
+        public uint Id { get; private set; }
+        public string Name { get; private set; }
+        public string Surname { get; private set; }
+        public double Points { get; private set; }
 
-        public ShooterWithPoints(MySqlDataReader reader)
+        public void SetData(IDataReader dataReader)
         {
-            Id = reader.GetUInt32("Id");
-            Name = reader.GetString("imie");
-            Surname = reader.GetString("nazwisko");
-            Points = reader.GetDouble("sumaPunktow");
+            Id = uint.Parse(dataReader["Id"].ToString());
+            Name = dataReader["imie"].ToString();
+            Surname = dataReader["nazwisko"].ToString();
+            Points = double.Parse(dataReader["sumaPunktow"].ToString());
         }
 
-        public ShooterWithPoints(DataRow data)
-        {
-            Id = uint.Parse(data["Id"].ToString());
-            Name = data["imie"].ToString();
-            Surname = data["nazwisko"].ToString();
-            Points = double.Parse(data["sumaPunktow"].ToString());
-        }
+        // shallow copy
+        public object Clone() => this.MemberwiseClone();
     }
 }

@@ -3,21 +3,24 @@ using System.Data;
 
 namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
-    class ShooterStatsOnStage
+    class ShooterStatsOnStage : IBaseEntity
     {
-        public uint StageId { get; }
-        public string StageName { get; }
-        public double Points { get; }
-        public string Time { get; }
-        public double StagePoints { get; }
+        public uint StageId { get; private set; }
+        public string StageName { get; private set; }
+        public double Points { get; private set; }
+        public string Time { get; private set; }
+        public double StagePoints { get; private set; }
 
-        public ShooterStatsOnStage(DataRow data)
+        public void SetData(IDataReader dataReader)
         {
-            StageId = uint.Parse(data["trasaId"].ToString());
-            StageName = data["nazwaTrasy"].ToString();
-            Points = double.Parse(data["punkty"].ToString());
-            Time = data["czas"].ToString();
-            StagePoints = double.Parse(data["punktyNaTrasie"].ToString());
+            StageId = uint.Parse(dataReader["trasaId"].ToString());
+            StageName = dataReader["nazwaTrasy"].ToString();
+            Points = double.Parse(dataReader["punkty"].ToString());
+            Time = dataReader["czas"].ToString();
+            StagePoints = double.Parse(dataReader["punktyNaTrasie"].ToString());
         }
+
+        // shallow copy
+        public object Clone() => this.MemberwiseClone();
     }
 }

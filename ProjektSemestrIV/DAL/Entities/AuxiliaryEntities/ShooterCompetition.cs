@@ -1,22 +1,27 @@
 ﻿using MySql.Data.MySqlClient;
+using System;
+using System.Data;
 
 namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
-    class ShooterCompetition
+    class ShooterCompetition : IBaseEntity
     {
-        public uint CompetitionId { get; }
-        public string Location { get; }
-        public string StartDate { get; }
-        public uint Position { get; }
-        public double Points { get; }
+        public uint CompetitionId { get; private set; }
+        public string Location { get; private set; }
+        public string StartDate { get; private set; }
+        public uint Position { get; private set; }
+        public double Points { get; private set; }
 
-        public ShooterCompetition(MySqlDataReader reader)
+        public void SetData(IDataReader dataReader)
         {
-            CompetitionId = reader.GetUInt32("competitionId");
-            Location = reader.GetString("location");
-            StartDate = reader.GetDateTime("startDate").ToString();
-            Position = reader.GetUInt32("position");
-            Points = reader.GetDouble("points");
+            CompetitionId = uint.Parse(dataReader["competitionId"].ToString());
+            Location = dataReader["location"].ToString();
+            StartDate = dataReader["startDate"].ToString();
+            Position = uint.Parse(dataReader["position"].ToString());
+            Points = double.Parse(dataReader["points"].ToString());
         }
+
+        // shallow copy
+        public object Clone() => this.MemberwiseClone();
     }
 }

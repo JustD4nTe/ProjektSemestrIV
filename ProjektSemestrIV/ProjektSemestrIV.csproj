@@ -131,6 +131,7 @@
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterStatsOnStage.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithStagePointsAndCompetitionPoints.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
+    <Compile Include="DAL\Entities\IBaseEntity.cs" />
     <Compile Include="DAL\Entities\Run.cs" />
     <Compile Include="DAL\Entities\Shooter.cs" />
     <Compile Include="DAL\Entities\Stage.cs" />
