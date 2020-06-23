@@ -38,10 +38,8 @@ namespace ProjektSemestrIV.ViewModels
             NumOfTargets = model.GetNumOfTargets();
             BestShooter = model.GetShooterWithPoints();
             AverageTime = model.GetAverageTime();
-            Shooters = model.GetShooters().Convert();
-            
+            Shooters = model.GetShooters().Convert();           
         }
-
 
         private void OnSwitchView()
         => navigation.Navigate(new ShowShooterOnStageViewModel(SelectedShooter.Id, stageId));

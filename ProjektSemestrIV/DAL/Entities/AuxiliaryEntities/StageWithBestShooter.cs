@@ -1,23 +1,27 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
+using System.Data;
 
 namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
-    class StageWithBestShooter
+    class StageWithBestShooter : IBaseEntity
     {
-        public uint Id { get; }
-        public String StageName { get; }
-        public String ShooterName { get; }
-        public String ShooterSurname { get; }
-        public double ShooterPoints { get; }
+        public uint Id { get; private set; }
+        public string StageName { get; private set; }
+        public string ShooterName { get; private set; }
+        public string ShooterSurname { get; private set; }
+        public double ShooterPoints { get; private set; }
 
-        public StageWithBestShooter(MySqlDataReader reader)
+        public void SetData(IDataReader dataReader)
         {
-            Id = reader.GetUInt32("trasa_id");
-            StageName = reader.GetString("nazwaTrasy");
-            ShooterName = reader.GetString("imieStrzelca");
-            ShooterSurname = reader.GetString("nazwiskoStrzelca");
-            ShooterPoints = reader.GetDouble("punktyStrzelca");
+            Id = uint.Parse(dataReader["trasa_id"].ToString());
+            StageName = dataReader["nazwaTrasy"].ToString();
+            ShooterName = dataReader["imieStrzelca"].ToString();
+            ShooterSurname = dataReader["nazwiskoStrzelca"].ToString();
+            ShooterPoints = double.Parse(dataReader["punktyStrzelca"].ToString());
         }
+
+        // shallow copy
+        public object Clone() => this.MemberwiseClone();
     }
 }

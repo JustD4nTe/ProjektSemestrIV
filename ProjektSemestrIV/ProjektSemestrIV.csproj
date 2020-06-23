@@ -131,6 +131,7 @@
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterStatsOnStage.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithStagePointsAndCompetitionPoints.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
+    <Compile Include="DAL\Entities\IBaseEntity.cs" />
     <Compile Include="DAL\Entities\Run.cs" />
     <Compile Include="DAL\Entities\Shooter.cs" />
     <Compile Include="DAL\Entities\Stage.cs" />
@@ -138,6 +139,8 @@
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithPoints.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithCompetitionTime.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
+    <Compile Include="DAL\Repositories\BaseRepository.cs" />
+    <Compile Include="Models\AccuracyTypeEnum.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedShooterInCompetitionModel.cs" />
     <Compile Include="Models\ComplexModels\ShowSelectedStageModel.cs" />
     <Compile Include="Models\ComplexModels\ShowShooterOnStageModel.cs" />

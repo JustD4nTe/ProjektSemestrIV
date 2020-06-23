@@ -22,7 +22,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
         => shooter.Name + " " + shooter.Surname;
 
         public string GetCompetitionName()
-        => competition.Location + ", " + competition.StartDate.Substring(0, 10) 
+        => competition.Location + ", " + competition.StartDate.Substring(0, 10)
                 + " - " + competition.EndDate.Substring(0, 10);
 
         public double GetPoints()
@@ -35,22 +35,20 @@ namespace ProjektSemestrIV.Models.ComplexModels
         => ShooterRepository.GetShooterPositionAtCompetitionFromDB(shooter.ID, competition.Id);
 
         public double GetGeneralAccuracy()
-        => ShooterRepository.GetShooterGeneralAccuracyAtCompetitionFromDB(shooter.ID, competition.Id);
+        => ShooterRepository.GetAccuracy(AccuracyTypeEnum.General, shooter.ID, competitionId: competition.Id);
 
         public double GetAlphaAccuracy()
-        => ShooterRepository.GetShooterAlphaAccuracyAtCompetitionFromDB(shooter.ID, competition.Id);
+        => ShooterRepository.GetAccuracy(AccuracyTypeEnum.Alpha, shooter.ID, competitionId: competition.Id);
 
         public double GetCharlieAccuracy()
-        => ShooterRepository.GetShooterCharlieAccuracyAtCompetitionFromDB(shooter.ID, competition.Id);
+        => ShooterRepository.GetAccuracy(AccuracyTypeEnum.Charlie, shooter.ID, competitionId: competition.Id);
 
         public double GetDeltaAccuracy()
-        => ShooterRepository.GetShooterDeltaAccuracyAtCompetitionFromDB(shooter.ID, competition.Id);
+        => ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID, competitionId: competition.Id);
 
         public ObservableCollection<StatsAtStageOverview> GetShooterStatsOnStages()
         => ShooterRepository.GetShooterStatsOnStages(shooter.ID, competition.Id)
                             .Select(x => new StatsAtStageOverview(x.StageId, x.StageName, x.Points, x.Time, x.StagePoints))
                             .Convert();
-
-
     }
 }
