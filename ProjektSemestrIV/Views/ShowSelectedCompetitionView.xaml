@@ -9,80 +9,85 @@
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <TabControl>
-        <TabItem Header="Ogólne informacje">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
+    <StackPanel>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+               Content="{Binding Source={x:Static resx:Resources.CompetitionSummary}}" FontSize="30"/>
+    
+        <TabControl>
+            <TabItem Header="{Binding Source={x:Static resx:Resources.GeneralInformation}}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0"
-                       Content="{Binding Source={x:Static resx:Resources.DurationDate}}"/>
-                <Label Grid.Row="0" Grid.Column="1"
-                       Content="{Binding DurationDate, Mode=OneWay}"/>
+                    <Label Grid.Row="0" Grid.Column="0"
+                           Content="{Binding Source={x:Static resx:Resources.DurationDate}}"/>
+                    <Label Grid.Row="0" Grid.Column="1"
+                           Content="{Binding DurationDate, Mode=OneWay}"/>
 
-                <Label Grid.Row="1" Grid.Column="0"
-                       Content="{Binding Source={x:Static resx:Resources.Location}}"/>
-                <Label Grid.Row="1" Grid.Column="1"
-                       Content="{Binding Location, Mode=OneWay}"/>
+                    <Label Grid.Row="1" Grid.Column="0"
+                           Content="{Binding Source={x:Static resx:Resources.Location}}"/>
+                    <Label Grid.Row="1" Grid.Column="1"
+                           Content="{Binding Location, Mode=OneWay}"/>
 
-                <Label Grid.Row="2" Grid.Column="0"
-                       Content="{Binding Source={x:Static resx:Resources.NumberOfParticipants}}"/>
-                <Label Grid.Row="2" Grid.Column="1"
-                       Content="{Binding ShootersCount, Mode=OneWay}"/>
+                    <Label Grid.Row="2" Grid.Column="0"
+                           Content="{Binding Source={x:Static resx:Resources.NumberOfParticipants}}"/>
+                    <Label Grid.Row="2" Grid.Column="1"
+                           Content="{Binding ShootersCount, Mode=OneWay}"/>
 
-                <Label Grid.Row="3" Grid.Column="0"
-                       Content="{Binding Source={x:Static resx:Resources.FastestRun}}"/>
-                <Label Grid.Row="3" Grid.Column="1"
-                       Content="{Binding FastestShooter, Mode=OneWay}"/>
+                    <Label Grid.Row="3" Grid.Column="0"
+                           Content="{Binding Source={x:Static resx:Resources.FastestRun}}"/>
+                    <Label Grid.Row="3" Grid.Column="1"
+                           Content="{Binding FastestShooter, Mode=OneWay}"/>
 
-                <Label Grid.Row="4" Grid.Column="0"
-                       Content="{Binding Source={x:Static resx:Resources.Podium}}"/>
-                <Label Grid.Row="4" Grid.Column="1"
-                       Content="{Binding Podium, Mode=OneWay}"/>
-            </Grid>
-        </TabItem>
-        <TabItem Header="{Binding Source={x:Static resx:Resources.ListStages}}">
-            <DataGrid ItemsSource="{Binding Stages}" AutoGenerateColumns="False"
-                      AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
-                      SelectedItem="{Binding SelectedStage}" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StageName}}" Binding="{Binding StageName}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.BestShooter}}" Binding="{Binding BestPlayer}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Points}}" Binding="{Binding Points}"/>
-                </DataGrid.Columns>
+                    <Label Grid.Row="4" Grid.Column="0"
+                           Content="{Binding Source={x:Static resx:Resources.Podium}}"/>
+                    <Label Grid.Row="4" Grid.Column="1"
+                           Content="{Binding Podium, Mode=OneWay}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="{Binding Source={x:Static resx:Resources.ListStages}}">
+                <DataGrid ItemsSource="{Binding Stages}" AutoGenerateColumns="False"
+                          AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
+                          SelectedItem="{Binding SelectedStage}" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StageName}}" Binding="{Binding StageName}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.BestShooter}}" Binding="{Binding BestPlayer}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Points}}" Binding="{Binding Points}"/>
+                    </DataGrid.Columns>
 
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDoubleClick">
-                        <i:InvokeCommandAction Command="{Binding SwitchViewToStageCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </DataGrid>
-        </TabItem>
-        <TabItem Header="{Binding Source={x:Static resx:Resources.ListShooters}}">
-            <DataGrid ItemsSource="{Binding Shooters}" AutoGenerateColumns="False"
-                      AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
-                      SelectedItem="{Binding SelectedShooter}">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterName}}" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterSurname}}" Binding="{Binding Surname}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Points}}" Binding="{Binding Points}"/>
-                </DataGrid.Columns>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction Command="{Binding SwitchViewToStageCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="{Binding Source={x:Static resx:Resources.ListShooters}}">
+                <DataGrid ItemsSource="{Binding Shooters}" AutoGenerateColumns="False"
+                          AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
+                          SelectedItem="{Binding SelectedShooter}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterName}}" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterSurname}}" Binding="{Binding Surname}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Points}}" Binding="{Binding Points}"/>
+                    </DataGrid.Columns>
 
-                <i:Interaction.Triggers>
-                    <i:EventTrigger EventName="MouseDoubleClick">
-                        <i:InvokeCommandAction Command="{Binding SwitchViewToShooterCommand}"/>
-                    </i:EventTrigger>
-                </i:Interaction.Triggers>
-            </DataGrid>
-        </TabItem>
-    </TabControl>
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseDoubleClick">
+                            <i:InvokeCommandAction Command="{Binding SwitchViewToShooterCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+    </StackPanel>
 </Page>
