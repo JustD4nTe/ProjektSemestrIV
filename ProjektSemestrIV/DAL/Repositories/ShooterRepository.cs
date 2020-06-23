@@ -177,30 +177,22 @@ namespace ProjektSemestrIV.DAL.Repositories
             return readValue is DBNull ? 0.0 : decimal.ToDouble((decimal)readValue);
         }
 
-        public static uint GetShooterOnStagePosition(uint ShooterId, uint StageId)
+        public static uint GetShooterOnStagePosition(uint shooterId, uint stageId)
         {
-            var query = $@"SELECT strzelec_id, trasa_id, 
-                                (SUM(alpha)*5+SUM(charlie)*3+SUM(delta)-10*(SUM(miss)+SUM(`n-s`)+SUM(proc)+SUM(extra)))
-                                    /(SELECT czas FROM przebieg WHERE id_strzelec=strzelec_id and id_trasa=trasa_id) AS points
-                            FROM tarcza
-                            WHERE trasa_id = {StageId}
-                            GROUP BY strzelec_id, trasa_id
-                            ORDER BY points DESC;";
+            var query = $@"WITH ranking AS (
+                                SELECT strzelec.id AS strzelec_id, 
+                                        RANK() OVER(ORDER BY (SUM(alpha)*5+SUM(charlie)*3+SUM(delta)-10*(SUM(miss)+SUM(`n-s`)+SUM(proc)+SUM(extra)))
+                                                    /(SELECT czas FROM przebieg WHERE id_strzelec=strzelec_id AND id_trasa=trasa_id) DESC) AS pozycja
+                            FROM strzelec
+                            INNER JOIN tarcza ON strzelec.id = tarcza.strzelec_id
+                            INNER JOIN trasa ON tarcza.trasa_id = trasa.id
+                            WHERE trasa.id = {stageId}
+                            GROUP BY strzelec.id)
+                            SELECT pozycja FROM ranking WHERE strzelec_id = {shooterId}";
 
             DataTable resultsOfQuery = ExecuteSelectQuery(query);
-            uint position = 0;
 
-            for (int i = 0; i < resultsOfQuery.Rows.Count; i++)
-            {
-                position++;
-
-                var shooter_id = uint.Parse(resultsOfQuery.Rows[i]["strzelec_id"].ToString());
-
-                if (shooter_id == ShooterId)
-                    break;
-            }
-
-            return position;
+            return uint.Parse(resultsOfQuery.Rows[0]["pozycja"].ToString());
         }
 
         public static double GetShooterGeneralSumOfPointsFromDB(uint id)
