@@ -44,7 +44,7 @@ namespace ProjektSemestrIV.Models.ComplexModels {
                        .ToString(@"hh\h\:mm\m\:ss\s\:fff\m\s");
 
         public string getShooterOnStageCompetition()
-            => ShooterRepository.getShooterOnStageCompetition(shooter.ID, stage.ID);
+            => ShooterRepository.GetShooterOnStageCompetition(shooter.ID, stage.ID);
 
         public string getShooterOnStageStageName()
             => stage.Name;

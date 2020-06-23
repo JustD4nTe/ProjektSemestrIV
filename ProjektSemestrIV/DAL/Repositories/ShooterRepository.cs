@@ -281,11 +281,13 @@ namespace ProjektSemestrIV.DAL.Repositories
             return resultOfQuery.Rows.Count == 1 ? new ShooterWithPoints(resultOfQuery.Rows[0]) : null;
         }
 
-        public static string getShooterOnStageCompetition(uint ShooterId, uint StageId)
+        public static string GetShooterOnStageCompetition(uint shooterId, uint stageId)
         {
             var query = $@"SELECT CONCAT(miejsce, ' ', DATE(rozpoczecie)) AS zawody
-                            FROM trasa INNER JOIN zawody ON trasa.id_zawody=zawody.id
-                            WHERE trasa.id={StageId}";
+                            FROM trasa 
+                            INNER JOIN zawody ON trasa.id_zawody=zawody.id
+                            INNER JOIN przebieg ON trasa.id=przebieg.id_trasa
+                            WHERE trasa.id = {stageId} AND przebieg.id_strzelec = {shooterId}";
 
             DataTable resultOfQuery = ExecuteSelectQuery(query);
 
