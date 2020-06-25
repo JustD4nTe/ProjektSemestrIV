@@ -93,8 +93,12 @@ namespace ProjektSemestrIV.ViewModels {
                 return addStage;
             }
         }
-        private Boolean CanExecuteAddStage( object parameter )
-            => EditedStageIndex == -1;
+        private Boolean CanExecuteAddStage( object parameter ) {
+            if(EditedStageIndex != -1) return false;
+            if(CompetitionID == 0) return false;
+            if(Name == "" || Name == null) return false;
+            return true;
+        }
         private void ExecuteAddStage( object parameter ) {
             Stage newStage = new Stage(CompetitionID, Name, Rules);
             stageModel.AddStageToDatabase(newStage);
@@ -115,8 +119,12 @@ namespace ProjektSemestrIV.ViewModels {
                 return confirmStageEdit;
             }
         }
-        private Boolean CanExecuteConfirmStageEdit( object parameter )
-            => EditedStageIndex != -1;
+        private Boolean CanExecuteConfirmStageEdit( object parameter ) {
+            if(EditedStageIndex == -1) return false;
+            if(CompetitionID == 0) return false;
+            if(Name == "" || Name == null) return false;
+            return true;
+        }
         private void ExecuteConfirmStageEdit( object parameter ) {
             Stage newStage = new Stage(CompetitionID, Name, Rules);
             UInt32 id = SelectedStage.ID;
