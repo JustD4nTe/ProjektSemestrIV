@@ -8,19 +8,75 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ProjektSemestrIV.DAL.Entities;
+using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models;
 
 namespace ProjektSemestrIV.ViewModels {
     class EditScoreViewModel : BaseViewModel {
         private TargetModel targetModel;
         private RunModel runModel;
+        private StageModel stageModel;
+        private CompetitionModel competitionModel;
+
         public EditScoreViewModel() {
             targetModel = new TargetModel();
             runModel = new RunModel();
+            stageModel = new StageModel();
+            competitionModel = new CompetitionModel();
+
+            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
             EditedTargetIndex = -1;
             ShooterIdIsEnabled = true;
             StageIdIsEnabled = true;
         }
+
+        private ObservableCollection<Competition> competition;
+        public ObservableCollection<Competition> Competitions {
+            get { return competition; }
+            set {
+                competition = value;
+                onPropertyChanged(nameof(Competitions));
+            }
+        }
+
+        private Competition selectedCompetition;
+        public Competition SelectedCompetition {
+            get { return selectedCompetition; }
+            set {
+                selectedCompetition = value;
+                if(value != null) {
+                    Stages = stageModel.GetCompetitionStages(value.Id);
+                }
+                SelectedStage = null;
+                onPropertyChanged(nameof(SelectedCompetition));
+            }
+        }
+
+        private ObservableCollection<Stage> stages;
+        public ObservableCollection<Stage> Stages {
+            get { return stages; }
+            set {
+                stages = value;
+                onPropertyChanged(nameof(Stages));
+            }
+        }
+
+        private Stage selectedStage;
+        public Stage SelectedStage {
+            get { return selectedStage; }
+            set {
+                selectedStage = value;
+                if(value != null) {
+                    Stage_id = value.ID;
+                }
+                else {
+                    Stage_id = 0;
+                }
+                onPropertyChanged(nameof(SelectedStage));
+            }
+        }
+
+        public Int32 SelectedStageIndex { get; set; }
 
         private UInt32 target_id;
         public UInt32 Target_id {
@@ -122,7 +178,12 @@ namespace ProjektSemestrIV.ViewModels {
 
         private String time;
         public String Time {
-            get { return time; }
+            get {
+                if(time != null) {
+                    return time.Substring(0, 2) + time.Substring(3, 2) + time.Substring(6, 2) + time.Substring(9, 3);
+                }
+                return null;
+            }
             set {
                 time = value;
                 onPropertyChanged(nameof(Time));
@@ -171,8 +232,12 @@ namespace ProjektSemestrIV.ViewModels {
                 return addTarget;
             }
         }
-        private Boolean CanExecuteAddTarget( object parameter )
-            => EditedTargetIndex == -1;
+        private Boolean CanExecuteAddTarget( object parameter ) {
+            if(EditedTargetIndex != -1) return false;
+            if(Shooter_id == 0) return false;
+            if(Stage_id == 0) return false;
+            return true;
+        }
         private void ExecuteAddTarget( object parameter ) {
             Target newTarget = new Target(shooter_id, stage_id, alpha, charlie, delta, miss, noShoot, procedure, extra);
             targetModel.AddTargetToDatabase(newTarget);
@@ -198,8 +263,12 @@ namespace ProjektSemestrIV.ViewModels {
                 return confirmTargetEdit;
             }
         }
-        private Boolean CanExecuteConfirmTargetEdit( object parameter )
-            => EditedTargetIndex != -1;
+        private Boolean CanExecuteConfirmTargetEdit( object parameter ) {
+            if(EditedTargetIndex == -1) return false;
+            if(Shooter_id == 0) return false;
+            if(Stage_id == 0) return false;
+            return true;
+        }
         private void ExecuteConfirmTargetEdit( object parameter ) {
             Target newTarget = new Target(shooter_id, stage_id, alpha, charlie, delta, miss, noShoot, procedure, extra);
             UInt32 id = SelectedTarget.ID;
@@ -277,14 +346,14 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteSaveRun( object parameter )
-            => (Shooter_id > 0) && (Stage_id > 0);
+            => (Shooter_id > 0) && (Stage_id > 0) && Int32.TryParse(Time, out _);
         private void ExecuteSaveRun( object parameter ) {
             if(runModel.GetRunWhere(Shooter_id,Stage_id) != null) {
-                Run newRun = new Run(Time, Shooter_id, Stage_id);
+                Run newRun = new Run(time, Shooter_id, Stage_id);
                 runModel.EditRunInDatabase(newRun, Shooter_id, Stage_id);
             }
             else {
-                Run newRun = new Run(Time, Shooter_id, Stage_id);
+                Run newRun = new Run(time, Shooter_id, Stage_id);
                 runModel.AddRunToDatabase(newRun);
             }
         }

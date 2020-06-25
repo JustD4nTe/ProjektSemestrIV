@@ -14,6 +14,9 @@ namespace ProjektSemestrIV.Models {
         public ObservableCollection<Stage> GetAllStages()
             => StageRepository.GetAllStages().Convert();
 
+        public ObservableCollection<Stage> GetCompetitionStages(uint competition_id)
+            => StageRepository.GetCompetitionStages(competition_id).Convert();
+
         public Boolean AddStageToDatabase( Stage stage )
             => StageRepository.AddStageToDatabase(stage);
 
