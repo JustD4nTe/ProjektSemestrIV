@@ -60,8 +60,12 @@ namespace ProjektSemestrIV.ViewModels {
                 return addShooter;
             }
         }
-        private Boolean CanExecuteAddShooter( object parameter )
-            => EditedItemIndex == -1;
+        private Boolean CanExecuteAddShooter( object parameter ) {
+            if(EditedItemIndex != -1) return false;
+            if(Name == "" || Name == null) return false;
+            if(Surname == "" || Surname == null) return false;
+            return true;
+        }
         private void ExecuteAddShooter( object parameter ) {
             Shooter newShooter = new Shooter(Name, Surname);
             shooterModel.AddShooterToDatabase(newShooter);
@@ -82,8 +86,12 @@ namespace ProjektSemestrIV.ViewModels {
                 return confirmShooterEdit;
             }
         }
-        private Boolean CanExecuteConfirmShooterEdit( object parameter )
-            => EditedItemIndex != -1;
+        private Boolean CanExecuteConfirmShooterEdit( object parameter ) {
+            if(EditedItemIndex == -1) return false;
+            if(Name == "" || Name == null) return false;
+            if(Surname == "" || Surname == null) return false;
+            return true;
+        }
         private void ExecuteConfirmShooterEdit( object parameter ) {
             Shooter newShooter = new Shooter(Name, Surname);
             UInt32 id = Shooters[SelectedIndex].ID;
