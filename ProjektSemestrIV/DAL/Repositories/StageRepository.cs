@@ -57,9 +57,12 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         public static uint GetNumOfTargetsOnStageFromDB(uint id)
         {
-            var query = $@"SELECT count(tarcza.id) AS numOfTargets FROM trasa
+            var query = $@"SELECT DISTINCT(count(tarcza.id)) AS numOfTargets FROM trasa
                             INNER JOIN tarcza ON trasa.id = tarcza.trasa_id
-                            WHERE trasa.id = {id};";
+                            INNER JOIN przebieg ON przebieg.id_trasa = trasa.id
+                            INNER JOIN strzelec ON przebieg.id_strzelec = strzelec.id AND strzelec.id = tarcza.strzelec_id
+                            WHERE trasa.id = {id}
+                            GROUP BY strzelec.id;";
             
             return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
