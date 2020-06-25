@@ -5,6 +5,7 @@ using ProjektSemestrIV.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,8 +30,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private String startDate;
-        public String StartDate {
+        private DateTime? startDate = null;
+        public DateTime? StartDate {
             get { return startDate; }
             set {
                 startDate = value;
@@ -38,8 +39,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private String endDate;
-        public String EndDate {
+        private DateTime? endDate = null;
+        public DateTime? EndDate {
             get { return endDate; }
             set {
                 endDate = value;
@@ -71,15 +72,20 @@ namespace ProjektSemestrIV.ViewModels {
                 return addCompetition;
             }
         }
-        private Boolean CanExecuteAddCompetition( object parameter )
-            => EditedCompetitionIndex == -1;
+        private Boolean CanExecuteAddCompetition( object parameter ) {
+            if(EditedCompetitionIndex != -1) return false;
+            if(Location == "" || Location == null) return false;
+            if(StartDate == null) return false;
+            if(EndDate == null) return false;
+            return true;
+        }
         private void ExecuteAddCompetition( object parameter ) {
-            Competition competition = new Competition(Location, StartDate, EndDate);
+            Competition competition = new Competition(Location, StartDate.ToString(), EndDate.ToString());
             competitionModel.AddCompetitionToDatabase(competition);
 
             Location = "";
-            StartDate = "";
-            EndDate = "";
+            StartDate = null;
+            EndDate = null;
             Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
         }
 
@@ -94,16 +100,20 @@ namespace ProjektSemestrIV.ViewModels {
                 return confirmCompetitionEdit;
             }
         }
-        private Boolean CanExecuteConfirmCompetitionEdit( object parameter )
-            => EditedCompetitionIndex != -1;
+        private Boolean CanExecuteConfirmCompetitionEdit( object parameter ) {
+            if(EditedCompetitionIndex == -1) return false;
+            if(Location == "" || Location == null) return false;
+            if(StartDate == null) return false;
+            return true;
+        }
         private void ExecuteConfirmCompetitionEdit( object parameter ) {
-            Competition newCompetition = new Competition(Location, StartDate, EndDate);
+            Competition newCompetition = new Competition(Location, StartDate.ToString(), EndDate.ToString());
             UInt32 id = SelectedCompetition.Id;
             competitionModel.EditCompetitionInDatabase(newCompetition, id);
 
             Location = "";
-            StartDate = "";
-            EndDate = "";
+            StartDate = null;
+            EndDate = null;
             EditedCompetitionIndex = -1;
             Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
         }
@@ -123,8 +133,13 @@ namespace ProjektSemestrIV.ViewModels {
             => SelectedCompetitionIndex != -1;
         private void ExecuteEditCompetition( object parameter ) {
             Location = SelectedCompetition.Location;
-            StartDate = SelectedCompetition.StartDate;
-            EndDate = SelectedCompetition.EndDate;
+            StartDate = DateTime.Parse(SelectedCompetition.StartDate);
+            if(SelectedCompetition.EndDate != "") {
+                EndDate = DateTime.Parse(SelectedCompetition.EndDate);
+            }
+            else {
+                EndDate = null;
+            }
             EditedCompetitionIndex = SelectedCompetitionIndex;
         }
 
