@@ -117,10 +117,10 @@ namespace ProjektSemestrIV.DAL.Repositories
                             GROUP BY strzelec.id, zawody.id,trasa.id) AS punkty
                         INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
                         INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
-                        SELECT  zawody_id AS competitionId, location, startdate, position, points 
+                        SELECT zawody_id AS competitionId, location, startdate, position, points 
                         FROM (SELECT zawody_id, strzelec_id AS shooterId, zawody_miejsce AS location, 
                                         zawody_rozpoczecie AS startDate, 
-                                        RANK() OVER(ORDER BY SUM(punktacja.pkt) DESC) AS position, SUM(punktacja.pkt) AS points 
+                                        RANK() OVER(PARTITION BY punktacja.zawody_id ORDER BY SUM(punktacja.pkt) DESC) AS position, SUM(punktacja.pkt) AS points 
                         FROM punktacja
                         GROUP BY punktacja.strzelec_id, zawody_id) AS subQuery
                         WHERE shooterId = {id};";
@@ -131,20 +131,22 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static double GetShooterGeneralAveragePositionFromDB(uint id)
         {
             var query = $@"WITH ranking AS (
-                            SELECT RANK() OVER(ORDER BY punkty.suma/przebieg.czas DESC) AS positions, 
-                                    punkty.suma/przebieg.czas AS pkt , punkty.strzelec_id
+                            SELECT RANK() OVER(PARTITION BY punkty.zawody_id ORDER BY sum(punkty.suma/przebieg.czas) DESC) AS positions, 
+                                    sum(punkty.suma/przebieg.czas) AS pkt , punkty.strzelec_id, punkty.zawody_id
                             FROM (
                                 SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, 
-                                        ((SUM(alpha) * 5 + SUM(charlie) * 3 + SUM(delta)) - 10 * (SUM(miss) + SUM(`n-s`) + SUM(proc) + SUM(extra))) AS suma
+                                        ((SUM(alpha) * 5 + SUM(charlie) * 3 + SUM(delta)) - 10 * (SUM(miss) + SUM(`n-s`) + SUM(proc) + SUM(extra))) AS suma, zawody.id AS zawody_id
                                 FROM strzelec
-                                INNER JOIN tarcza ON strzelec.id = tarcza.strzelec_id
+                                INNER JOIN tarcza ON strzelec.id = tarcza.strzelec_id 
                                 INNER JOIN trasa ON tarcza.trasa_id = trasa.id
-                                GROUP BY strzelec.id, trasa.id) AS punkty
+                                INNER JOIN zawody ON zawody.id = trasa.id_zawody
+                                INNER JOIN przebieg ON przebieg.id_strzelec = strzelec.id AND przebieg.id_trasa = trasa.id
+                                GROUP BY strzelec.id, zawody.id, trasa.id) AS punkty
                             INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
-                            INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
-                        SELECT avg(ranking.positions) AS averagePosition 
-                        FROM ranking
-                        WHERE strzelec_id = {id};";
+                            INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id
+                            GROUP BY zawody_id,strzelec_id)
+                            SELECT avg(ranking.positions) AS averagePosition FROM ranking
+                            WHERE strzelec_id = {id};";
 
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
