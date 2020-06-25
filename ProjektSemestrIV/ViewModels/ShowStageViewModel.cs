@@ -7,9 +7,9 @@ using System.Windows.Navigation;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedStageViewModel
+    class ShowStageViewModel
     {
-        private readonly ShowSelectedStageModel model;
+        private readonly ShowStageModel model;
         private readonly NavigationService navigation;
         private readonly uint stageId;
 
@@ -20,16 +20,16 @@ namespace ProjektSemestrIV.ViewModels
         public string BestShooter { get; }
         public double AverageTime { get; }
 
-        public ObservableCollection<ShooterWithStagePointsAndCompetitionPointsOverview> Shooters { get; }
-        public ShooterWithStagePointsAndCompetitionPointsOverview SelectedShooter { get; set; }
+        public ObservableCollection<ShooterWithStageAndCompetitionPointsOverview> Shooters { get; }
+        public ShooterWithStageAndCompetitionPointsOverview SelectedShooter { get; set; }
 
         public ICommand SwitchViewCommand { get; }
 
-        public ShowSelectedStageViewModel(NavigationService navigation, uint stageId)
+        public ShowStageViewModel(NavigationService navigation, uint stageId)
         {
             this.stageId = stageId;
             this.navigation = navigation;
-            model = new ShowSelectedStageModel(stageId);
+            model = new ShowStageModel(stageId);
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => SelectedShooter != null);
 
             CompetitionLocation = model.GetCompetitionLocation();

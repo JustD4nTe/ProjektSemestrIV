@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace ProjektSemestrIV.Models.ComplexModels
 {
-    class ShowSelectedShooterModel
+    class ShowShooterModel
     {
         private Shooter shooter;
 
-        public ShowSelectedShooterModel(uint id)
+        public ShowShooterModel(uint id)
             => shooter = ShooterRepository.GetShooterByIdFromDB(id);
 
         public string GetShooterName() => shooter.Name;

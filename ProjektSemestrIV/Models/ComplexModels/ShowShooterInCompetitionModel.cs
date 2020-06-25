@@ -7,12 +7,12 @@ using System.Linq;
 
 namespace ProjektSemestrIV.Models.ComplexModels
 {
-    class ShowSelectedShooterInCompetitionModel
+    class ShowShooterInCompetitionModel
     {
         Shooter shooter;
         Competition competition;
 
-        public ShowSelectedShooterInCompetitionModel(uint shooterId, uint competitionId)
+        public ShowShooterInCompetitionModel(uint shooterId, uint competitionId)
         {
             shooter = ShooterRepository.GetShooterFromDB(shooterId);
             competition = CompetitionRepository.GetCompetitionFromDB(competitionId);
@@ -46,9 +46,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public double GetDeltaAccuracy()
         => ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID, competitionId: competition.Id);
 
-        public ObservableCollection<StatsAtStageOverview> GetShooterStatsOnStages()
+        public ObservableCollection<ShooterStatsOnStageOverview> GetShooterStatsOnStages()
         => ShooterRepository.GetShooterStatsOnStages(shooter.ID, competition.Id)
-                            .Select(x => new StatsAtStageOverview(x.StageId, x.StageName, x.Points, x.Time, x.StagePoints))
+                            .Select(x => new ShooterStatsOnStageOverview(x.StageId, x.StageName, x.Points, x.Time, x.StagePoints))
                             .Convert();
     }
 }

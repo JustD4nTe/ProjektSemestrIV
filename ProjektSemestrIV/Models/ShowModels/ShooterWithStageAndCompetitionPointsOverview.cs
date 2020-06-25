@@ -2,7 +2,7 @@
 
 namespace ProjektSemestrIV.Models.ShowModels
 {
-    class ShooterWithStagePointsAndCompetitionPointsOverview
+    class ShooterWithStageAndCompetitionPointsOverview
     {
         public uint Id { get; }
         public uint Position { get; }
@@ -11,7 +11,7 @@ namespace ProjektSemestrIV.Models.ShowModels
         public double StagePoints { get; }
         public double CompetitionPoints { get; }
 
-        public ShooterWithStagePointsAndCompetitionPointsOverview(uint id ,uint position, string name, string surname, double stagePoints, double competitionPoints)
+        public ShooterWithStageAndCompetitionPointsOverview(uint id ,uint position, string name, string surname, double stagePoints, double competitionPoints)
         {
             Id = id;
             Position = position;

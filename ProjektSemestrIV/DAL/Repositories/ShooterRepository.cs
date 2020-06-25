@@ -250,7 +250,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<object>(query).FirstOrDefault()?.ToString();
         }
 
-        public static IEnumerable<ShooterWithStagePointsAndCompetitionPoints>
+        public static IEnumerable<ShooterWithStageAndCompetitionPoints>
             GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(uint id)
         {
             var query = $@"WITH punktacja AS (
@@ -285,7 +285,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                         WHERE compQuery.zawody_id = subQuery.zawody_id AND compQuery.strzelec_id = subQuery.strzelec_id
                         GROUP BY subQuery.zawody_id, subQuery.trasa_id, location, strzelec_id, subQuery.position, subQuery.stagePoints;";
 
-            return ExecuteSelectQuery<ShooterWithStagePointsAndCompetitionPoints>(query);
+            return ExecuteSelectQuery<ShooterWithStageAndCompetitionPoints>(query);
         }
 
         public static Shooter GetShooterFromDB(uint id)

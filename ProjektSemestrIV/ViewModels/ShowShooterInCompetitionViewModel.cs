@@ -7,9 +7,9 @@ using System.Windows.Navigation;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedShooterInCompetitionViewModel 
+    class ShowShooterInCompetitionViewModel 
     {
-        private readonly ShowSelectedShooterInCompetitionModel model;
+        private readonly ShowShooterInCompetitionModel model;
         private readonly NavigationService navigation;
         private readonly uint shooterId;
 
@@ -24,18 +24,18 @@ namespace ProjektSemestrIV.ViewModels
         public double CharlieAccuracy { get;  }
         public double DeltaAccuracy { get;  }
 
-        public ObservableCollection<StatsAtStageOverview> StageStats { get; }
+        public ObservableCollection<ShooterStatsOnStageOverview> StageStats { get; }
 
-        public StatsAtStageOverview SelectedStage { get; set; }
+        public ShooterStatsOnStageOverview SelectedStage { get; set; }
 
         public ICommand SwitchViewCommand { get; }
 
-        public ShowSelectedShooterInCompetitionViewModel(NavigationService navigation, uint shooterId, uint competitionId)
+        public ShowShooterInCompetitionViewModel(NavigationService navigation, uint shooterId, uint competitionId)
         {
             this.navigation = navigation;
             this.shooterId = shooterId;
 
-            model = new ShowSelectedShooterInCompetitionModel(shooterId, competitionId);
+            model = new ShowShooterInCompetitionModel(shooterId, competitionId);
 
             ShooterName = model.GetShooterName();
             CompetitionName = model.GetCompetitionName();

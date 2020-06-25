@@ -9,9 +9,9 @@ using System.Windows.Navigation;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedCompetitionViewModel
+    class ShowCompetitionViewModel
     {
-        private readonly ShowSelectedCompetitionModel model;
+        private readonly ShowCompetitionModel model;
         private readonly NavigationService navigation;
         private readonly uint id;
 
@@ -21,22 +21,22 @@ namespace ProjektSemestrIV.ViewModels
         public string FastestShooter { get; }
         public string Podium { get; }
 
-        public ObservableCollection<StageWithBestPlayerOverview> Stages { get; }
+        public ObservableCollection<StageWithBestShooterOverview> Stages { get; }
         public ObservableCollection<ShooterWithPointsOverview> Shooters { get; }
 
-        public StageWithBestPlayerOverview SelectedStage { get; set; }
+        public StageWithBestShooterOverview SelectedStage { get; set; }
         public ShooterWithPointsOverview SelectedShooter { get; set; }
 
         public ICommand SwitchViewToStageCommand { get; }
         public ICommand SwitchViewToShooterCommand { get; }
 
-        public ShowSelectedCompetitionViewModel(NavigationService navigation, uint id)
+        public ShowCompetitionViewModel(NavigationService navigation, uint id)
         {
             this.navigation = navigation;
 
             this.id = id;
 
-            model = new ShowSelectedCompetitionModel(id);
+            model = new ShowCompetitionModel(id);
 
             DurationDate = model.GetDurationDate();
             Location = model.GetLocation();
@@ -50,9 +50,9 @@ namespace ProjektSemestrIV.ViewModels
         }
 
         private void OnSwitchViewToStage()
-        => navigation.Navigate(new ShowSelectedStageViewModel(navigation, SelectedStage.Id));
+        => navigation.Navigate(new ShowStageViewModel(navigation, SelectedStage.Id));
 
         private void OnSwitchViewToShooter()
-        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(navigation, SelectedShooter.Id, id));
+        => navigation.Navigate(new ShowShooterInCompetitionViewModel(navigation, SelectedShooter.Id, id));
     }
 }

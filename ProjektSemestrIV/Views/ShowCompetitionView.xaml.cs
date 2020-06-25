@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ProjektSemestrIV.Views
 {
     /// <summary>
-    /// Interaction logic for CompetitionView.xaml
+    /// Interaction logic for ShowCompetitionView.xaml
     /// </summary>
-    public partial class ShowSelectedCompetitionView : Page
+    public partial class ShowCompetitionView : Page
     {
-        public ShowSelectedCompetitionView()
+        public ShowCompetitionView()
         {
             InitializeComponent();
         }

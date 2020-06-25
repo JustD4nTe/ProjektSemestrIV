@@ -31,6 +31,6 @@ namespace ProjektSemestrIV.ViewModels
 
 
         private void OnSwitchView()
-        => navigation.Navigate(new ShowSelectedCompetitionViewModel(navigation, SelectedCompetitionId.Id));
+        => navigation.Navigate(new ShowCompetitionViewModel(navigation, SelectedCompetitionId.Id));
     }
 }

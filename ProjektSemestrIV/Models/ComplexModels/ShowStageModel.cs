@@ -6,12 +6,12 @@ using System.Linq;
 
 namespace ProjektSemestrIV.Models.ComplexModels
 {
-    class ShowSelectedStageModel
+    class ShowStageModel
     {
         private Stage stage;
         private Competition competition;
 
-        public ShowSelectedStageModel(uint id)
+        public ShowStageModel(uint id)
         {
             stage = StageRepository.GetStageByIdFromDB(id);
             competition = CompetitionRepository.GetCompetitionFromDB(stage.Competition_ID);
@@ -33,9 +33,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public double GetAverageTime() => StageRepository.GetAverageTimeOnStageByIdFromDB(stage.ID);
 
-        public IEnumerable<ShooterWithStagePointsAndCompetitionPointsOverview> GetShooters()
+        public IEnumerable<ShooterWithStageAndCompetitionPointsOverview> GetShooters()
             => ShooterRepository.GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(stage.ID)
-                                .Select(x => new ShooterWithStagePointsAndCompetitionPointsOverview(x.Id,
+                                .Select(x => new ShooterWithStageAndCompetitionPointsOverview(x.Id,
                                                                                                     x.Position,
                                                                                                     x.Name,
                                                                                                     x.Surname,

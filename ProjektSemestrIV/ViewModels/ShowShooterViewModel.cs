@@ -8,10 +8,10 @@ using System.Windows.Navigation;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedShooterViewModel
+    class ShowShooterViewModel
     {
         #region Fields and properties
-        private readonly ShowSelectedShooterModel model;
+        private readonly ShowShooterModel model;
         private readonly NavigationService navigation;
         private readonly uint id;
 
@@ -32,12 +32,12 @@ namespace ProjektSemestrIV.ViewModels
         public ICommand SwitchViewCommand { get; }
         #endregion
 
-        public ShowSelectedShooterViewModel(NavigationService navigation, uint id)
+        public ShowShooterViewModel(NavigationService navigation, uint id)
         {
             this.navigation = navigation;
             this.id = id;
 
-            model = new ShowSelectedShooterModel(id);
+            model = new ShowShooterModel(id);
 
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), 
                                                  x => SelectedCompetition != null);
@@ -55,6 +55,6 @@ namespace ProjektSemestrIV.ViewModels
         }
 
         public void OnSwitchView()
-        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(navigation, id, SelectedCompetition.CompetitionId));
+        => navigation.Navigate(new ShowShooterInCompetitionViewModel(navigation, id, SelectedCompetition.CompetitionId));
     }
 }

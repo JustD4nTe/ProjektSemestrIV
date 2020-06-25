@@ -2,7 +2,7 @@
 
 namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
-    class ShooterWithStagePointsAndCompetitionPoints : IBaseEntity
+    class ShooterWithStageAndCompetitionPoints : IBaseEntity
     {
         public uint Id { get; private set; }
         public uint Position { get; private set; }

@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace ProjektSemestrIV.Models.ComplexModels
 {
-    class ShowSelectedCompetitionModel
+    class ShowCompetitionModel
     {
         private Competition competition;
 
-        public ShowSelectedCompetitionModel(uint id)
+        public ShowCompetitionModel(uint id)
         {
             competition = CompetitionRepository.GetCompetitionFromDB(id);
         }
@@ -48,9 +48,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
         => CompetitionRepository.GetShootersWithPointsFromStage(competition.Id)
                                 .Select(x => new ShooterWithPointsOverview(x.Id, x.Name, x.Surname, x.Points));
 
-        public IEnumerable<StageWithBestPlayerOverview> GetStageWithBestShooters()
+        public IEnumerable<StageWithBestShooterOverview> GetStageWithBestShooters()
         => CompetitionRepository.GetStagesWithBestShooter(competition.Id)
-                                .Select(x => new StageWithBestPlayerOverview(x.Id,
+                                .Select(x => new StageWithBestShooterOverview(x.Id,
                                                                            x.StageName,
                                                                            x.ShooterName,
                                                                            x.ShooterSurname,
