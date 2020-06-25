@@ -185,7 +185,7 @@ namespace ProjektSemestrIV.ViewModels {
                 return null;
             }
             set {
-                time = value;
+                time = value.Replace(',', '.');
                 onPropertyChanged(nameof(Time));
             }
         }
@@ -345,10 +345,17 @@ namespace ProjektSemestrIV.ViewModels {
                 return saveRun;
             }
         }
-        private Boolean CanExecuteSaveRun( object parameter )
-            => (Shooter_id > 0) && (Stage_id > 0) && Int32.TryParse(Time, out _);
+        private Boolean CanExecuteSaveRun( object parameter ) {
+            if(Shooter_id <= 0) return false;
+            if(Stage_id <= 0) return false;
+            if(Int32.TryParse(Time, out _) == false) return false;
+            if(int.Parse(Time.Substring(0, 2)) >= 24) return false;
+            if(int.Parse(Time.Substring(2, 2)) >= 60) return false;
+            if(int.Parse(Time.Substring(4, 2)) >= 60) return false;
+            return true;
+        }
         private void ExecuteSaveRun( object parameter ) {
-            if(runModel.GetRunWhere(Shooter_id,Stage_id) != null) {
+            if(runModel.GetRunWhere(Shooter_id, Stage_id) != null) {
                 Run newRun = new Run(time, Shooter_id, Stage_id);
                 runModel.EditRunInDatabase(newRun, Shooter_id, Stage_id);
             }
