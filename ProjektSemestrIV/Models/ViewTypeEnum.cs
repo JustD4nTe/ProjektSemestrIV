@@ -2,17 +2,12 @@
 {
 	public enum ViewTypeEnum
 	{
-		Configuration,
+		Connection,
 		EditCompetitions,
 		EditStages,
 		EditShooters,
 		EditScore,
 		ShowCompetitions,
-		ShowShooters,
-		ShowSelectedCompetition,
-		ShowSelectedShooter,
-		ShowSelectedStage,
-		ShowShooterOnStage,
-		ShowSelectedShooterInCompetition
+		ShowShooters
 	}
 }

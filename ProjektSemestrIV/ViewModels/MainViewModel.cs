@@ -25,7 +25,7 @@ namespace ProjektSemestrIV.ViewModels
         {
             switch ((ViewTypeEnum)parameter)
             {
-                case ViewTypeEnum.Configuration:
+                case ViewTypeEnum.Connection:
                     navigation.Navigate(new ConnectionViewModel());
                     break;
                 case ViewTypeEnum.EditCompetitions:

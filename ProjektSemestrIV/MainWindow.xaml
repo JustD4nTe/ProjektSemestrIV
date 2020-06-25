@@ -18,7 +18,7 @@
         <StackPanel Grid.Row="0" Grid.Column="0" Margin="5">
             <Label Content="{Binding Source={x:Static resx:Resources.ConnectionConfiguration}}" HorizontalAlignment="Center"/>
             <Button Content="{Binding Source={x:Static resx:Resources.Configuration}}" 
-                    Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.Configuration}"/>
+                    Command="{Binding UpdateFormView}" CommandParameter="{x:Static viewType:ViewTypeEnum.Connection}"/>
 
             <Separator Margin="0,10,0,10" Height="0"/>
 
