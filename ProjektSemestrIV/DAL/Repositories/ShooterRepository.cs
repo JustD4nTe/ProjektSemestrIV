@@ -117,10 +117,10 @@ namespace ProjektSemestrIV.DAL.Repositories
                             GROUP BY strzelec.id, zawody.id,trasa.id) AS punkty
                         INNER JOIN przebieg ON przebieg.id_strzelec = punkty.strzelec_id AND przebieg.id_trasa = punkty.trasa_id
                         INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id)
-                        SELECT  zawody_id AS competitionId, location, startdate, position, points 
+                        SELECT zawody_id AS competitionId, location, startdate, position, points 
                         FROM (SELECT zawody_id, strzelec_id AS shooterId, zawody_miejsce AS location, 
                                         zawody_rozpoczecie AS startDate, 
-                                        RANK() OVER(ORDER BY SUM(punktacja.pkt) DESC) AS position, SUM(punktacja.pkt) AS points 
+                                        RANK() OVER(PARTITION BY punktacja.zawody_id ORDER BY SUM(punktacja.pkt) DESC) AS position, SUM(punktacja.pkt) AS points 
                         FROM punktacja
                         GROUP BY punktacja.strzelec_id, zawody_id) AS subQuery
                         WHERE shooterId = {id};";
