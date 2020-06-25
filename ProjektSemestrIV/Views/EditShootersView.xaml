@@ -43,14 +43,14 @@
                 Grid.Row="0" Grid.Column="1"
                 x:Name="TextBoxShooterName" x:FieldModifier="private"
                 VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
-                Text="{Binding Name, Mode=TwoWay}"/>
+                Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.ShooterSurname}}"/>
             <TextBox
                 Grid.Row="1" Grid.Column="1" 
                 x:Name="TextBoxShooterSurname" x:FieldModifier="private"
                 VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
-                Text="{Binding Surname, Mode=TwoWay}"/>
+                Text="{Binding Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Button
                 Grid.Row="3" Grid.Column="1" 

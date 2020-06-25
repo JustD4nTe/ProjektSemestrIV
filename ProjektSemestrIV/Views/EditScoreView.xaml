@@ -81,13 +81,13 @@
                 <Label Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.Procedure}}"/>
                 <Label Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.Extra}}"/>
 
-                <TextBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Text="{Binding Alpha, Mode=TwoWay}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding Charlie, Mode=TwoWay}"/>
-                <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Text="{Binding Delta, Mode=TwoWay}"/>
-                <TextBox Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" Text="{Binding Miss, Mode=TwoWay}"/>
-                <TextBox Grid.Row="1" Grid.Column="4" HorizontalAlignment="Stretch" Text="{Binding NoShoot, Mode=TwoWay}"/>
-                <TextBox Grid.Row="1" Grid.Column="5" HorizontalAlignment="Stretch" Text="{Binding Procedure, Mode=TwoWay}"/>
-                <TextBox Grid.Row="1" Grid.Column="6" HorizontalAlignment="Stretch" Text="{Binding Extra, Mode=TwoWay}"/>
+                <TextBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Text="{Binding Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding Charlie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Text="{Binding Delta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" Text="{Binding Miss, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="4" HorizontalAlignment="Stretch" Text="{Binding NoShoot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="5" HorizontalAlignment="Stretch" Text="{Binding Procedure, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="6" HorizontalAlignment="Stretch" Text="{Binding Extra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
 
             <Grid Grid.Row="2" Grid.Column="0">
@@ -122,9 +122,9 @@
                 <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.ShooterID}}"/>
                 <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.StageID}}"/>
 
-                <xctk:MaskedTextBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Text="{Binding Time, Mode=TwoWay}" Mask="00:00:00.000"/>
-                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" IsEnabled="{Binding ShooterIdIsEnabled}" Text="{Binding Shooter_id, Mode=TwoWay}"/>
-                <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" IsEnabled="{Binding StageIdIsEnabled}" Text="{Binding Stage_id, Mode=TwoWay}"/>
+                <xctk:MaskedTextBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Text="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Mask="00:00:00.000"/>
+                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" IsEnabled="{Binding ShooterIdIsEnabled}" Text="{Binding Shooter_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" IsEnabled="{Binding StageIdIsEnabled}" Text="{Binding Stage_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </Grid>
         </Grid>
 
