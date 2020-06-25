@@ -13,8 +13,8 @@ namespace ProjektSemestrIV.Models.ComplexModels {
 
         public ShowShooterOnStageModel(uint shooterId, uint stageId)
         {
-            shooter = ShooterRepository.GetShooterByIdFromDB(shooterId);
-            stage = StageRepository.GetStageByIdFromDB(stageId);
+            shooter = ShooterRepository.GetShooterById(shooterId);
+            stage = StageRepository.GetStageById(stageId);
         }
 
         public string GetShooterName() => shooter.Name;
@@ -34,10 +34,10 @@ namespace ProjektSemestrIV.Models.ComplexModels {
             => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID, stage.ID));
 
         public string GetShooterGeneralAveragePosition()
-            => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
+            => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePosition(shooter.ID));
 
         public string GetShooterOnStageSumOfPoints()
-            => String.Format("{0:N3}", ShooterRepository.GetShooterOnStageSumOfPointsFromDB(shooter.ID, stage.ID));
+            => String.Format("{0:N3}", ShooterRepository.GetShooterOnStageSumOfPoints(shooter.ID, stage.ID));
 
         public string GetShooterOnStageTime()
             => TimeSpan.FromSeconds(ShooterRepository.GetShooterOnStageTime(shooter.ID, stage.ID))

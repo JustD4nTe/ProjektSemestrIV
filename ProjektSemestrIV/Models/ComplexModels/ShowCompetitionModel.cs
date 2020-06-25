@@ -13,7 +13,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public ShowCompetitionModel(uint id)
         {
-            competition = CompetitionRepository.GetCompetitionFromDB(id);
+            competition = CompetitionRepository.GetCompetition(id);
         }
 
         // return dd.mm.yyyy-dd.mm.yyyy

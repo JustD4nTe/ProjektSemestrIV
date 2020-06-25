@@ -15,7 +15,7 @@ namespace ProjektSemestrIV.ViewModels {
         private CompetitionModel competitionModel;
         public EditCompetitionsViewModel() {
             competitionModel = new CompetitionModel();
-            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
+            Competitions = competitionModel.GetAllCompetitions().Convert();
             SelectedCompetitionIndex = -1;
             EditedCompetitionIndex = -1;
         }
@@ -75,12 +75,12 @@ namespace ProjektSemestrIV.ViewModels {
             => EditedCompetitionIndex == -1;
         private void ExecuteAddCompetition( object parameter ) {
             Competition competition = new Competition(Location, StartDate, EndDate);
-            competitionModel.AddCompetitionToDatabase(competition);
+            competitionModel.AddCompetition(competition);
 
             Location = "";
             StartDate = "";
             EndDate = "";
-            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
+            Competitions = competitionModel.GetAllCompetitions().Convert();
         }
 
 
@@ -99,13 +99,13 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteConfirmCompetitionEdit( object parameter ) {
             Competition newCompetition = new Competition(Location, StartDate, EndDate);
             UInt32 id = SelectedCompetition.Id;
-            competitionModel.EditCompetitionInDatabase(newCompetition, id);
+            competitionModel.EditCompetition(newCompetition, id);
 
             Location = "";
             StartDate = "";
             EndDate = "";
             EditedCompetitionIndex = -1;
-            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
+            Competitions = competitionModel.GetAllCompetitions().Convert();
         }
 
 
@@ -143,8 +143,8 @@ namespace ProjektSemestrIV.ViewModels {
             => (SelectedCompetitionIndex != -1) && (SelectedCompetitionIndex != EditedCompetitionIndex);
         private void ExecuteDeleteCompetition( object parameter ) {
             UInt32 id = SelectedCompetition.Id;
-            competitionModel.DeleteCompetitionFromDatabase(id);
-            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
+            competitionModel.DeleteCompetition(id);
+            Competitions = competitionModel.GetAllCompetitions().Convert();
         }
     }
 }

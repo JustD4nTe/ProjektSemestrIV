@@ -18,7 +18,7 @@ namespace ProjektSemestrIV.ViewModels {
             stageModel = new StageModel();
             competitionModel = new CompetitionModel();
             Stages = stageModel.GetAllStages();
-            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
+            Competitions = competitionModel.GetAllCompetitions().Convert();
             SelectedStageIndex = -1;
             EditedStageIndex = -1;
         }
@@ -97,7 +97,7 @@ namespace ProjektSemestrIV.ViewModels {
             => EditedStageIndex == -1;
         private void ExecuteAddStage( object parameter ) {
             Stage newStage = new Stage(CompetitionID, Name, Rules);
-            stageModel.AddStageToDatabase(newStage);
+            stageModel.AddStage(newStage);
 
             Name = "";
             Rules = "";
@@ -120,7 +120,7 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteConfirmStageEdit( object parameter ) {
             Stage newStage = new Stage(CompetitionID, Name, Rules);
             UInt32 id = SelectedStage.ID;
-            stageModel.EditStageInDatabase(newStage, id);
+            stageModel.EditStage(newStage, id);
 
             Name = "";
             Rules = "";
@@ -162,7 +162,7 @@ namespace ProjektSemestrIV.ViewModels {
             => (SelectedStageIndex != -1) && (SelectedStageIndex != EditedStageIndex);
         private void ExecuteDeleteStage( object parameter ) {
             UInt32 id = SelectedStage.ID;
-            stageModel.DeleteStageFromDatabase(id);
+            stageModel.DeleteStage(id);
             Stages = stageModel.GetAllStages();
         }
     }

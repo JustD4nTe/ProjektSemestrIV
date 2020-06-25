@@ -15,7 +15,7 @@ namespace ProjektSemestrIV.DAL.Repositories
     class ShooterRepository : BaseRepository
     {
         #region CRUD
-        public static bool AddShooterToDB(Shooter shooter)
+        public static bool AddShooter(Shooter shooter)
         {
             var query = @"INSERT INTO strzelec (`imie`, `nazwisko`)
                             VALUES (@imie, @nazwisko)";
@@ -23,7 +23,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteModifyQuery(query, shooter.GetParameters());
         }
 
-        public static bool EditShooterInDB(Shooter shooter, uint id)
+        public static bool EditShooter(Shooter shooter, uint id)
         {
             var query = $@"UPDATE strzelec 
                             SET `imie` = @imie, `nazwisko` = @nazwisko 
@@ -32,21 +32,21 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteModifyQuery(query, shooter.GetParameters());
         }
 
-        public static IEnumerable<Shooter> GetAllShootersFromDB()
+        public static IEnumerable<Shooter> GetAllShooters()
         {
             var query = "SELECT * FROM strzelec";
 
             return ExecuteSelectQuery<Shooter>(query);
         }
 
-        public static Shooter GetShooterByIdFromDB(uint id)
+        public static Shooter GetShooterById(uint id)
         {
             string query = $"SELECT * FROM strzelec WHERE strzelec.id = {id}";
 
             return ExecuteSelectQuery<Shooter>(query).FirstOrDefault();
         }
 
-        public static bool DeleteShooterFromDB(uint shooterID)
+        public static bool DeleteShooter(uint shooterID)
         {
             string query = $"DELETE FROM strzelec WHERE (`id` = '{shooterID}')";
 
@@ -101,7 +101,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
-        public static IEnumerable<ShooterCompetition> GetShooterAccomplishedCompetitionsFromDB(uint id)
+        public static IEnumerable<ShooterCompetition> GetShooterAccomplishedCompetitions(uint id)
         {
             var query = $@"WITH punktacja AS (
                             SELECT  punkty.zawody_id, punkty.suma/przebieg.czas AS pkt , 
@@ -128,7 +128,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<ShooterCompetition>(query);
         }
 
-        public static double GetShooterGeneralAveragePositionFromDB(uint id)
+        public static double GetShooterGeneralAveragePosition(uint id)
         {
             var query = $@"WITH ranking AS (
                             SELECT RANK() OVER(PARTITION BY punkty.zawody_id ORDER BY sum(punkty.suma/przebieg.czas) DESC) AS positions, 
@@ -167,7 +167,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
 
-        public static double GetShooterGeneralSumOfPointsFromDB(uint id)
+        public static double GetShooterGeneralSumOfPoints(uint id)
         {
             var query = $@"SELECT SUM(subQuery.points/przebieg.czas) AS sumOfPoints
                             FROM (
@@ -183,7 +183,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
-        public static double GetShooterOnStageSumOfPointsFromDB(uint ShooterId, uint StageId)
+        public static double GetShooterOnStageSumOfPoints(uint ShooterId, uint StageId)
         {
             var query = $@"SELECT (SUM(alpha)*5+SUM(charlie)*3+SUM(delta)-10*(SUM(miss)+SUM(`n-s`)+SUM(proc)+SUM(extra)))
                                      /(SELECT czas FROM przebieg WHERE id_strzelec = 1 and id_trasa = 1) AS points
@@ -194,7 +194,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
-        public static double GetShooterGeneralSumOfTimesFromDB(uint id)
+        public static double GetShooterGeneralSumOfTimes(uint id)
         {
             var query = $@"SELECT SUM(przebieg.czas) AS sumOfTimes
                             FROM tarcza
@@ -216,7 +216,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<TimeSpan>(query).FirstOrDefault().TotalSeconds;
         }
 
-        public static ShooterWithPoints GetShooterWithPointsByStageIdFromDB(uint id)
+        public static ShooterWithPoints GetShooterWithPointsByStageId(uint id)
         {
             var query = $@"WITH ranking AS (
                             SELECT summing.strzelec_id AS strzelec_id, summing.strzelec_imie AS imie, 
@@ -251,7 +251,7 @@ namespace ProjektSemestrIV.DAL.Repositories
         }
 
         public static IEnumerable<ShooterWithStageAndCompetitionPoints>
-            GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(uint id)
+            GetShootersWithStagePointsAndCompetitionPointsById(uint id)
         {
             var query = $@"WITH punktacja AS (
                             SELECT punkty.suma/przebieg.czas AS pkt ,punkty.strzelec_imie, punkty.strzelec_nazwisko, 
@@ -288,14 +288,14 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<ShooterWithStageAndCompetitionPoints>(query);
         }
 
-        public static Shooter GetShooterFromDB(uint id)
+        public static Shooter GetShooter(uint id)
         {
             var query = $"SELECT * FROM strzelec WHERE strzelec.id={id}";
 
             return ExecuteSelectQuery<Shooter>(query).FirstOrDefault();
         }
 
-        public static double GetShooterSumOfPointsAtCompetitionFromDB(uint shooterId, uint competitionId)
+        public static double GetShooterSumOfPointsAtCompetition(uint shooterId, uint competitionId)
         {
             var query = $@"SELECT SUM(subQuery.points/przebieg.czas) AS sumOfPoints
                             FROM (
@@ -311,7 +311,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
-        public static double GetShooterSumOfTimesAtCompetitionFromDB(uint shooterId, uint competitionId)
+        public static double GetShooterSumOfTimesAtCompetition(uint shooterId, uint competitionId)
         {
             var query = $@"SELECT SUM(przebieg.czas) AS sumOfTimes
                             FROM strzelec 
@@ -323,7 +323,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
-        public static uint GetShooterPositionAtCompetitionFromDB(uint shooterId, uint competitionId)
+        public static uint GetShooterPositionAtCompetition(uint shooterId, uint competitionId)
         {
             var query = $@"WITH ranking AS (
                             SELECT strzelec.id AS strzelec_id, 

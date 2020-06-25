@@ -11,21 +11,21 @@ namespace ProjektSemestrIV.DAL.Repositories
     class CompetitionRepository : BaseRepository
     {
         #region CRUD
-        public static IEnumerable<Competition> GetAllCompetitionsFromDB()
+        public static IEnumerable<Competition> GetAllCompetitions()
         {
             var query = "SELECT * FROM zawody";
 
             return ExecuteSelectQuery<Competition>(query);
         }
 
-        public static Competition GetCompetitionFromDB(uint id)
+        public static Competition GetCompetition(uint id)
         {
             var query = $"SELECT * FROM zawody WHERE id={id}";
 
             return ExecuteSelectQuery<Competition>(query).FirstOrDefault();
         }
 
-        public static bool AddCompetitionToDatabase(Competition competition)
+        public static bool AddCompetition(Competition competition)
         {
             var query = @"INSERT INTO zawody (`miejsce`, `rozpoczecie`, `zakonczenie`)
                             VALUES (@miejsce, @rozpoczecie, @zakonczenie)";
@@ -33,7 +33,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteModifyQuery(query, competition.GetParameters());
         }
 
-        public static bool EditCompetitionInDatabase(Competition competition, uint id)
+        public static bool EditCompetition(Competition competition, uint id)
         {
             var query = $@"UPDATE zawody 
                             SET `miejsce` = @miejsce, `rozpoczecie` = @rozpoczenie, `zakonczenie` = @zakonczenie 
@@ -42,7 +42,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteModifyQuery(query,competition.GetParameters());
         }
 
-        public static bool DeleteCompetitionFromDatabase(uint competitionID)
+        public static bool DeleteCompetition(uint competitionID)
         {
             var query = $@"DELETE FROM zawody WHERE (`id` = '{competitionID}')";
 

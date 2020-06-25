@@ -19,7 +19,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<Target>(query);
         }
 
-        public static bool AddTargetToDatabase(Target target)
+        public static bool AddTarget(Target target)
         {
             var query = @"INSERT INTO tarcza (`strzelec_id`, `trasa_id`, `alpha`, `charlie`, `delta`, `miss`, `n-s`, `proc`, `extra`)
                             VALUES (@strzelec_id, @trasa_id, @alpha, @charlie, @delta, @miss, @ns, @proc, @extra)";
@@ -27,7 +27,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteModifyQuery(query, target.GetParameters());
         }
 
-        public static bool EditTargetInDatabase(Target target, uint target_id)
+        public static bool EditTarget(Target target, uint target_id)
         {
             var query = $@"UPDATE `tarcza` 
                             SET `strzelec_id` = @strzelec_id, `trasa_id` = @trasa_id, 
@@ -39,7 +39,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteModifyQuery(query, target.GetParameters());
         }
 
-        public static bool DeleteTargetFromDatabase(uint targetID)
+        public static bool DeleteTarget(uint targetID)
         {
             var query = $"DELETE FROM tarcza WHERE (`id` = '{targetID}')";
 

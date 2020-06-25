@@ -13,13 +13,13 @@ namespace ProjektSemestrIV.Models {
         public ObservableCollection<Target> GetTargetsWhere(UInt32 shooter_id, UInt32 stage_id)
             => TargetRepository.GetTargetsWhere(shooter_id, stage_id).Convert();
 
-        public Boolean AddTargetToDatabase( Target target )
-            => TargetRepository.AddTargetToDatabase(target);
+        public Boolean AddTarget( Target target )
+            => TargetRepository.AddTarget(target);
 
-        public Boolean EditTargetInDatabase( Target target, UInt32 target_id )
-            => TargetRepository.EditTargetInDatabase(target, target_id);
+        public Boolean EditTarget( Target target, UInt32 target_id )
+            => TargetRepository.EditTarget(target, target_id);
 
-        public Boolean DeleteTargetFromDatabase( UInt32 id )
-            => TargetRepository.DeleteTargetFromDatabase(id);
+        public Boolean DeleteTarget( UInt32 id )
+            => TargetRepository.DeleteTarget(id);
     }
 }

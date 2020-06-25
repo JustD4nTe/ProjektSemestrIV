@@ -9,16 +9,16 @@ namespace ProjektSemestrIV.Models
 {
     class CompetitionModel
     {
-        public ObservableCollection<Competition> GetAllCompetitionsFromDB()
-            => CompetitionRepository.GetAllCompetitionsFromDB().Convert();
+        public ObservableCollection<Competition> GetAllCompetitions()
+            => CompetitionRepository.GetAllCompetitions().Convert();
 
-        public Boolean AddCompetitionToDatabase( Competition competition )
-            => CompetitionRepository.AddCompetitionToDatabase(competition);
+        public Boolean AddCompetition( Competition competition )
+            => CompetitionRepository.AddCompetition(competition);
 
-        public Boolean DeleteCompetitionFromDatabase( UInt32 shooterID )
-            => CompetitionRepository.DeleteCompetitionFromDatabase(shooterID);
+        public Boolean DeleteCompetition( UInt32 shooterID )
+            => CompetitionRepository.DeleteCompetition(shooterID);
 
-        public Boolean EditCompetitionInDatabase( Competition competition, UInt32 id )
-            => CompetitionRepository.EditCompetitionInDatabase(competition, id);
+        public Boolean EditCompetition( Competition competition, UInt32 id )
+            => CompetitionRepository.EditCompetition(competition, id);
     }
 }

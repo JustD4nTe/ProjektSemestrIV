@@ -14,8 +14,8 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public ShowShooterInCompetitionModel(uint shooterId, uint competitionId)
         {
-            shooter = ShooterRepository.GetShooterFromDB(shooterId);
-            competition = CompetitionRepository.GetCompetitionFromDB(competitionId);
+            shooter = ShooterRepository.GetShooter(shooterId);
+            competition = CompetitionRepository.GetCompetition(competitionId);
         }
 
         public string GetShooterName()
@@ -26,13 +26,13 @@ namespace ProjektSemestrIV.Models.ComplexModels
                 + " - " + competition.EndDate.Substring(0, 10);
 
         public double GetPoints()
-        => ShooterRepository.GetShooterSumOfPointsAtCompetitionFromDB(shooter.ID, competition.Id);
+        => ShooterRepository.GetShooterSumOfPointsAtCompetition(shooter.ID, competition.Id);
 
         public double GetTime()
-        => ShooterRepository.GetShooterSumOfTimesAtCompetitionFromDB(shooter.ID, competition.Id);
+        => ShooterRepository.GetShooterSumOfTimesAtCompetition(shooter.ID, competition.Id);
 
         public uint GetPosition()
-        => ShooterRepository.GetShooterPositionAtCompetitionFromDB(shooter.ID, competition.Id);
+        => ShooterRepository.GetShooterPositionAtCompetition(shooter.ID, competition.Id);
 
         public double GetGeneralAccuracy()
         => ShooterRepository.GetAccuracy(AccuracyTypeEnum.General, shooter.ID, competitionId: competition.Id);

@@ -13,8 +13,8 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public ShowStageModel(uint id)
         {
-            stage = StageRepository.GetStageByIdFromDB(id);
-            competition = CompetitionRepository.GetCompetitionFromDB(stage.Competition_ID);
+            stage = StageRepository.GetStageById(id);
+            competition = CompetitionRepository.GetCompetition(stage.Competition_ID);
         }
 
         public string GetCompetitionLocation() => competition.Location;
@@ -23,23 +23,23 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public string GetStageRules() => stage.Rules;
 
-        public uint GetNumOfTargets() => StageRepository.GetNumOfTargetsOnStageFromDB(stage.ID);
+        public uint GetNumOfTargets() => StageRepository.GetNumOfTargetsOnStage(stage.ID);
 
         public string GetShooterWithPoints()
         {
-            var shooter = ShooterRepository.GetShooterWithPointsByStageIdFromDB(stage.ID);
+            var shooter = ShooterRepository.GetShooterWithPointsByStageId(stage.ID);
             return $"{shooter.Name} {shooter.Surname} : {shooter.Points}pkt";
         }
 
-        public double GetAverageTime() => StageRepository.GetAverageTimeOnStageByIdFromDB(stage.ID);
+        public double GetAverageTime() => StageRepository.GetAverageTimeOnStageById(stage.ID);
 
         public IEnumerable<ShooterWithStageAndCompetitionPointsOverview> GetShooters()
-            => ShooterRepository.GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(stage.ID)
+            => ShooterRepository.GetShootersWithStagePointsAndCompetitionPointsById(stage.ID)
                                 .Select(x => new ShooterWithStageAndCompetitionPointsOverview(x.Id,
-                                                                                                    x.Position,
-                                                                                                    x.Name,
-                                                                                                    x.Surname,
-                                                                                                    x.StagePoints,
-                                                                                                    x.CompetitionPoints));
+                                                                                                x.Position,
+                                                                                                x.Name,
+                                                                                                x.Surname,
+                                                                                                x.StagePoints,
+                                                                                                x.CompetitionPoints));
     }
 }

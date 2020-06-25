@@ -175,7 +175,7 @@ namespace ProjektSemestrIV.ViewModels {
             => EditedTargetIndex == -1;
         private void ExecuteAddTarget( object parameter ) {
             Target newTarget = new Target(shooter_id, stage_id, alpha, charlie, delta, miss, noShoot, procedure, extra);
-            targetModel.AddTargetToDatabase(newTarget);
+            targetModel.AddTarget(newTarget);
 
             Alpha = 0;
             Charlie = 0;
@@ -203,7 +203,7 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteConfirmTargetEdit( object parameter ) {
             Target newTarget = new Target(shooter_id, stage_id, alpha, charlie, delta, miss, noShoot, procedure, extra);
             UInt32 id = SelectedTarget.ID;
-            targetModel.EditTargetInDatabase(newTarget, id);
+            targetModel.EditTarget(newTarget, id);
 
             Alpha = 0;
             Charlie = 0;
@@ -261,7 +261,7 @@ namespace ProjektSemestrIV.ViewModels {
             => (SelectedTargetIndex != -1) && (SelectedTargetIndex != EditedTargetIndex);
         private void ExecuteDeleteTarget( object parameter ) {
             UInt32 id = SelectedTarget.ID;
-            targetModel.DeleteTargetFromDatabase(id);
+            targetModel.DeleteTarget(id);
             Targets = targetModel.GetTargetsWhere(Shooter_id, Stage_id);
         }
 
@@ -281,11 +281,11 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteSaveRun( object parameter ) {
             if(runModel.GetRunWhere(Shooter_id,Stage_id) != null) {
                 Run newRun = new Run(Time, Shooter_id, Stage_id);
-                runModel.EditRunInDatabase(newRun, Shooter_id, Stage_id);
+                runModel.EditRun(newRun, Shooter_id, Stage_id);
             }
             else {
                 Run newRun = new Run(Time, Shooter_id, Stage_id);
-                runModel.AddRunToDatabase(newRun);
+                runModel.AddRun(newRun);
             }
         }
     }

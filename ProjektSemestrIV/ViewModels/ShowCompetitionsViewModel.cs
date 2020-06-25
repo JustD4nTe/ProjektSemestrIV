@@ -24,7 +24,7 @@ namespace ProjektSemestrIV.ViewModels
 
             model = new CompetitionModel();
 
-            Competitions = model.GetAllCompetitionsFromDB().Convert();
+            Competitions = model.GetAllCompetitions().Convert();
 
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => true);
         }

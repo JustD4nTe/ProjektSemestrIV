@@ -12,7 +12,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
         private Shooter shooter;
 
         public ShowShooterModel(uint id)
-            => shooter = ShooterRepository.GetShooterByIdFromDB(id);
+            => shooter = ShooterRepository.GetShooterById(id);
 
         public string GetShooterName() => shooter.Name;
 
@@ -31,7 +31,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
             => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID));
 
         public IEnumerable<ShooterCompetitionOverview> GetShooterCompetitions()
-            => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID)
+            => ShooterRepository.GetShooterAccomplishedCompetitions(shooter.ID)
                                 .Select(x => new ShooterCompetitionOverview(x.CompetitionId,
                                                                             x.Location,
                                                                             x.StartDate,
@@ -39,13 +39,13 @@ namespace ProjektSemestrIV.Models.ComplexModels
                                                                             x.Points));
 
         public string GetShooterGeneralAveragePosition()
-            => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
+            => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePosition(shooter.ID));
 
         public string GetShooterGeneralSumOfPoints()
-            => String.Format("{0:N3}", ShooterRepository.GetShooterGeneralSumOfPointsFromDB(shooter.ID));
+            => String.Format("{0:N3}", ShooterRepository.GetShooterGeneralSumOfPoints(shooter.ID));
 
         public string GetShooterGeneralSumOfTimes()
-            => TimeSpan.FromSeconds(ShooterRepository.GetShooterGeneralSumOfTimesFromDB(shooter.ID))
+            => TimeSpan.FromSeconds(ShooterRepository.GetShooterGeneralSumOfTimes(shooter.ID))
                        .ToString(@"hh\h\:mm\m\:ss\s\:fff\m\s");
     }
 }
