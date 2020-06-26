@@ -76,6 +76,17 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
 
+
+        public static string GetCompetitionName(uint stageId)
+        {
+            var query = $@"SELECT CONCAT(miejsce, ' ', DATE(rozpoczecie)) AS zawody
+                            FROM trasa 
+                            INNER JOIN zawody ON trasa.id_zawody=zawody.id
+                            WHERE trasa.id = {stageId}";
+
+            return ExecuteSelectQuery<object>(query).FirstOrDefault()?.ToString();
+        }
+
         #endregion Auxiliary queries
     }
 }
