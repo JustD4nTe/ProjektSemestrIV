@@ -11,156 +11,182 @@
              Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1"/>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="1"/>
-            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                Content="{Binding Source={x:Static resx:Resources.EditRun}}" FontSize="30"/>
 
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="0,0,10,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="4*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
             </Grid.RowDefinitions>
 
-            <DataGrid 
-                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+            <Grid Grid.Row="0" Grid.Column="0" Margin="0,0,0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="5"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.StageID}}"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.ShooterID}}"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Time}}"/>
+
+                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsEnabled="False" Text="{Binding Stage_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsEnabled="{Binding ShooterIdIsEnabled}" Text="{Binding Shooter_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <xctk:MaskedTextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Time, Mode=TwoWay}" Mask="00:00:00.000"/>
+
+                <Button Grid.Row="4" Grid.Column="1" 
+                        Content="{Binding Source={x:Static resx:Resources.Save}}" 
+                        Command="{Binding SaveRun}" Width="50"
+                        HorizontalAlignment="Left"/>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="10"/>
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Alpha}}"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Charlie}}"/>
+                <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Delta}}"/>
+                <Label Grid.Row="3" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Miss}}"/>
+                <Label Grid.Row="4" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.NoShoot}}"/>
+                <Label Grid.Row="5" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Procedure}}"/>
+                <Label Grid.Row="6" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Extra}}"/>
+
+                <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Charlie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Delta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Miss, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" Text="{Binding NoShoot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Procedure, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Extra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                <Button Grid.Row="8" Grid.Column="1" 
+                        Content="{Binding Source={x:Static resx:Resources.Add}}" 
+                        Command="{Binding AddTarget}"  Width="50"
+                        VerticalAlignment="Center" HorizontalAlignment="Left"/>
+
+                <Button Grid.Row="10" Grid.Column="1" 
+                        Content="{Binding Source={x:Static resx:Resources.Ok}}" 
+                        Command="{Binding ConfirmTargetEdit}" Width="50"
+                        VerticalAlignment="Center" HorizontalAlignment="Left"/>
+            </Grid>
+        </Grid>
+                
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <DataGrid 
+                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                 x:Name="DataGridTargets" x:FieldModifier="private"
                 AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"                
                 ItemsSource="{Binding Targets, Mode=OneWay}"
                 SelectedItem="{Binding SelectedTarget, Mode=OneWayToSource}"
                 SelectedIndex="{Binding SelectedTargetIndex, Mode=OneWayToSource}">
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Alpha}}" Binding="{Binding Alpha}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Charlie}}" Binding="{Binding Charlie}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Charlie}}" Binding="{Binding Delta}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Miss}}" Binding="{Binding Miss}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.NoShoot}}" Binding="{Binding NoShoot}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Procedure}}" Binding="{Binding Procedure}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Extra}}" Binding="{Binding Extra}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Alpha}}" Binding="{Binding Alpha}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Charlie}}" Binding="{Binding Charlie}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Delta}}" Binding="{Binding Delta}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Miss}}" Binding="{Binding Miss}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.NoShoot}}" Binding="{Binding NoShoot}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Procedure}}" Binding="{Binding Procedure}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Extra}}" Binding="{Binding Extra}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
 
-            <Grid Grid.Row="1" Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
+                <Button Grid.Row="1" Grid.Column="0" 
+                        Content="{Binding Source={x:Static resx:Resources.Edit}}" 
+                        Command="{Binding EditTarget}" VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" Margin="10"/>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-
-                <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.Alpha}}"/>
-                <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.Charlie}}"/>
-                <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.Delta}}"/>
-                <Label Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.Miss}}"/>
-                <Label Grid.Row="0" Grid.Column="4" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.NoShoot}}"/>
-                <Label Grid.Row="0" Grid.Column="5" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.Procedure}}"/>
-                <Label Grid.Row="0" Grid.Column="6" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.Extra}}"/>
-
-                <TextBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Text="{Binding Alpha, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding Charlie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Text="{Binding Delta, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" Text="{Binding Miss, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="1" Grid.Column="4" HorizontalAlignment="Stretch" Text="{Binding NoShoot, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="1" Grid.Column="5" HorizontalAlignment="Stretch" Text="{Binding Procedure, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="1" Grid.Column="6" HorizontalAlignment="Stretch" Text="{Binding Extra, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Grid.Row="1" Grid.Column="1" 
+                        Content="{Binding Source={x:Static resx:Resources.Delete}}" 
+                        Command="{Binding DeleteTarget}" VerticalAlignment="Center" 
+                        HorizontalAlignment="Center" Margin="10"/>
             </Grid>
 
-            <Grid Grid.Row="2" Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-
-                <Button Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Add}}" Command="{Binding AddTarget}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Button Grid.Row="0" Grid.Column="1" Content="{Binding Source={x:Static resx:Resources.Ok}}" Command="{Binding ConfirmTargetEdit}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Button Grid.Row="0" Grid.Column="2" Content="{Binding Source={x:Static resx:Resources.Edit}}" Command="{Binding EditTarget}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Button Grid.Row="0" Grid.Column="3" Content="{Binding Source={x:Static resx:Resources.Delete}}" Command="{Binding DeleteTarget}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <Button Grid.Row="0" Grid.Column="4" Content="{Binding Source={x:Static resx:Resources.Save}}" Command="{Binding SaveRun}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-            </Grid>
-
-            <Grid Grid.Row="3" Grid.Column="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                </Grid.RowDefinitions>
-
-                <Label Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.Time}}"/>
-                <Label Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.ShooterID}}"/>
-                <Label Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Content="{Binding Source={x:Static resx:Resources.StageID}}"/>
-
-                <xctk:MaskedTextBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Text="{Binding Time, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Mask="00:00:00.000"/>
-                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" IsEnabled="{Binding ShooterIdIsEnabled}" Text="{Binding Shooter_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" IsEnabled="{Binding StageIdIsEnabled}" Text="{Binding Stage_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-            </Grid>
-        </Grid>
-
-        <GridSplitter Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch"/>
-
-        <DataGrid 
-                Grid.Row="1" Grid.Column="2"
+            <DataGrid Grid.Row="0" Grid.Column="2"
                 x:Name="DataGridCompetitions" x:FieldModifier="private"
                 AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
                 ItemsSource="{Binding Competitions, Mode=OneWay}"
                 SelectedItem="{Binding SelectedCompetition, Mode=OneWayToSource}">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding Id}"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Location}}" Binding="{Binding Location}"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StartDate}}" Binding="{Binding StartDate}"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.EndDate}}" Binding="{Binding EndDate}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding Id}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Location}}" Binding="{Binding Location}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StartDate}}" Binding="{Binding StartDate}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.EndDate}}" Binding="{Binding EndDate}"/>
+                </DataGrid.Columns>
+            </DataGrid>
 
-        <GridSplitter Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch"/>
-        
-        <DataGrid 
-                Grid.Row="1" Grid.Column="4" Grid.ColumnSpan="2" 
+            <DataGrid Grid.Row="1" Grid.Column="3"
                 x:Name="DataGridStages" x:FieldModifier="private"
                 AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
                 ItemsSource="{Binding Stages, Mode=OneWay}"
                 SelectedItem="{Binding SelectedStage, Mode=OneWayToSource}"
                 SelectedIndex="{Binding SelectedStageIndex, Mode=OneWayToSource}">
 
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.IdCompetition}}" Binding="{Binding Competition_ID}"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Name}}" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Rules}}" Binding="{Binding Rules}"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.IdCompetition}}" Binding="{Binding Competition_ID}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Name}}" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Rules}}" Binding="{Binding Rules}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
     </Grid>
 </Page>
