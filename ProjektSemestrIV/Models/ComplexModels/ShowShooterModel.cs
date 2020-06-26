@@ -12,40 +12,40 @@ namespace ProjektSemestrIV.Models.ComplexModels
         private Shooter shooter;
 
         public ShowShooterModel(uint id)
-            => shooter = ShooterRepository.GetShooterById(id);
+            => shooter = ShooterRepository.GetShooter(id);
 
         public string GetShooterName() => shooter.Name;
 
         public string GetShooterSurname() => shooter.Surname;
 
-        public string GetShooterCompetitionGeneralAccuracy()
+        public string GetGeneralAccuracy()
             => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.General, shooter.ID));
 
-        public string GetShooterCompetitionAlphaAccuracy()
+        public string GetAlphaAccuracy()
             => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Alpha, shooter.ID));
 
-        public string GetShooterCompetitionCharlieAccuracy()
+        public string GetCharlieAccuracy()
             => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Charlie, shooter.ID));
 
-        public string GetShooterCompetitionDeltaAccuracy()
+        public string GetDeltaAccuracy()
             => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID));
 
-        public IEnumerable<ShooterCompetitionOverview> GetShooterCompetitions()
-            => ShooterRepository.GetShooterAccomplishedCompetitions(shooter.ID)
+        public IEnumerable<ShooterCompetitionOverview> GetShootersOnCompetition()
+            => ShooterRepository.GetShootersOnCompetition(shooter.ID)
                                 .Select(x => new ShooterCompetitionOverview(x.CompetitionId,
                                                                             x.Location,
                                                                             x.StartDate,
                                                                             x.Position,
                                                                             x.Points));
 
-        public string GetShooterGeneralAveragePosition()
-            => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePosition(shooter.ID));
+        public string GetGeneralAvgPosition()
+            => String.Format("{0:N2}", ShooterRepository.GetGeneralAvgPosition(shooter.ID));
 
-        public string GetShooterGeneralSumOfPoints()
-            => String.Format("{0:N3}", ShooterRepository.GetShooterGeneralSumOfPoints(shooter.ID));
+        public string GetGeneralPoints()
+            => String.Format("{0:N3}", ShooterRepository.GetGeneralPoints(shooter.ID));
 
-        public string GetShooterGeneralSumOfTimes()
-            => TimeSpan.FromSeconds(ShooterRepository.GetShooterGeneralSumOfTimes(shooter.ID))
+        public string GetGeneralSumOfTimes()
+            => TimeSpan.FromSeconds(ShooterRepository.GetGeneralSumOfTimes(shooter.ID))
                        .ToString(@"hh\h\:mm\m\:ss\s\:fff\m\s");
     }
 }

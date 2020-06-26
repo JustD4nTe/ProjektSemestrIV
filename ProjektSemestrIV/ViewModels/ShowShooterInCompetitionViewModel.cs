@@ -48,7 +48,7 @@ namespace ProjektSemestrIV.ViewModels
             CharlieAccuracy = model.GetCharlieAccuracy();
             DeltaAccuracy = model.GetDeltaAccuracy();
 
-            StageStats = model.GetShooterStatsOnStages();
+            StageStats = model.GetStatsOnStages();
 
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), 
                                                  x => SelectedStage != null);

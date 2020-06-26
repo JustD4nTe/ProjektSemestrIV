@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.Models {
     class TargetModel {
-        public ObservableCollection<Target> GetTargetsWhere(UInt32 shooter_id, UInt32 stage_id)
-            => TargetRepository.GetTargetsWhere(shooter_id, stage_id).Convert();
+        public ObservableCollection<Target> GetTargets(UInt32 shooter_id, UInt32 stage_id)
+            => TargetRepository.GetTargets(shooter_id, stage_id).Convert();
 
         public Boolean AddTarget( Target target )
             => TargetRepository.AddTarget(target);

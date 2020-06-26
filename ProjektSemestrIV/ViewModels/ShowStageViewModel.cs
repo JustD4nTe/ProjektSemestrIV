@@ -35,9 +35,9 @@ namespace ProjektSemestrIV.ViewModels
             CompetitionLocation = model.GetCompetitionLocation();
             StageName = model.GetStageName();
             StageRules = model.GetStageRules();
-            NumOfTargets = model.GetNumOfTargets();
-            BestShooter = model.GetShooterWithPoints();
-            AverageTime = model.GetAverageTime();
+            NumOfTargets = model.GetTargetsCount();
+            BestShooter = model.GetBestShooter();
+            AverageTime = model.GetAvgTime();
             Shooters = model.GetShooters().Convert();           
         }
 

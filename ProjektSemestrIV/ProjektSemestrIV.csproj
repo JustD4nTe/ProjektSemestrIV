@@ -127,9 +127,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAL\DatabaseConnection.cs" />
-    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterCompetition.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterOnCompetition.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterStatsOnStage.cs" />
-    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithStageAndCompetitionPoints.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterStageAndCompetitionPoints.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
     <Compile Include="DAL\Entities\IBaseEntity.cs" />
     <Compile Include="DAL\Entities\Run.cs" />

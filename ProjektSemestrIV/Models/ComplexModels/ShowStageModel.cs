@@ -13,7 +13,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public ShowStageModel(uint id)
         {
-            stage = StageRepository.GetStageById(id);
+            stage = StageRepository.GetStage(id);
             competition = CompetitionRepository.GetCompetition(stage.Competition_ID);
         }
 
@@ -23,18 +23,18 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public string GetStageRules() => stage.Rules;
 
-        public uint GetNumOfTargets() => StageRepository.GetNumOfTargetsOnStage(stage.ID);
+        public uint GetTargetsCount() => StageRepository.GetTargetsCount(stage.ID);
 
-        public string GetShooterWithPoints()
+        public string GetBestShooter()
         {
-            var shooter = ShooterRepository.GetShooterWithPointsByStageId(stage.ID);
+            var shooter = ShooterRepository.GetBestShooter(stage.ID);
             return $"{shooter.Name} {shooter.Surname} : {shooter.Points}pkt";
         }
 
-        public double GetAverageTime() => StageRepository.GetAverageTimeOnStageById(stage.ID);
+        public double GetAvgTime() => StageRepository.GetAvgTime(stage.ID);
 
         public IEnumerable<ShooterWithStageAndCompetitionPointsOverview> GetShooters()
-            => ShooterRepository.GetShootersWithStagePointsAndCompetitionPointsById(stage.ID)
+            => ShooterRepository.GetStageAndCompetitionPoints(stage.ID)
                                 .Select(x => new ShooterWithStageAndCompetitionPointsOverview(x.Id,
                                                                                                 x.Position,
                                                                                                 x.Name,

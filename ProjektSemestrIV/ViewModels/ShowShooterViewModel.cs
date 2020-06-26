@@ -44,14 +44,14 @@ namespace ProjektSemestrIV.ViewModels
 
             Name = model.GetShooterName();
             Surname = model.GetShooterSurname();
-            SumOfPoints = model.GetShooterGeneralSumOfPoints();
-            SumOfTimes = model.GetShooterGeneralSumOfTimes();
-            GeneralAccuracy = model.GetShooterCompetitionGeneralAccuracy();
-            AlphaAccuracy = model.GetShooterCompetitionAlphaAccuracy();
-            CharlieAccuracy = model.GetShooterCompetitionCharlieAccuracy();
-            DeltaAccuracy = model.GetShooterCompetitionDeltaAccuracy();
-            AveragePosition = model.GetShooterGeneralAveragePosition();
-            Competitions = model.GetShooterCompetitions().Convert();
+            SumOfPoints = model.GetGeneralPoints();
+            SumOfTimes = model.GetGeneralSumOfTimes();
+            GeneralAccuracy = model.GetGeneralAccuracy();
+            AlphaAccuracy = model.GetAlphaAccuracy();
+            CharlieAccuracy = model.GetCharlieAccuracy();
+            DeltaAccuracy = model.GetDeltaAccuracy();
+            AveragePosition = model.GetGeneralAvgPosition();
+            Competitions = model.GetShootersOnCompetition().Convert();
         }
 
         public void OnSwitchView()

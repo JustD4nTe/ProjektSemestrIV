@@ -42,9 +42,9 @@ namespace ProjektSemestrIV.ViewModels
             Location = model.GetLocation();
             ShootersCount = model.GetShootersCount();
             FastestShooter = model.GetFastestShooter();
-            Podium = model.GetShootersOnPodium();
-            Stages = model.GetStageWithBestShooters().Convert();
-            Shooters = model.GetShootersFromCompetition().Convert();
+            Podium = model.GetPodium();
+            Stages = model.GetStagesWithBestShooters().Convert();
+            Shooters = model.GetShootersWithPointsOnStage().Convert();
             SwitchViewToStageCommand = new RelayCommand(x => OnSwitchViewToStage(), x => SelectedStage != null);
             SwitchViewToShooterCommand = new RelayCommand(x => OnSwitchViewToShooter(), x => SelectedShooter != null);
         }

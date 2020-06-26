@@ -17,9 +17,7 @@ namespace ProjektSemestrIV.Models {
         public Boolean EditRun( Run run, UInt32 shooter_id, UInt32 stage_id )
             => RunRepository.EditRun(run, shooter_id, stage_id);
 
-        public Run GetRunWhere( UInt32 shooter_id, UInt32 stage_id ) {
-            Run run = RunRepository.GetRunWhere(shooter_id, stage_id);
-            return run;
-        }
+        public Run GetRun( UInt32 shooter_id, UInt32 stage_id )
+            => RunRepository.GetRun(shooter_id, stage_id);
     }
 }

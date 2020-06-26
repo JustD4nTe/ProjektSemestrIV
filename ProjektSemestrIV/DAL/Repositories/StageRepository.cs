@@ -19,9 +19,9 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<Stage>(query);
         }
 
-        public static Stage GetStageById(uint id)
+        public static Stage GetStage(uint stageId)
         {
-            var query = $"SELECT * FROM trasa WHERE trasa.id = {id}";
+            var query = $"SELECT * FROM trasa WHERE trasa.id = {stageId}";
 
             return ExecuteSelectQuery<Stage>(query).FirstOrDefault();
         }
@@ -34,12 +34,12 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteModifyQuery(query, stage.GetParameters());
         }
 
-        public static bool EditStage(Stage stage, uint id)
+        public static bool EditStage(Stage stage, uint stageId)
         {
             var query = $@"UPDATE `trasa` 
                             SET `id_zawody` = @id_zawody, `nazwa` = @nazwa,
                                 `zasady` = @zasady 
-                            WHERE (`id` = '{id}');";
+                            WHERE (`id` = '{stageId}');";
 
             return ExecuteModifyQuery(query, stage.GetParameters());
         }
@@ -55,23 +55,23 @@ namespace ProjektSemestrIV.DAL.Repositories
 
         #region Auxiliary queries
 
-        public static uint GetNumOfTargetsOnStage(uint id)
+        public static uint GetTargetsCount(uint stageId)
         {
             var query = $@"SELECT DISTINCT(count(tarcza.id)) AS numOfTargets FROM trasa
                             INNER JOIN tarcza ON trasa.id = tarcza.trasa_id
                             INNER JOIN przebieg ON przebieg.id_trasa = trasa.id
                             INNER JOIN strzelec ON przebieg.id_strzelec = strzelec.id AND strzelec.id = tarcza.strzelec_id
-                            WHERE trasa.id = {id}
+                            WHERE trasa.id = {stageId}
                             GROUP BY strzelec.id;";
             
             return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
 
-        public static double GetAverageTimeOnStageById(uint id)
+        public static double GetAvgTime(uint stageId)
         {
             var query = $@"SELECT avg(przebieg.czas) AS averageTime FROM przebieg
                             INNER JOIN trasa ON trasa.id = przebieg.id_trasa
-                            WHERE trasa.id = {id};";
+                            WHERE trasa.id = {stageId};";
 
             return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
