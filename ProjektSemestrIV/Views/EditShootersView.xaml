@@ -10,8 +10,8 @@
              Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -22,7 +22,7 @@
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                Content="{Binding Source={x:Static resx:Resources.ShooterEditing}}" FontSize="30"/>
 
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="0,0,10,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -42,14 +42,14 @@
             <TextBox
                 Grid.Row="0" Grid.Column="1"
                 x:Name="TextBoxShooterName" x:FieldModifier="private"
-                VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
+                VerticalAlignment="Center"
                 Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.ShooterSurname}}"/>
             <TextBox
                 Grid.Row="1" Grid.Column="1" 
                 x:Name="TextBoxShooterSurname" x:FieldModifier="private"
-                VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
+                VerticalAlignment="Center"
                 Text="{Binding Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Button
