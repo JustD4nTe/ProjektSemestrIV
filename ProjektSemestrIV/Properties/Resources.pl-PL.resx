@@ -282,6 +282,9 @@
   <data name="ServerAdress" xml:space="preserve">
     <value>Adres serwera</value>
   </data>
+  <data name="Shooter" xml:space="preserve">
+    <value>Strzelec</value>
+  </data>
   <data name="ShooterEditing" xml:space="preserve">
     <value>Edycja strzelca</value>
   </data>

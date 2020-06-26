@@ -336,4 +336,7 @@
   <data name="Navigation" xml:space="preserve">
     <value>Navigation</value>
   </data>
+  <data name="Shooter" xml:space="preserve">
+    <value>Shooter</value>
+  </data>
 </root>

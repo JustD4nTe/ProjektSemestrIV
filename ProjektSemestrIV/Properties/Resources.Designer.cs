@@ -556,6 +556,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Shooter.
+        /// </summary>
+        public static string Shooter {
+            get {
+                return ResourceManager.GetString("Shooter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Shooter Editing.
         /// </summary>
         public static string ShooterEditing {
