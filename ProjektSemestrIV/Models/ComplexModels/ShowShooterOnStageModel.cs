@@ -6,10 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace ProjektSemestrIV.Models.ComplexModels {
-    class ShowShooterOnStageModel {
-        private Shooter shooter;
-        private Stage stage;
-
+    class ShowShooterOnStageModel
+    {
+        private readonly Shooter shooter;
+        private readonly Stage stage;
 
         public ShowShooterOnStageModel(uint shooterId, uint stageId)
         {
@@ -22,31 +22,30 @@ namespace ProjektSemestrIV.Models.ComplexModels {
         public string GetShooterSurname() => shooter.Surname;
 
         public string GetShooterOnStageGeneralAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.General,shooter.ID, stage.ID));
+            => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.General,shooter.ID, stage.ID):P2}";
 
         public string GetShooterOnStageAlphaAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Alpha, shooter.ID, stage.ID));
+            => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Alpha, shooter.ID, stage.ID):P2}";
 
         public string GetShooterOnStageCharlieAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Charlie, shooter.ID, stage.ID));
+            => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Charlie, shooter.ID, stage.ID):P2}";
 
         public string GetShooterOnStageDeltaAccuracy()
-            => String.Format("{0:P2}", ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID, stage.ID));
+            => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID, stage.ID):P2}";
 
         public string GetShooterGeneralAveragePosition()
-            => String.Format("{0:N2}", ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID));
+            => $"{ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID):N2}";
 
         public string GetShooterOnStageSumOfPoints()
-            => String.Format("{0:N3}", ShooterRepository.GetShooterOnStageSumOfPointsFromDB(shooter.ID, stage.ID));
+            => $"{ShooterRepository.GetShooterOnStageSumOfPointsFromDB(shooter.ID, stage.ID):N3}";
 
         public string GetShooterOnStageTime()
-            => TimeSpan.FromSeconds(ShooterRepository.GetShooterOnStageTime(shooter.ID, stage.ID))
-                       .ToString(@"hh\h\:mm\m\:ss\s\:fff\m\s");
+            => $"{TimeSpan.FromSeconds(ShooterRepository.GetShooterOnStageTime(shooter.ID, stage.ID)):g}";
 
-        public string getShooterOnStageCompetition()
+        public string GetShooterOnStageCompetition()
             => ShooterRepository.GetShooterOnStageCompetition(shooter.ID, stage.ID);
 
-        public string getShooterOnStageStageName()
+        public string GetShooterOnStageStageName()
             => stage.Name;
 
         public uint GetShooterOnStagePosition()

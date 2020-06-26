@@ -9,16 +9,20 @@ namespace ProjektSemestrIV.Models.ComplexModels
 {
     class ShowSelectedCompetitionModel
     {
-        private Competition competition;
+        private readonly Competition competition;
 
         public ShowSelectedCompetitionModel(uint id)
         {
             competition = CompetitionRepository.GetCompetitionFromDB(id);
         }
 
-        // return dd.mm.yyyy-dd.mm.yyyy
+        /// <summary>
+        /// Get Competition data containing: location, date of the start and optionally date of the end
+        /// </summary>
+        /// <returns>Formatted string</returns> 
         public string GetDurationDate()
-        => competition.StartDate.Substring(0, 10) + "-" + competition.EndDate.Substring(0, 10);
+        => $"{competition.Location} , {DateTime.Parse(competition.StartDate):g}{(DateTime.TryParse(competition.EndDate, out var result) ? $" - {result:g}" : "")}";
+
 
         public string GetLocation()
         => competition.Location;
@@ -29,9 +33,7 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public string GetFastestShooter()
         {
             var shooter = CompetitionRepository.GetFastestShooterOfCompetition(competition.Id);
-            return shooter.Name + " " + shooter.Surname + ": "
-                                + TimeSpan.FromSeconds(shooter.TimeInSeconds)
-                                          .ToString(@"hh\h\:mm\m\:ss\s\:fff\m\s");
+            return $"{shooter.Name} {shooter.Surname} : {TimeSpan.FromSeconds(shooter.TimeInSeconds):g}";
         }
 
         public string GetShootersOnPodium()
@@ -39,8 +41,8 @@ namespace ProjektSemestrIV.Models.ComplexModels
             var playersOnPodium = CompetitionRepository.GetShootersWithPointsFromStage(competition.Id, true).ToList();
 
             var podium = $"I - {playersOnPodium[0].Name} {playersOnPodium[0].Surname}: {playersOnPodium[0].Points}\n"
-                            + $"II - {playersOnPodium[1].Name} {playersOnPodium[1].Surname}: {playersOnPodium[1].Points}\n"
-                            + $"III - {playersOnPodium[2].Name} {playersOnPodium[2].Surname}: {playersOnPodium[2].Points}";
+                         + $"II - {playersOnPodium[1].Name} {playersOnPodium[1].Surname}: {playersOnPodium[1].Points}\n"
+                         + $"III - {playersOnPodium[2].Name} {playersOnPodium[2].Surname}: {playersOnPodium[2].Points}";
             return podium;
         }
 

@@ -26,8 +26,8 @@ namespace ProjektSemestrIV.ViewModels
 
             Name = model.GetShooterName();
             Surname = model.GetShooterSurname();
-            Competition = model.getShooterOnStageCompetition();
-            StageName = model.getShooterOnStageStageName();
+            Competition = model.GetShooterOnStageCompetition();
+            StageName = model.GetShooterOnStageStageName();
             SumOfPoints = model.GetShooterOnStageSumOfPoints();
             Time = model.GetShooterOnStageTime();
             GeneralAccuracy = model.GetShooterOnStageGeneralAccuracy();

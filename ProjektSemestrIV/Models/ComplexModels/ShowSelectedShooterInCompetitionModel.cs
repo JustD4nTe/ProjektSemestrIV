@@ -10,8 +10,8 @@ namespace ProjektSemestrIV.Models.ComplexModels
 {
     class ShowSelectedShooterInCompetitionModel
     {
-        Shooter shooter;
-        Competition competition;
+        private readonly Shooter shooter;
+        private readonly Competition competition;
 
         public ShowSelectedShooterInCompetitionModel(uint shooterId, uint competitionId)
         {
@@ -22,8 +22,12 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public string GetShooterName()
         => $"{shooter.Name} {shooter.Surname}";
 
+        /// <summary>
+        /// Get Competition data containing: location, date of the start and optionally date of the end
+        /// </summary>
+        /// <returns>Formatted string</returns>
         public string GetCompetitionName()
-        => $"{competition.Location} , od {DateTime.Parse(competition.StartDate):g}{(DateTime.TryParse(competition.EndDate, out var result) ? $" do {result:g}" : "")}";
+        => $"{competition.Location} , {DateTime.Parse(competition.StartDate):g}{(DateTime.TryParse(competition.EndDate, out var result) ? $" - {result:g}" : "")}";
 
         public string GetPoints()
         => $"{ShooterRepository.GetShooterSumOfPointsAtCompetitionFromDB(shooter.ID, competition.Id):N3}";
