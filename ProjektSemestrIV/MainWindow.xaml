@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:ProjektSemestrIV"
         xmlns:viewType="clr-namespace:ProjektSemestrIV.Models"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="970">
     
     <Grid>
         <Grid.ColumnDefinitions>
