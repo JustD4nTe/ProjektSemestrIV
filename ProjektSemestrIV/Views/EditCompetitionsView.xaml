@@ -91,8 +91,7 @@
                 x:Name="DataGridShooters" x:FieldModifier="private"
                 AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
                 ItemsSource="{Binding Competitions, Mode=OneWay}"
-                SelectedItem="{Binding SelectedCompetition, Mode=OneWayToSource}"
-                SelectedIndex="{Binding SelectedCompetitionIndex, Mode=OneWayToSource}">
+                SelectedItem="{Binding SelectedCompetition, Mode=OneWayToSource}">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding Id}"/>
