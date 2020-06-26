@@ -125,8 +125,7 @@
                 x:Name="DataGridStages" x:FieldModifier="private"
                 AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
                 ItemsSource="{Binding Stages, Mode=OneWay}"
-                SelectedItem="{Binding SelectedStage, Mode=OneWayToSource}"
-                SelectedIndex="{Binding SelectedStageIndex, Mode=OneWayToSource}">
+                SelectedItem="{Binding SelectedStage, Mode=OneWayToSource}">
 
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
@@ -155,7 +154,9 @@
                 <DataGrid 
                 Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                 x:Name="DataGridCompetitions" x:FieldModifier="private"
-                AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
+                AutoGenerateColumns="False" AlternatingRowBackground="Lavender" 
+                GridLinesVisibility="None" IsReadOnly="True"
+                IsEnabled="{Binding IsCompetitionsEnabled, Mode=OneWay}"
                 ItemsSource="{Binding Competitions, Mode=OneWay}"
                 SelectedItem="{Binding SelectedCompetition, Mode=OneWayToSource}">
 
