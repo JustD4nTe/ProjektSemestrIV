@@ -12,6 +12,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
@@ -52,7 +53,7 @@
                 <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Time}}"/>
 
                 <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsEnabled="False" Text="{Binding Stage_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsEnabled="{Binding ShooterIdIsEnabled}" Text="{Binding Shooter_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsEnabled="False" Text="{Binding Shooter_id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <xctk:MaskedTextBox Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Time, Mode=TwoWay}" Mask="00:00:00.000"/>
 
                 <Button Grid.Row="4" Grid.Column="1" 
@@ -109,84 +110,125 @@
                         VerticalAlignment="Center" HorizontalAlignment="Left"/>
             </Grid>
         </Grid>
-                
-        <Grid Grid.Row="1" Grid.Column="1">
+
+        <GridSplitter Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch"/>
+
+        <Grid Grid.Row="1" Grid.Column="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Grid.Column="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
 
-                <DataGrid 
-                Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
-                x:Name="DataGridTargets" x:FieldModifier="private"
-                AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"                
-                ItemsSource="{Binding Targets, Mode=OneWay}"
-                SelectedItem="{Binding SelectedTarget, Mode=OneWayToSource}"
-                SelectedIndex="{Binding SelectedTargetIndex, Mode=OneWayToSource}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
 
-                    <DataGrid.Columns>
-                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Alpha}}" Binding="{Binding Alpha}"/>
-                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Charlie}}" Binding="{Binding Charlie}"/>
-                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Delta}}" Binding="{Binding Delta}"/>
-                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Miss}}" Binding="{Binding Miss}"/>
-                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.NoShoot}}" Binding="{Binding NoShoot}"/>
-                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Procedure}}" Binding="{Binding Procedure}"/>
-                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Extra}}" Binding="{Binding Extra}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
+                    <DataGrid 
+                    Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                    x:Name="DataGridTargets" x:FieldModifier="private"
+                    AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"                
+                    ItemsSource="{Binding Targets, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedTarget, Mode=OneWayToSource}"
+                    SelectedIndex="{Binding SelectedTargetIndex, Mode=OneWayToSource}">
 
-                <Button Grid.Row="1" Grid.Column="0" 
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Alpha}}" Binding="{Binding Alpha}"/>
+                            <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Charlie}}" Binding="{Binding Charlie}"/>
+                            <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Delta}}" Binding="{Binding Delta}"/>
+                            <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Miss}}" Binding="{Binding Miss}"/>
+                            <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.NoShoot}}" Binding="{Binding NoShoot}"/>
+                            <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Procedure}}" Binding="{Binding Procedure}"/>
+                            <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Extra}}" Binding="{Binding Extra}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Button Grid.Row="1" Grid.Column="0" 
                         Content="{Binding Source={x:Static resx:Resources.Edit}}" 
                         Command="{Binding EditTarget}" VerticalAlignment="Center" 
                         HorizontalAlignment="Center" Margin="10"/>
 
-                <Button Grid.Row="1" Grid.Column="1" 
+                    <Button Grid.Row="1" Grid.Column="1" 
                         Content="{Binding Source={x:Static resx:Resources.Delete}}" 
                         Command="{Binding DeleteTarget}" VerticalAlignment="Center" 
                         HorizontalAlignment="Center" Margin="10"/>
+                </Grid>
+
+                <DataGrid Grid.Row="0" Grid.Column="1"
+                    x:Name="DataGridShooters" x:FieldModifier="private"
+                    AutoGenerateColumns="False" AlternatingRowBackground="Lavender" 
+                    GridLinesVisibility="None" IsReadOnly="True"
+                    IsEnabled="{Binding IsDataGridEnabled, Mode=OneWay}"
+                    ItemsSource="{Binding Shooters, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedShooter, Mode=OneWayToSource}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterName}}" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.ShooterSurname}}" Binding="{Binding Surname}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
 
-            <DataGrid Grid.Row="0" Grid.Column="2"
-                x:Name="DataGridCompetitions" x:FieldModifier="private"
-                AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
-                ItemsSource="{Binding Competitions, Mode=OneWay}"
-                SelectedItem="{Binding SelectedCompetition, Mode=OneWayToSource}">
+            <GridSplitter Grid.Row="1" Grid.Column="0"
+                          HorizontalAlignment="Stretch"/>
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding Id}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Location}}" Binding="{Binding Location}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StartDate}}" Binding="{Binding StartDate}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.EndDate}}" Binding="{Binding EndDate}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <Grid Grid.Row="2" Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-            <DataGrid Grid.Row="1" Grid.Column="3"
-                x:Name="DataGridStages" x:FieldModifier="private"
-                AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
-                ItemsSource="{Binding Stages, Mode=OneWay}"
-                SelectedItem="{Binding SelectedStage, Mode=OneWayToSource}"
-                SelectedIndex="{Binding SelectedStageIndex, Mode=OneWayToSource}">
+                <DataGrid Grid.Row="0" Grid.Column="0"
+                    x:Name="DataGridCompetitions" x:FieldModifier="private"
+                    AutoGenerateColumns="False" AlternatingRowBackground="Lavender" 
+                    GridLinesVisibility="None" IsReadOnly="True"
+                    IsEnabled="{Binding IsDataGridEnabled, Mode=OneWay}"
+                    ItemsSource="{Binding Competitions, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedCompetition, Mode=OneWayToSource}">
 
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.IdCompetition}}" Binding="{Binding Competition_ID}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Name}}" Binding="{Binding Name}"/>
-                    <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Rules}}" Binding="{Binding Rules}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding Id}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Location}}" Binding="{Binding Location}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StartDate}}" Binding="{Binding StartDate}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.EndDate}}" Binding="{Binding EndDate}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+
+                <DataGrid Grid.Row="0" Grid.Column="1"
+                    x:Name="DataGridStages" x:FieldModifier="private"
+                    AutoGenerateColumns="False" AlternatingRowBackground="Lavender" 
+                    GridLinesVisibility="None" IsReadOnly="True"
+                    IsEnabled="{Binding IsDataGridEnabled, Mode=OneWay}"
+                    ItemsSource="{Binding Stages, Mode=OneWay}"
+                    SelectedItem="{Binding SelectedStage, Mode=OneWayToSource}"
+                    SelectedIndex="{Binding SelectedStageIndex, Mode=OneWayToSource}">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.IdCompetition}}" Binding="{Binding Competition_ID}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Name}}" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Rules}}" Binding="{Binding Rules}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
         </Grid>
     </Grid>
 </Page>
