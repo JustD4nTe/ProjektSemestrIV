@@ -73,7 +73,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
 
-        public static IEnumerable<Stage> GetCompetitionStages( uint competition_id ) {
+        public static IEnumerable<Stage> GetCompetitionStages(uint competition_id) {
             var query = $"SELECT * FROM trasa WHERE trasa.id_zawody = {competition_id}";
 
             return ExecuteSelectQuery<Stage>(query);
