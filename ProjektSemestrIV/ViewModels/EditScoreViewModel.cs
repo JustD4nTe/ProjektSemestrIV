@@ -17,18 +17,19 @@ namespace ProjektSemestrIV.ViewModels {
         private RunModel runModel;
         private StageModel stageModel;
         private CompetitionModel competitionModel;
+        private ShooterModel shooterModel;
 
         public EditScoreViewModel() {
             targetModel = new TargetModel();
             runModel = new RunModel();
             stageModel = new StageModel();
             competitionModel = new CompetitionModel();
+            shooterModel = new ShooterModel();
 
             Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
-            EditedTargetIndex = -1;
-            ShooterIdIsEnabled = true;
-            StageIdIsEnabled = true;
+            Shooters = shooterModel.GetAllShooters();
         }
+
 
         private ObservableCollection<Competition> competition;
         public ObservableCollection<Competition> Competitions {
@@ -39,7 +40,7 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private Competition selectedCompetition;
+        private Competition selectedCompetition = null;
         public Competition SelectedCompetition {
             get { return selectedCompetition; }
             set {
@@ -52,6 +53,7 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
+
         private ObservableCollection<Stage> stages;
         public ObservableCollection<Stage> Stages {
             get { return stages; }
@@ -61,33 +63,51 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private Stage selectedStage;
+        private Stage selectedStage = null;
         public Stage SelectedStage {
             get { return selectedStage; }
             set {
                 selectedStage = value;
-                if(value != null) {
-                    Stage_id = value.ID;
-                }
-                else {
-                    Stage_id = 0;
-                }
+                Stage_id = (value != null) ? value.ID : 0;
                 onPropertyChanged(nameof(SelectedStage));
             }
         }
 
-        public Int32 SelectedStageIndex { get; set; }
 
-        private UInt32 target_id;
-        public UInt32 Target_id {
-            get { return target_id; }
+        private ObservableCollection<Target> targets;
+        public ObservableCollection<Target> Targets {
+            get { return targets; }
             set {
-                target_id = value;
-                onPropertyChanged(nameof(Target_id));
+                targets = value;
+                onPropertyChanged(nameof(Targets));
             }
         }
 
-        private UInt32 shooter_id;
+        public Target SelectedTarget { get; set; } = null;
+        public UInt32? EditedTargetId { get; set; } = null;
+
+
+        private ObservableCollection<Shooter> shooters;
+        public ObservableCollection<Shooter> Shooters {
+            get { return shooters; }
+            set {
+                shooters = value;
+                onPropertyChanged(nameof(Shooters));
+            }
+        }
+
+        private Shooter selectedShooter = null;
+        public Shooter SelectedShooter {
+            get { return selectedShooter; }
+            set {
+                selectedShooter = value;
+                Shooter_id = (value != null) ? value.ID : 0;
+                onPropertyChanged(nameof(SelectedShooter));
+            }
+        }
+
+
+        private UInt32 shooter_id = 0;
         public UInt32 Shooter_id {
             get { return shooter_id; }
             set {
@@ -100,7 +120,7 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private UInt32 stage_id;
+        private UInt32 stage_id = 0;
         public UInt32 Stage_id {
             get { return stage_id; }
             set {
@@ -113,8 +133,18 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private Byte alpha;
-        public Byte Alpha {
+        private Boolean isDataGridEnabled = true;
+        private Boolean IsDataGridEnabled {
+            get { return isDataGridEnabled; }
+            set {
+                isDataGridEnabled = value;
+                onPropertyChanged(nameof(IsDataGridEnabled));
+            }
+        }
+
+
+        private String alpha = "";
+        public String Alpha {
             get { return alpha; }
             set {
                 alpha = value;
@@ -122,8 +152,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private Byte charlie;
-        public Byte Charlie {
+        private String charlie = "";
+        public String Charlie {
             get { return charlie; }
             set {
                 charlie = value;
@@ -131,8 +161,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private Byte delta;
-        public Byte Delta {
+        private String delta = "";
+        public String Delta {
             get { return delta; }
             set {
                 delta = value;
@@ -140,8 +170,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private Byte miss;
-        public Byte Miss {
+        private String miss = "";
+        public String Miss {
             get { return miss; }
             set {
                 miss = value;
@@ -149,8 +179,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private Byte noShoot;
-        public Byte NoShoot {
+        private String noShoot = "";
+        public String NoShoot {
             get { return noShoot; }
             set {
                 noShoot = value;
@@ -158,8 +188,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private Byte procedure;
-        public Byte Procedure {
+        private String procedure = "";
+        public String Procedure {
             get { return procedure; }
             set {
                 procedure = value;
@@ -167,8 +197,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private Byte extra;
-        public Byte Extra {
+        private String extra = "";
+        public String Extra {
             get { return extra; }
             set {
                 extra = value;
@@ -190,37 +220,6 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private ObservableCollection<Target> targets;
-        public ObservableCollection<Target> Targets {
-            get { return targets; }
-            set {
-                targets = value;
-                onPropertyChanged(nameof(Targets));
-            }
-        }
-
-        public Target SelectedTarget { get; set; }
-        public Int32 SelectedTargetIndex { get; set; }
-        public Int32 EditedTargetIndex { get; set; }
-
-        private Boolean shooterIdIsEnabled;
-        public Boolean ShooterIdIsEnabled {
-            get { return shooterIdIsEnabled; }
-            set {
-                shooterIdIsEnabled = value;
-                onPropertyChanged(nameof(ShooterIdIsEnabled));
-            }
-        }
-
-        private Boolean stageIdIsEnabled;
-        public Boolean StageIdIsEnabled {
-            get { return stageIdIsEnabled; }
-            set {
-                stageIdIsEnabled = value;
-                onPropertyChanged(nameof(StageIdIsEnabled));
-            }
-        }
-
 
         private ICommand addTarget = null;
         public ICommand AddTarget {
@@ -232,23 +231,13 @@ namespace ProjektSemestrIV.ViewModels {
                 return addTarget;
             }
         }
-        private Boolean CanExecuteAddTarget( object parameter ) {
-            if(EditedTargetIndex != -1) return false;
-            if(Shooter_id == 0) return false;
-            if(Stage_id == 0) return false;
-            return true;
-        }
+        private Boolean CanExecuteAddTarget( object parameter )
+            => !IsEditing() && IsInputValid();
         private void ExecuteAddTarget( object parameter ) {
-            Target newTarget = new Target(shooter_id, stage_id, alpha, charlie, delta, miss, noShoot, procedure, extra);
+            Target newTarget = new Target(shooter_id, stage_id, Byte.Parse(alpha), Byte.Parse(charlie), Byte.Parse(delta), Byte.Parse(miss), Byte.Parse(noShoot), Byte.Parse(procedure), Byte.Parse(extra));
             targetModel.AddTargetToDatabase(newTarget);
 
-            Alpha = 0;
-            Charlie = 0;
-            Delta = 0;
-            Miss = 0;
-            NoShoot = 0;
-            Procedure = 0;
-            Extra = 0;
+            ClearInput();
             Targets = targetModel.GetTargetsWhere(Shooter_id, Stage_id);
         }
 
@@ -263,27 +252,16 @@ namespace ProjektSemestrIV.ViewModels {
                 return confirmTargetEdit;
             }
         }
-        private Boolean CanExecuteConfirmTargetEdit( object parameter ) {
-            if(EditedTargetIndex == -1) return false;
-            if(Shooter_id == 0) return false;
-            if(Stage_id == 0) return false;
-            return true;
-        }
+        private Boolean CanExecuteConfirmTargetEdit( object parameter ) 
+            => IsEditing() && IsInputValid();
         private void ExecuteConfirmTargetEdit( object parameter ) {
-            Target newTarget = new Target(shooter_id, stage_id, alpha, charlie, delta, miss, noShoot, procedure, extra);
+            Target newTarget = new Target(shooter_id, stage_id, Byte.Parse(alpha), Byte.Parse(charlie), Byte.Parse(delta), Byte.Parse(miss), Byte.Parse(noShoot), Byte.Parse(procedure), Byte.Parse(extra));
             UInt32 id = SelectedTarget.ID;
             targetModel.EditTargetInDatabase(newTarget, id);
 
-            Alpha = 0;
-            Charlie = 0;
-            Delta = 0;
-            Miss = 0;
-            NoShoot = 0;
-            Procedure = 0;
-            Extra = 0;
-            ShooterIdIsEnabled = true;
-            StageIdIsEnabled = true;
-            EditedTargetIndex = -1;
+            ClearInput();
+            isDataGridEnabled = true;
+            EditedTargetId = null;
             Targets = targetModel.GetTargetsWhere(Shooter_id, Stage_id);
         }
 
@@ -299,20 +277,18 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteEditTarget( object parameter )
-            => SelectedTargetIndex != -1;
+            => SelectedTarget != null;
         private void ExecuteEditTarget( object parameter ) {
-            Alpha = SelectedTarget.Alpha;
-            Charlie = SelectedTarget.Charlie;
-            Delta = SelectedTarget.Delta;
-            Miss = SelectedTarget.Miss;
-            NoShoot = SelectedTarget.NoShoot;
-            Procedure = SelectedTarget.Procedure;
-            Extra = SelectedTarget.Extra;
+            Alpha = SelectedTarget.Alpha.ToString();
+            Charlie = SelectedTarget.Charlie.ToString();
+            Delta = SelectedTarget.Delta.ToString();
+            Miss = SelectedTarget.Miss.ToString();
+            NoShoot = SelectedTarget.NoShoot.ToString();
+            Procedure = SelectedTarget.Procedure.ToString();
+            Extra = SelectedTarget.Extra.ToString();
 
-            ShooterIdIsEnabled = false;
-            StageIdIsEnabled = false;
-
-            EditedTargetIndex = SelectedTargetIndex;
+            isDataGridEnabled = false;
+            EditedTargetId = SelectedTarget.ID;
         }
 
 
@@ -327,7 +303,7 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteDeleteTarget( object parameter )
-            => (SelectedTargetIndex != -1) && (SelectedTargetIndex != EditedTargetIndex);
+            => (SelectedTarget != null) && (SelectedTarget.ID != EditedTargetId);
         private void ExecuteDeleteTarget( object parameter ) {
             UInt32 id = SelectedTarget.ID;
             targetModel.DeleteTargetFromDatabase(id);
@@ -345,15 +321,8 @@ namespace ProjektSemestrIV.ViewModels {
                 return saveRun;
             }
         }
-        private Boolean CanExecuteSaveRun( object parameter ) {
-            if(Shooter_id <= 0) return false;
-            if(Stage_id <= 0) return false;
-            if(Int32.TryParse(Time, out _) == false) return false;
-            if(int.Parse(Time.Substring(0, 2)) >= 24) return false;
-            if(int.Parse(Time.Substring(2, 2)) >= 60) return false;
-            if(int.Parse(Time.Substring(4, 2)) >= 60) return false;
-            return true;
-        }
+        private Boolean CanExecuteSaveRun( object parameter )
+            => (Stage_id != 0) && (Shooter_id != 0) && TimeSpan.TryParse(time, out _);
         private void ExecuteSaveRun( object parameter ) {
             if(runModel.GetRunWhere(Shooter_id, Stage_id) != null) {
                 Run newRun = new Run(time, Shooter_id, Stage_id);
@@ -363,6 +332,31 @@ namespace ProjektSemestrIV.ViewModels {
                 Run newRun = new Run(time, Shooter_id, Stage_id);
                 runModel.AddRunToDatabase(newRun);
             }
+        }
+
+
+        private void ClearInput() {
+            Alpha = "";
+            Charlie = "";
+            Delta = "";
+            Miss = "";
+            NoShoot = "";
+            Procedure = "";
+            Extra = "";
+        }
+
+        private bool IsEditing()
+            => EditedTargetId != null;
+
+        private bool IsInputValid() {
+            if(Byte.TryParse(Alpha, out _)) return false;
+            if(Byte.TryParse(Charlie, out _)) return false;
+            if(Byte.TryParse(Delta, out _)) return false;
+            if(Byte.TryParse(Miss, out _)) return false;
+            if(Byte.TryParse(NoShoot, out _)) return false;
+            if(Byte.TryParse(Procedure, out _)) return false;
+            if(Byte.TryParse(Extra, out _)) return false;
+            return true;
         }
     }
 }
