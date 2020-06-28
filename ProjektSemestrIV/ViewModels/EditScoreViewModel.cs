@@ -349,13 +349,13 @@ namespace ProjektSemestrIV.ViewModels {
             => EditedTargetId != null;
 
         private bool IsInputValid() {
-            if(Byte.TryParse(Alpha, out _)) return false;
-            if(Byte.TryParse(Charlie, out _)) return false;
-            if(Byte.TryParse(Delta, out _)) return false;
-            if(Byte.TryParse(Miss, out _)) return false;
-            if(Byte.TryParse(NoShoot, out _)) return false;
-            if(Byte.TryParse(Procedure, out _)) return false;
-            if(Byte.TryParse(Extra, out _)) return false;
+            if(!Byte.TryParse(Alpha, out _)) return false;
+            if(!Byte.TryParse(Charlie, out _)) return false;
+            if(!Byte.TryParse(Delta, out _)) return false;
+            if(!Byte.TryParse(Miss, out _)) return false;
+            if(!Byte.TryParse(NoShoot, out _)) return false;
+            if(!Byte.TryParse(Procedure, out _)) return false;
+            if(!Byte.TryParse(Extra, out _)) return false;
             return true;
         }
     }
