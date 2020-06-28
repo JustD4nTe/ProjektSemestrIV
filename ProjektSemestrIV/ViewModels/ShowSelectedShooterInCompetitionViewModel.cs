@@ -15,14 +15,14 @@ namespace ProjektSemestrIV.ViewModels
 
         public string ShooterName { get;  }
         public string CompetitionName { get; }
-        public uint Position { get; }
-        public double Points { get; }
-        public double Time { get; }
+        public string Position { get; }
+        public string Points { get; }
+        public string Time { get; }
 
-        public double Accuracy { get; }
-        public double AlphaAccuracy { get;  }
-        public double CharlieAccuracy { get;  }
-        public double DeltaAccuracy { get;  }
+        public string Accuracy { get; }
+        public string AlphaAccuracy { get;  }
+        public string CharlieAccuracy { get;  }
+        public string DeltaAccuracy { get;  }
 
         public ObservableCollection<StatsAtStageOverview> StageStats { get; }
 

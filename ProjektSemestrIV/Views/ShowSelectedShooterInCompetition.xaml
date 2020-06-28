@@ -12,59 +12,60 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
                Content="{Binding Source={x:Static resx:Resources.ShooterOnCompetitionSummary}}" FontSize="30"/>
         
-        <Grid Grid.Row="1">
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.Competition}}"/>
+            <Label Content="{Binding CompetitionName}" FontStyle="Italic"/>
+        </StackPanel>
+        
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0">
                 <StackPanel Orientation="Horizontal">
-                    <Label Content="{Binding Source={x:Static resx:Resources.ShooterName}}"/>
-                    <Label Content="{Binding ShooterName}"/>
+                    <Label Content="{Binding Source={x:Static resx:Resources.Shooter}}"/>
+                    <Label Content="{Binding ShooterName}" FontStyle="Italic"/>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="{Binding Source={x:Static resx:Resources.Competition}}"/>
-                    <Label Content="{Binding CompetitionName}"/>
-                </StackPanel>
-
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{Binding Source={x:Static resx:Resources.Position}}"/>
-                    <Label Content="{Binding Position}"/>
+                    <Label Content="{Binding Position}" FontStyle="Italic"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{Binding Source={x:Static resx:Resources.Points}}"/>
-                    <Label Content="{Binding Points}"/>
+                    <Label Content="{Binding Points}" FontStyle="Italic"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{Binding Source={x:Static resx:Resources.Time}}"/>
-                    <Label Content="{Binding Time}"/>
+                    <Label Content="{Binding Time}" FontStyle="Italic"/>
                 </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{Binding Source={x:Static resx:Resources.Accuracy}}"/>
-                    <Label Content="{Binding Accuracy}"/>
+                    <Label Content="{Binding Accuracy}" FontStyle="Italic"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{Binding Source={x:Static resx:Resources.AlphaAccuracy}}"/>
-                    <Label Content="{Binding AlphaAccuracy}"/>
+                    <Label Content="{Binding AlphaAccuracy}" FontStyle="Italic"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{Binding Source={x:Static resx:Resources.CharlieAccuracy}}"/>
-                    <Label Content="{Binding CharlieAccuracy}"/>
+                    <Label Content="{Binding CharlieAccuracy}" FontStyle="Italic"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="{Binding Source={x:Static resx:Resources.DeltaAccuracy}}"/>
-                    <Label Content="{Binding DeltaAccuracy}"/>
+                    <Label Content="{Binding DeltaAccuracy}" FontStyle="Italic"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <DataGrid x:Name="DataGridCompetitions" ItemsSource="{Binding StageStats}" Grid.Row="2"
+        <DataGrid x:Name="DataGridCompetitions" ItemsSource="{Binding StageStats}" Grid.Row="3"
                   AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False"
                   SelectedItem="{Binding SelectedStage}">
             <DataGrid.Columns>
