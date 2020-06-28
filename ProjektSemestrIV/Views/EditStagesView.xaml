@@ -51,15 +51,16 @@
                 <TextBox
                 Grid.Row="0" Grid.Column="1"
                 x:Name="TextBoxCompetitionID" x:FieldModifier="private"
-                VerticalAlignment="Center" IsEnabled="False"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                IsEnabled="False" Width="150"
                 Text="{Binding CompetitionID, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Label Grid.Row="1" Grid.Column="0" 
                    Content="{Binding Source={x:Static resx:Resources.Name}}"/>
                 <TextBox
-                Grid.Row="1" Grid.Column="1"
+                Grid.Row="1" Grid.Column="1" Width="150"
                 x:Name="TextBoxShooterName" x:FieldModifier="private"
-                VerticalAlignment="Center"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
                 Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
                 <Button

@@ -43,23 +43,25 @@
 
             <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Location}}"/>
             <TextBox
-                Grid.Row="0" Grid.Column="1"
+                Grid.Row="0" Grid.Column="1" Width="300"
                 x:Name="TextBoxLocation" x:FieldModifier="private"
-                VerticalAlignment="Center"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
                 Text="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.StartDate}}"/>
             <xctk:DateTimePicker
-                Grid.Row="1" Grid.Column="1"
+                Grid.Row="1" Grid.Column="1" Width="300"
                 x:Name="StartDate" x:FieldModifier="private"
-                VerticalAlignment="Center" TextAlignment="Left"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                TextAlignment="Left"
                 Value="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.EndDate}}"/>
             <xctk:DateTimePicker
-                Grid.Row="2" Grid.Column="1" 
+                Grid.Row="2" Grid.Column="1" Width="300"
                 x:Name="EndDate" x:FieldModifier="private"
-                VerticalAlignment="Center" TextAlignment="Left"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                TextAlignment="Left"
                 Value="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Button
