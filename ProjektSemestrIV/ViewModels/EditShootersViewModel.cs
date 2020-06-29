@@ -14,11 +14,9 @@ namespace ProjektSemestrIV.ViewModels {
         public EditShootersViewModel() {
             shooterModel = new ShooterModel();
             Shooters = shooterModel.GetAllShooters();
-            SelectedIndex = -1;
-            EditedItemIndex = -1;
         }
 
-        private String name;
+        private String name = "";
         public String Name {
             get { return name; }
             set {
@@ -27,7 +25,7 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private String surname;
+        private String surname = "";
         public String Surname {
             get { return surname; }
             set {
@@ -45,9 +43,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        public Shooter SelectedItem { get; set; }
-        public Int32 SelectedIndex { get; set; }
-        public Int32 EditedItemIndex { get; set; }
+        public Shooter SelectedShooter { get; set; } = null;
+        public UInt32? EditedShooterId { get; set; } = null;
 
 
         private ICommand addShooter = null;
@@ -61,13 +58,12 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteAddShooter( object parameter )
-            => EditedItemIndex == -1;
+            => !IsEditing() && InputIsValid();
         private void ExecuteAddShooter( object parameter ) {
             Shooter newShooter = new Shooter(Name, Surname);
             shooterModel.AddShooterToDatabase(newShooter);
 
-            Name = "";
-            Surname = "";
+            ClearInput();
             Shooters = shooterModel.GetAllShooters();
         }
 
@@ -83,15 +79,14 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteConfirmShooterEdit( object parameter )
-            => EditedItemIndex != -1;
+            => IsEditing() && InputIsValid();
         private void ExecuteConfirmShooterEdit( object parameter ) {
             Shooter newShooter = new Shooter(Name, Surname);
-            UInt32 id = Shooters[SelectedIndex].ID;
+            UInt32 id = SelectedShooter.ID;
             shooterModel.EditShooterInDatabase(newShooter, id);
 
-            Name = "";
-            Surname = "";
-            EditedItemIndex = -1;
+            ClearInput();
+            EditedShooterId = null;
             Shooters = shooterModel.GetAllShooters();
         }
 
@@ -107,11 +102,11 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteEditShooter( object parameter )
-            => SelectedIndex != -1;
+            => SelectedShooter != null;
         private void ExecuteEditShooter( object parameter ) {
-            Name = SelectedItem.Name;
-            Surname = SelectedItem.Surname;
-            EditedItemIndex = SelectedIndex;
+            Name = SelectedShooter.Name;
+            Surname = SelectedShooter.Surname;
+            EditedShooterId = SelectedShooter.ID;
         }
 
 
@@ -126,11 +121,26 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteDeleteShooter( object parameter )
-            => (SelectedIndex != -1) && (SelectedIndex != EditedItemIndex);
+            => (SelectedShooter != null) && (SelectedShooter.ID != EditedShooterId);
         private void ExecuteDeleteShooter( object parameter ) {
-            UInt32 id = SelectedItem.ID;
+            UInt32 id = SelectedShooter.ID;
             shooterModel.DeleteShooterFromDatabase(id);
             Shooters = shooterModel.GetAllShooters();
+        }
+
+
+        private void ClearInput() {
+            Name = "";
+            Surname = "";
+        }
+
+        private bool IsEditing()
+            => EditedShooterId != null;
+
+        private bool InputIsValid() {
+            if(Name.Length == 0 || Surname.Length == 0) return false;
+            if(Name.Length > 45 || Surname.Length > 45) return false;
+            return true;
         }
     }
 }

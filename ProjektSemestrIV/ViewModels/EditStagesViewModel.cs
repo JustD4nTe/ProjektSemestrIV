@@ -17,10 +17,7 @@ namespace ProjektSemestrIV.ViewModels {
         public EditStagesViewModel() {
             stageModel = new StageModel();
             competitionModel = new CompetitionModel();
-            Stages = stageModel.GetAllStages();
             Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
-            SelectedStageIndex = -1;
-            EditedStageIndex = -1;
         }
 
         private UInt32 competitionID;
@@ -32,7 +29,7 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private String name;
+        private String name = "";
         public String Name {
             get { return name; }
             set {
@@ -41,21 +38,12 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private String rules;
+        private String rules = "";
         public String Rules {
             get { return rules; }
             set {
                 rules = value;
                 onPropertyChanged(nameof(Rules));
-            }
-        }
-
-        private ObservableCollection<Stage> stages;
-        public ObservableCollection<Stage> Stages {
-            get { return stages; }
-            set {
-                stages = value;
-                onPropertyChanged(nameof(Stages));
             }
         }
 
@@ -68,10 +56,6 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        public Stage SelectedStage { get; set; }
-        public Int32 SelectedStageIndex { get; set; }
-        public Int32 EditedStageIndex { get; set; }
-
         private Competition selectedCompetition;
         public Competition SelectedCompetition {
             get { return selectedCompetition; }
@@ -79,9 +63,34 @@ namespace ProjektSemestrIV.ViewModels {
                 selectedCompetition = value;
                 if(selectedCompetition != null) {
                     CompetitionID = value.Id;
+                    Stages = stageModel.GetCompetitionStages(value.Id);
                 }
+                SelectedStage = null;
+                onPropertyChanged(nameof(SelectedCompetition));
             }
         }
+
+        private ObservableCollection<Stage> stages;
+        public ObservableCollection<Stage> Stages {
+            get { return stages; }
+            set {
+                stages = value;
+                onPropertyChanged(nameof(Stages));
+            }
+        }
+
+        public Stage SelectedStage { get; set; } = null;
+        public UInt32? EditedStageId { get; set; } = null;
+
+        private Boolean isCompetitionsEnabled = true;
+        public Boolean IsCompetitionsEnabled {
+            get { return isCompetitionsEnabled; }
+            set {
+                isCompetitionsEnabled = value;
+                onPropertyChanged(nameof(IsCompetitionsEnabled));
+            }
+        }
+
 
         private ICommand addStage = null;
         public ICommand AddStage {
@@ -94,14 +103,13 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteAddStage( object parameter )
-            => EditedStageIndex == -1;
+            => !IsEditing() && InputIsValid();
         private void ExecuteAddStage( object parameter ) {
             Stage newStage = new Stage(CompetitionID, Name, Rules);
             stageModel.AddStageToDatabase(newStage);
 
-            Name = "";
-            Rules = "";
-            Stages = stageModel.GetAllStages();
+            ClearInput();
+            Stages = stageModel.GetCompetitionStages(SelectedCompetition.Id);
         }
 
 
@@ -116,16 +124,16 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteConfirmStageEdit( object parameter )
-            => EditedStageIndex != -1;
+            => IsEditing() && InputIsValid();
         private void ExecuteConfirmStageEdit( object parameter ) {
             Stage newStage = new Stage(CompetitionID, Name, Rules);
             UInt32 id = SelectedStage.ID;
             stageModel.EditStageInDatabase(newStage, id);
 
-            Name = "";
-            Rules = "";
-            EditedStageIndex = -1;
-            Stages = stageModel.GetAllStages();
+            ClearInput();
+            EditedStageId = null;
+            IsCompetitionsEnabled = true;
+            Stages = stageModel.GetCompetitionStages(SelectedCompetition.Id);
         }
 
 
@@ -140,11 +148,12 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteEditStage( object parameter )
-            => SelectedStageIndex != -1;
+            => SelectedStage!= null;
         private void ExecuteEditStege( object parameter ) {
             Name = SelectedStage.Name;
             Rules = SelectedStage.Rules;
-            EditedStageIndex = SelectedStageIndex;
+            EditedStageId = SelectedStage.ID;
+            IsCompetitionsEnabled = false;
         }
 
 
@@ -159,11 +168,28 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteDeleteStage( object parameter )
-            => (SelectedStageIndex != -1) && (SelectedStageIndex != EditedStageIndex);
+            => (SelectedStage != null) && (SelectedStage.ID != EditedStageId);
         private void ExecuteDeleteStage( object parameter ) {
             UInt32 id = SelectedStage.ID;
             stageModel.DeleteStageFromDatabase(id);
-            Stages = stageModel.GetAllStages();
+            Stages = stageModel.GetCompetitionStages(SelectedCompetition.Id);
+        }
+
+
+        private void ClearInput() {
+            Name = "";
+            Rules = "";
+        }
+
+        private bool IsEditing()
+            => EditedStageId != null;
+
+        private bool InputIsValid() {
+            if(Name.Length == 0) return false;
+            if(Name.Length > 45) return false;
+            if(Rules.Length > 1<<16) return false;
+            if(CompetitionID == 0) return false;
+            return true;
         }
     }
 }

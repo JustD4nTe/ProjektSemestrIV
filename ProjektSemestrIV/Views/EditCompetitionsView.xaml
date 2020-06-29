@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              xmlns:local="clr-namespace:ProjektSemestrIV.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
@@ -11,8 +12,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -23,7 +24,7 @@
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
                Content="{Binding Source={x:Static resx:Resources.EditCompetition}}" FontSize="30"/>
 
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="0,0,10,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -42,24 +43,26 @@
 
             <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Location}}"/>
             <TextBox
-                Grid.Row="0" Grid.Column="1"
-                x:Name="TextBoxShooterName" x:FieldModifier="private"
-                VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
-                Text="{Binding Location, Mode=TwoWay}"/>
+                Grid.Row="0" Grid.Column="1" Width="300"
+                x:Name="TextBoxLocation" x:FieldModifier="private"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                Text="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.StartDate}}"/>
-            <TextBox
-                Grid.Row="1" Grid.Column="1" 
-                x:Name="TextBoxShooterSurname" x:FieldModifier="private"
-                VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
-                Text="{Binding StartDate, Mode=TwoWay}"/>
+            <xctk:DateTimePicker
+                Grid.Row="1" Grid.Column="1" Width="300"
+                x:Name="StartDate" x:FieldModifier="private"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                TextAlignment="Left"
+                Value="{Binding StartDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.EndDate}}"/>
-            <TextBox
-                Grid.Row="2" Grid.Column="1" 
-                x:Name="TextBox" x:FieldModifier="private"
-                VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
-                Text="{Binding EndDate, Mode=TwoWay}"/>
+            <xctk:DateTimePicker
+                Grid.Row="2" Grid.Column="1" Width="300"
+                x:Name="EndDate" x:FieldModifier="private"
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                TextAlignment="Left"
+                Value="{Binding EndDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Button
                 Grid.Row="4" Grid.Column="1" 
@@ -90,8 +93,7 @@
                 x:Name="DataGridShooters" x:FieldModifier="private"
                 AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
                 ItemsSource="{Binding Competitions, Mode=OneWay}"
-                SelectedItem="{Binding SelectedCompetition, Mode=OneWayToSource}"
-                SelectedIndex="{Binding SelectedCompetitionIndex, Mode=OneWayToSource}">
+                SelectedItem="{Binding SelectedCompetition, Mode=OneWayToSource}">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding Id}"/>
@@ -113,7 +115,5 @@
                 HorizontalAlignment="Center" Width="50" Margin="10" Content="{Binding Source={x:Static resx:Resources.Delete}}" 
                 Command="{Binding DeleteCompetition, Mode=OneWay}"/>
         </Grid>
-
     </Grid>
-
 </Page>
