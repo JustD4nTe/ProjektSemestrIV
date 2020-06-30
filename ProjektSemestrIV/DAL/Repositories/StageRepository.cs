@@ -76,7 +76,6 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
 
-
         public static string GetCompetitionName(uint stageId)
         {
             var query = $@"SELECT CONCAT(miejsce, ' ', DATE(rozpoczecie)) AS zawody
@@ -85,6 +84,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             WHERE trasa.id = {stageId}";
 
             return ExecuteSelectQuery<object>(query).FirstOrDefault()?.ToString();
+        }
+
+        public static IEnumerable<Stage> GetCompetitionStages(uint competition_id) {
+            var query = $"SELECT * FROM trasa WHERE trasa.id_zawody = {competition_id}";
+
+            return ExecuteSelectQuery<Stage>(query);
         }
 
         #endregion Auxiliary queries

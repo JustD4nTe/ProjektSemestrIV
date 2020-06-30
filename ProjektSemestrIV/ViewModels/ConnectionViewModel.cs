@@ -8,7 +8,7 @@ using System.Windows.Input;
 namespace ProjektSemestrIV.ViewModels {
     class ConnectionViewModel : BaseViewModel {
         public String ServerAddress { get; set; } = Properties.Settings.Default.ServerAddress;
-        public UInt32 Port { get; set; } = Properties.Settings.Default.Port;
+        public String Port { get; set; } = Properties.Settings.Default.Port.ToString();
         public String Database { get; set; } = Properties.Settings.Default.Database;
         public String User { get; set; } = Properties.Settings.Default.User;
         public String Password { get; set; } = Properties.Settings.Default.Password;
@@ -18,15 +18,17 @@ namespace ProjektSemestrIV.ViewModels {
         public ICommand ConfirmData {
             get {
                 if(confirmData == null) {
-                    confirmData = new RelayCommand(ExecuteConfirmData, null);
+                    confirmData = new RelayCommand(ExecuteConfirmData, CanExecuteConfirmData);
                 }
 
                 return confirmData;
             }
         }
+        private Boolean CanExecuteConfirmData( object parameter )
+            => uint.TryParse(Port, out _);
         public void ExecuteConfirmData( object parameter ) {
             Properties.Settings.Default.ServerAddress = ServerAddress;
-            Properties.Settings.Default.Port = Port;
+            Properties.Settings.Default.Port = uint.Parse(Port);
             Properties.Settings.Default.Database = Database;
             Properties.Settings.Default.User = User;
             Properties.Settings.Default.Password = Password;

@@ -1,13 +1,8 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
-using ProjektSemestrIV.DAL.Repositories;
 using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ProjektSemestrIV.ViewModels {
@@ -16,11 +11,9 @@ namespace ProjektSemestrIV.ViewModels {
         public EditCompetitionsViewModel() {
             competitionModel = new CompetitionModel();
             Competitions = competitionModel.GetAllCompetitions().Convert();
-            SelectedCompetitionIndex = -1;
-            EditedCompetitionIndex = -1;
         }
 
-        private String location;
+        private String location = "";
         public String Location {
             get { return location; }
             set {
@@ -29,8 +22,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private String startDate;
-        public String StartDate {
+        private DateTime? startDate = null;
+        public DateTime? StartDate {
             get { return startDate; }
             set {
                 startDate = value;
@@ -38,8 +31,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        private String endDate;
-        public String EndDate {
+        private DateTime? endDate = null;
+        public DateTime? EndDate {
             get { return endDate; }
             set {
                 endDate = value;
@@ -56,9 +49,8 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
 
-        public Competition SelectedCompetition { get; set; }
-        public Int32 SelectedCompetitionIndex { get; set; }
-        public Int32 EditedCompetitionIndex { get; set; }
+        public Competition SelectedCompetition { get; set; } = null;
+        public UInt32? EditedCompetitionId { get; set; } = null;
 
 
         private ICommand addCompetition = null;
@@ -72,14 +64,12 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteAddCompetition( object parameter )
-            => EditedCompetitionIndex == -1;
+            => !IsEditing() && InputIsValid();
         private void ExecuteAddCompetition( object parameter ) {
-            Competition competition = new Competition(Location, StartDate, EndDate);
+            Competition competition = new Competition(Location, StartDate.ToString(), EndDate.ToString());
             competitionModel.AddCompetition(competition);
 
-            Location = "";
-            StartDate = "";
-            EndDate = "";
+            ClearInput();
             Competitions = competitionModel.GetAllCompetitions().Convert();
         }
 
@@ -94,17 +84,15 @@ namespace ProjektSemestrIV.ViewModels {
                 return confirmCompetitionEdit;
             }
         }
-        private Boolean CanExecuteConfirmCompetitionEdit( object parameter )
-            => EditedCompetitionIndex != -1;
+        private Boolean CanExecuteConfirmCompetitionEdit( object parameter ) 
+            => IsEditing() && InputIsValid();
         private void ExecuteConfirmCompetitionEdit( object parameter ) {
-            Competition newCompetition = new Competition(Location, StartDate, EndDate);
+            Competition newCompetition = new Competition(Location, StartDate.ToString(), EndDate.ToString());
             UInt32 id = SelectedCompetition.Id;
             competitionModel.EditCompetition(newCompetition, id);
 
-            Location = "";
-            StartDate = "";
-            EndDate = "";
-            EditedCompetitionIndex = -1;
+            ClearInput();
+            EditedCompetitionId = null;
             Competitions = competitionModel.GetAllCompetitions().Convert();
         }
 
@@ -120,12 +108,12 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteEditCompetition( object parameter )
-            => SelectedCompetitionIndex != -1;
+            => SelectedCompetition != null;
         private void ExecuteEditCompetition( object parameter ) {
             Location = SelectedCompetition.Location;
-            StartDate = SelectedCompetition.StartDate;
-            EndDate = SelectedCompetition.EndDate;
-            EditedCompetitionIndex = SelectedCompetitionIndex;
+            StartDate = DateTime.Parse(SelectedCompetition.StartDate);
+            EndDate = (SelectedCompetition.EndDate == "") ? (DateTime?)null : DateTime.Parse(SelectedCompetition.EndDate);
+            EditedCompetitionId = SelectedCompetition.Id;
         }
 
 
@@ -140,11 +128,28 @@ namespace ProjektSemestrIV.ViewModels {
             }
         }
         private Boolean CanExecuteDeleteCompetition( object parameter )
-            => (SelectedCompetitionIndex != -1) && (SelectedCompetitionIndex != EditedCompetitionIndex);
+            => (SelectedCompetition != null) && (SelectedCompetition.Id != EditedCompetitionId);
         private void ExecuteDeleteCompetition( object parameter ) {
             UInt32 id = SelectedCompetition.Id;
             competitionModel.DeleteCompetition(id);
             Competitions = competitionModel.GetAllCompetitions().Convert();
+        }
+
+
+        private void ClearInput() {
+            Location = "";
+            StartDate = null;
+            EndDate = null;
+        }
+
+        private bool IsEditing()
+            => EditedCompetitionId != null;
+
+        private bool InputIsValid() {
+            if(Location.Length == 0) return false;
+            if(Location.Length > 45) return false;
+            if(StartDate == null) return false;
+            return true;
         }
     }
 }

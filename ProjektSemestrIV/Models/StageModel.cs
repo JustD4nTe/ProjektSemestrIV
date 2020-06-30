@@ -16,6 +16,9 @@ namespace ProjektSemestrIV.Models {
 
         public Boolean AddStage( Stage stage )
             => StageRepository.AddStage(stage);
+            
+        public ObservableCollection<Stage> GetCompetitionStages(uint competition_id)
+            => StageRepository.GetCompetitionStages(competition_id).Convert();
 
         public Boolean EditStage( Stage stage, UInt32 id )
             => StageRepository.EditStage(stage, id);

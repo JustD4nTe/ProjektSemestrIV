@@ -10,8 +10,8 @@
              Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -22,7 +22,7 @@
         <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" 
                Content="{Binding Source={x:Static resx:Resources.ShooterEditing}}" FontSize="30"/>
 
-        <Grid Grid.Row="1" Grid.Column="0">
+        <Grid Grid.Row="1" Grid.Column="0" Margin="0,0,10,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="*"/>
@@ -40,17 +40,17 @@
 
             <Label Grid.Row="0" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.ShooterName}}"/>
             <TextBox
-                Grid.Row="0" Grid.Column="1"
+                Grid.Row="0" Grid.Column="1" Width="125"
                 x:Name="TextBoxShooterName" x:FieldModifier="private"
-                VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
-                Text="{Binding Name, Mode=TwoWay}"/>
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.ShooterSurname}}"/>
             <TextBox
-                Grid.Row="1" Grid.Column="1" 
+                Grid.Row="1" Grid.Column="1" Width="125"
                 x:Name="TextBoxShooterSurname" x:FieldModifier="private"
-                VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
-                Text="{Binding Surname, Mode=TwoWay}"/>
+                VerticalAlignment="Center" HorizontalAlignment="Left"
+                Text="{Binding Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
             <Button
                 Grid.Row="3" Grid.Column="1" 
@@ -81,8 +81,8 @@
                 x:Name="DataGridShooters" x:FieldModifier="private"
                 AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"
                 ItemsSource="{Binding Shooters, Mode=OneWay}"
-                SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
-                SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}">
+                SelectedItem="{Binding SelectedShooter, Mode=OneWayToSource}"
+                SelectedIndex="{Binding SelectedShooterIndex, Mode=OneWayToSource}">
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
