@@ -33,9 +33,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public double GetAvgTime() => StageRepository.GetAvgTime(stage.ID);
 
-        public IEnumerable<ShooterWithStageAndCompetitionPointsOverview> GetShooters()
+        public IEnumerable<ShooterWithStageAndCompetitionPointsShowModel> GetShooters()
             => ShooterRepository.GetStageAndCompetitionPoints(stage.ID)
-                                .Select(x => new ShooterWithStageAndCompetitionPointsOverview(x.Id,
+                                .Select(x => new ShooterWithStageAndCompetitionPointsShowModel(x.Id,
                                                                                                 x.Position,
                                                                                                 x.Name,
                                                                                                 x.Surname,

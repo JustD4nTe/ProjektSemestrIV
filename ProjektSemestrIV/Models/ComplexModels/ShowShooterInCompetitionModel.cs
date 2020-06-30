@@ -50,9 +50,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public string GetDeltaAccuracy()
         => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID, competitionId: competition.Id):P2}";
 
-        public ObservableCollection<ShooterStatsOnStageOverview> GetStatsOnStages()
+        public ObservableCollection<ShooterStatsOnStageShowModel> GetStatsOnStages()
         => ShooterRepository.GetStatsOnStages(shooter.ID, competition.Id)
-                            .Select(x => new ShooterStatsOnStageOverview(x.StageId, x.StageName, x.Points, $"{TimeSpan.Parse(x.Time):g}", x.StagePoints))
+                            .Select(x => new ShooterStatsOnStageShowModel(x.StageId, x.StageName, x.Points, $"{TimeSpan.Parse(x.Time):g}", x.StagePoints))
                             .Convert();
     }
 }

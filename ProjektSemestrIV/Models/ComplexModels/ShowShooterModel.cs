@@ -29,9 +29,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
 
         public string GetDeltaAccuracy()
             => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID):P2}";
-        public IEnumerable<ShooterCompetitionOverview> GetShootersOnCompetition()
+        public IEnumerable<ShooterCompetitionShowModel> GetShootersOnCompetition()
             => ShooterRepository.GetShootersOnCompetition(shooter.ID)
-                                .Select(x => new ShooterCompetitionOverview(x.CompetitionId,
+                                .Select(x => new ShooterCompetitionShowModel(x.CompetitionId,
                                                                             x.Location,
                                                                             x.StartDate,
                                                                             x.Position,

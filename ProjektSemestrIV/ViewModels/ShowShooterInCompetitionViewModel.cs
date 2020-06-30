@@ -24,9 +24,9 @@ namespace ProjektSemestrIV.ViewModels
         public string CharlieAccuracy { get;  }
         public string DeltaAccuracy { get;  }
 
-        public ObservableCollection<ShooterStatsOnStageOverview> StageStats { get; }
+        public ObservableCollection<ShooterStatsOnStageShowModel> StageStats { get; }
 
-        public ShooterStatsOnStageOverview SelectedStage { get; set; }
+        public ShooterStatsOnStageShowModel SelectedStage { get; set; }
 
         public ICommand SwitchViewCommand { get; }
 

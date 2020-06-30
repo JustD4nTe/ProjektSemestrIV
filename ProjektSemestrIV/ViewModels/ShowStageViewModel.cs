@@ -20,8 +20,8 @@ namespace ProjektSemestrIV.ViewModels
         public string BestShooter { get; }
         public double AverageTime { get; }
 
-        public ObservableCollection<ShooterWithStageAndCompetitionPointsOverview> Shooters { get; }
-        public ShooterWithStageAndCompetitionPointsOverview SelectedShooter { get; set; }
+        public ObservableCollection<ShooterWithStageAndCompetitionPointsShowModel> Shooters { get; }
+        public ShooterWithStageAndCompetitionPointsShowModel SelectedShooter { get; set; }
 
         public ICommand SwitchViewCommand { get; }
 

@@ -21,11 +21,11 @@ namespace ProjektSemestrIV.ViewModels
         public string FastestShooter { get; }
         public string Podium { get; }
 
-        public ObservableCollection<StageWithBestShooterOverview> Stages { get; }
-        public ObservableCollection<ShooterWithPointsOverview> Shooters { get; }
+        public ObservableCollection<StageWithBestShooterShowModel> Stages { get; }
+        public ObservableCollection<ShooterWithPointsShowModel> Shooters { get; }
 
-        public StageWithBestShooterOverview SelectedStage { get; set; }
-        public ShooterWithPointsOverview SelectedShooter { get; set; }
+        public StageWithBestShooterShowModel SelectedStage { get; set; }
+        public ShooterWithPointsShowModel SelectedShooter { get; set; }
 
         public ICommand SwitchViewToStageCommand { get; }
         public ICommand SwitchViewToShooterCommand { get; }

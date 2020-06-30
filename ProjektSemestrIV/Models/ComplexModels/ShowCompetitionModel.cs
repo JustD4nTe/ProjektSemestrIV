@@ -46,13 +46,13 @@ namespace ProjektSemestrIV.Models.ComplexModels
             return podium;
         }
 
-        public IEnumerable<ShooterWithPointsOverview> GetShootersWithPointsOnStage()
+        public IEnumerable<ShooterWithPointsShowModel> GetShootersWithPointsOnStage()
         => CompetitionRepository.GetShootersWithPoints(competition.Id)
-                                .Select(x => new ShooterWithPointsOverview(x.Id, x.Name, x.Surname, x.Points));
+                                .Select(x => new ShooterWithPointsShowModel(x.Id, x.Name, x.Surname, x.Points));
 
-        public IEnumerable<StageWithBestShooterOverview> GetStagesWithBestShooters()
+        public IEnumerable<StageWithBestShooterShowModel> GetStagesWithBestShooters()
         => CompetitionRepository.GetStagesWithBestShooter(competition.Id)
-                                .Select(x => new StageWithBestShooterOverview(x.Id,
+                                .Select(x => new StageWithBestShooterShowModel(x.Id,
                                                                             x.StageName,
                                                                             x.ShooterName,
                                                                             x.ShooterSurname,

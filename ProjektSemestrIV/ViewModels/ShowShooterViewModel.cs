@@ -25,9 +25,9 @@ namespace ProjektSemestrIV.ViewModels
         public string DeltaAccuracy { get; }
         public string AveragePosition { get; }
 
-        public ObservableCollection<ShooterCompetitionOverview> Competitions { get; }
+        public ObservableCollection<ShooterCompetitionShowModel> Competitions { get; }
 
-        public ShooterCompetitionOverview SelectedCompetition { get; set; }
+        public ShooterCompetitionShowModel SelectedCompetition { get; set; }
 
         public ICommand SwitchViewCommand { get; }
         #endregion
