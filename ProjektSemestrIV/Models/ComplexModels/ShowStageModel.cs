@@ -8,8 +8,8 @@ namespace ProjektSemestrIV.Models.ComplexModels
 {
     class ShowStageModel
     {
-        private Stage stage;
-        private Competition competition;
+        private readonly Stage stage;
+        private readonly Competition competition;
 
         public ShowStageModel(uint id)
         {

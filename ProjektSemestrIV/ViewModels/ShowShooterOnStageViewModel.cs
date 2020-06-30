@@ -26,6 +26,7 @@ namespace ProjektSemestrIV.ViewModels
 
             Name = model.GetShooterName();
             Surname = model.GetShooterSurname();
+            
             Competition = model.GetCompetitionName();
             StageName = model.GetStageName();
             SumOfPoints = model.GetStagePoints();
