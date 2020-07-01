@@ -339,4 +339,13 @@
   <data name="Shooter" xml:space="preserve">
     <value>Shooter</value>
   </data>
+  <data name="CompetitionEditing" xml:space="preserve">
+    <value>Competition Editing</value>
+  </data>
+  <data name="RunEditing" xml:space="preserve">
+    <value>Run Editing</value>
+  </data>
+  <data name="StageEditing" xml:space="preserve">
+    <value>Stage Editing</value>
+  </data>
 </root>
