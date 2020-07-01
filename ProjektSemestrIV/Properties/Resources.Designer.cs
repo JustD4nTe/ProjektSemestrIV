@@ -169,6 +169,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Competition Editing.
+        /// </summary>
+        public static string CompetitionEditing {
+            get {
+                return ResourceManager.GetString("CompetitionEditing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Competition points.
         /// </summary>
         public static string CompetitionPoints {
@@ -538,6 +547,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Run Editing.
+        /// </summary>
+        public static string RunEditing {
+            get {
+                return ResourceManager.GetString("RunEditing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string Save {
@@ -624,6 +642,15 @@ namespace ProjektSemestrIV.Properties {
         public static string ShooterSurname {
             get {
                 return ResourceManager.GetString("ShooterSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Stage Editing.
+        /// </summary>
+        public static string StageEditing {
+            get {
+                return ResourceManager.GetString("StageEditing", resourceCulture);
             }
         }
         

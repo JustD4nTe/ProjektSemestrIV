@@ -153,6 +153,9 @@
   <data name="Competition" xml:space="preserve">
     <value>Zawody</value>
   </data>
+  <data name="CompetitionEditing" xml:space="preserve">
+    <value>Edycja zawodów</value>
+  </data>
   <data name="CompetitionPoints" xml:space="preserve">
     <value>Punkty na zawodach</value>
   </data>
@@ -187,10 +190,10 @@
     <value>Edytuj</value>
   </data>
   <data name="EditCompetition" xml:space="preserve">
-    <value>Edytuj Zawody</value>
+    <value>Edytuj zawody</value>
   </data>
   <data name="EditRun" xml:space="preserve">
-    <value>Edytuj Przebieg</value>
+    <value>Edytuj przebieg</value>
   </data>
   <data name="EditShooter" xml:space="preserve">
     <value>Edytuj strzelca</value>
@@ -276,6 +279,9 @@
   <data name="Rules" xml:space="preserve">
     <value>Zasady</value>
   </data>
+  <data name="RunEditing" xml:space="preserve">
+    <value>Edycja przebiegu</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Zapisz</value>
   </data>
@@ -305,6 +311,9 @@
   </data>
   <data name="ShooterSurname" xml:space="preserve">
     <value>Nazwisko</value>
+  </data>
+  <data name="StageEditing" xml:space="preserve">
+    <value>Edycja tras</value>
   </data>
   <data name="StageID" xml:space="preserve">
     <value>ID Trasy</value>
