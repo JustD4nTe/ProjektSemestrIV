@@ -12,14 +12,14 @@ namespace ProjektSemestrIV.DAL.Repositories
     class TargetRepository : BaseRepository
     {
         #region CRUD
-        public static IEnumerable<Target> GetTargetsWhere(uint shooter_id, uint stage_id)
+        public static IEnumerable<Target> GetTargets(uint shooterId, uint stageId)
         {
-            var query = $"SELECT * FROM tarcza WHERE strzelec_id = '{shooter_id}' AND trasa_id = '{stage_id}'";
+            var query = $"SELECT * FROM tarcza WHERE strzelec_id = '{shooterId}' AND trasa_id = '{stageId}'";
 
             return ExecuteSelectQuery<Target>(query);
         }
 
-        public static bool AddTargetToDatabase(Target target)
+        public static bool AddTarget(Target target)
         {
             var query = @"INSERT INTO tarcza (`strzelec_id`, `trasa_id`, `alpha`, `charlie`, `delta`, `miss`, `n-s`, `proc`, `extra`)
                             VALUES (@strzelec_id, @trasa_id, @alpha, @charlie, @delta, @miss, @ns, @proc, @extra)";
@@ -27,21 +27,21 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteModifyQuery(query, target.GetParameters());
         }
 
-        public static bool EditTargetInDatabase(Target target, uint target_id)
+        public static bool EditTarget(Target target, uint targetId)
         {
             var query = $@"UPDATE `tarcza` 
                             SET `strzelec_id` = @strzelec_id, `trasa_id` = @trasa_id, 
                                 `alpha` = @alpha, `charlie` = @charlie, 
                                 `delta` = @delta, `miss` = @miss, `n-s` = @ns, 
                                 `proc` = @proc, `extra` = @extra 
-                            WHERE id = '{target_id}'";
+                            WHERE id = '{targetId}'";
 
             return ExecuteModifyQuery(query, target.GetParameters());
         }
 
-        public static bool DeleteTargetFromDatabase(uint targetID)
+        public static bool DeleteTarget(uint targetId)
         {
-            var query = $"DELETE FROM tarcza WHERE (`id` = '{targetID}')";
+            var query = $"DELETE FROM tarcza WHERE (`id` = '{targetId}')";
 
             return ExecuteModifyQuery(query);
         }

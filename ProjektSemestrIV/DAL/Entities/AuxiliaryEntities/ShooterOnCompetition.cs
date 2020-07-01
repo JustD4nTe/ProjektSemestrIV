@@ -4,7 +4,7 @@ using System.Data;
 
 namespace ProjektSemestrIV.DAL.Entities.AuxiliaryEntities
 {
-    class ShooterCompetition : IBaseEntity
+    class ShooterOnCompetition : IBaseEntity
     {
         public uint CompetitionId { get; private set; }
         public string Location { get; private set; }

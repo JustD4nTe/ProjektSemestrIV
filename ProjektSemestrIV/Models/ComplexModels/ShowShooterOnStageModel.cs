@@ -13,42 +13,42 @@ namespace ProjektSemestrIV.Models.ComplexModels {
 
         public ShowShooterOnStageModel(uint shooterId, uint stageId)
         {
-            shooter = ShooterRepository.GetShooterByIdFromDB(shooterId);
-            stage = StageRepository.GetStageByIdFromDB(stageId);
+            shooter = ShooterRepository.GetShooter(shooterId);
+            stage = StageRepository.GetStage(stageId);
         }
 
         public string GetShooterName() => shooter.Name;
 
         public string GetShooterSurname() => shooter.Surname;
 
-        public string GetShooterOnStageGeneralAccuracy()
+        public string GetGeneralAccuracy()
             => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.General,shooter.ID, stage.ID):P2}";
 
-        public string GetShooterOnStageAlphaAccuracy()
+        public string GetAlphaAccuracy()
             => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Alpha, shooter.ID, stage.ID):P2}";
 
-        public string GetShooterOnStageCharlieAccuracy()
+        public string GetCharlieAccuracy()
             => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Charlie, shooter.ID, stage.ID):P2}";
 
-        public string GetShooterOnStageDeltaAccuracy()
+        public string GetDeltaAccuracy()
             => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID, stage.ID):P2}";
 
-        public string GetShooterGeneralAveragePosition()
-            => $"{ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID):N2}";
+        public string GetAvgPosition()
+            => $"{ShooterRepository.GetGeneralAvgPosition(shooter.ID):N2}";
 
-        public string GetShooterOnStageSumOfPoints()
-            => $"{ShooterRepository.GetShooterOnStageSumOfPointsFromDB(shooter.ID, stage.ID):N3}";
+        public string GetStagePoints()
+            => $"{ShooterRepository.GetStagePoints(shooter.ID, stage.ID):N3}";
 
-        public string GetShooterOnStageTime()
-            => $"{TimeSpan.FromSeconds(ShooterRepository.GetShooterOnStageTime(shooter.ID, stage.ID)):g}";
+        public string GetStageTime()
+            => $"{TimeSpan.FromSeconds(ShooterRepository.GetStageTime(shooter.ID, stage.ID)):g}";
 
-        public string GetShooterOnStageCompetition()
-            => ShooterRepository.GetShooterOnStageCompetition(shooter.ID, stage.ID);
+        public string GetCompetitionName()
+            => StageRepository.GetCompetitionName(stage.ID);
 
-        public string GetShooterOnStageStageName()
+        public string GetStageName()
             => stage.Name;
 
-        public uint GetShooterOnStagePosition()
-            => ShooterRepository.GetShooterOnStagePosition(shooter.ID, stage.ID);
+        public uint GetPositionOnStage()
+            => ShooterRepository.GetPositionOnStage(shooter.ID, stage.ID);
     }
 }

@@ -15,7 +15,7 @@ namespace ProjektSemestrIV.DAL.Repositories
     class ShooterRepository : BaseRepository
     {
         #region CRUD
-        public static bool AddShooterToDB(Shooter shooter)
+        public static bool AddShooter(Shooter shooter)
         {
             var query = @"INSERT INTO strzelec (`imie`, `nazwisko`)
                             VALUES (@imie, @nazwisko)";
@@ -23,32 +23,32 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteModifyQuery(query, shooter.GetParameters());
         }
 
-        public static bool EditShooterInDB(Shooter shooter, uint id)
+        public static bool EditShooter(Shooter shooter, uint shooterId)
         {
             var query = $@"UPDATE strzelec 
                             SET `imie` = @imie, `nazwisko` = @nazwisko 
-                            WHERE (`id` = '{id}')";
+                            WHERE (`id` = '{shooterId}')";
 
             return ExecuteModifyQuery(query, shooter.GetParameters());
         }
 
-        public static IEnumerable<Shooter> GetAllShootersFromDB()
+        public static IEnumerable<Shooter> GetAllShooters()
         {
             var query = "SELECT * FROM strzelec";
 
             return ExecuteSelectQuery<Shooter>(query);
         }
 
-        public static Shooter GetShooterByIdFromDB(uint id)
+        public static Shooter GetShooter(uint shooterId)
         {
-            string query = $"SELECT * FROM strzelec WHERE strzelec.id = {id}";
+            string query = $"SELECT * FROM strzelec WHERE strzelec.id = {shooterId}";
 
             return ExecuteSelectQuery<Shooter>(query).FirstOrDefault();
         }
 
-        public static bool DeleteShooterFromDB(uint shooterID)
+        public static bool DeleteShooter(uint shooterId)
         {
-            string query = $"DELETE FROM strzelec WHERE (`id` = '{shooterID}')";
+            string query = $"DELETE FROM strzelec WHERE (`id` = '{shooterId}')";
 
             return ExecuteModifyQuery(query);
         }
@@ -101,7 +101,11 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
-        public static IEnumerable<ShooterCompetition> GetShooterAccomplishedCompetitionsFromDB(uint id)
+        /// <summary>
+        /// Collection of shooters on the competition
+        /// </summary>
+        /// <returns>Information of competition and shooter's points</returns>
+        public static IEnumerable<ShooterOnCompetition> GetShootersOnCompetition(uint shooterId)
         {
             var query = $@"WITH punktacja AS (
                             SELECT  punkty.zawody_id, punkty.suma/przebieg.czas AS pkt , 
@@ -123,12 +127,15 @@ namespace ProjektSemestrIV.DAL.Repositories
                                         RANK() OVER(PARTITION BY punktacja.zawody_id ORDER BY SUM(punktacja.pkt) DESC) AS position, SUM(punktacja.pkt) AS points 
                         FROM punktacja
                         GROUP BY punktacja.strzelec_id, zawody_id) AS subQuery
-                        WHERE shooterId = {id};";
+                        WHERE shooterId = {shooterId};";
 
-            return ExecuteSelectQuery<ShooterCompetition>(query);
+            return ExecuteSelectQuery<ShooterOnCompetition>(query);
         }
 
-        public static double GetShooterGeneralAveragePositionFromDB(uint id)
+        /// <summary>
+        /// Get average shooter's position
+        /// </summary>
+        public static double GetGeneralAvgPosition(uint shooterId)
         {
             var query = $@"WITH ranking AS (
                             SELECT RANK() OVER(PARTITION BY punkty.zawody_id ORDER BY sum(punkty.suma/przebieg.czas) DESC) AS positions, 
@@ -146,12 +153,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN strzelec ON strzelec.id = punkty.strzelec_id
                             GROUP BY zawody_id,strzelec_id)
                             SELECT avg(ranking.positions) AS averagePosition FROM ranking
-                            WHERE strzelec_id = {id};";
+                            WHERE strzelec_id = {shooterId};";
 
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
-        public static uint GetShooterOnStagePosition(uint shooterId, uint stageId)
+        public static uint GetPositionOnStage(uint shooterId, uint stageId)
         {
             var query = $@"WITH ranking AS (
                                 SELECT strzelec.id AS strzelec_id, 
@@ -167,7 +174,29 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
 
-        public static double GetShooterGeneralSumOfPointsFromDB(uint id)
+        public static uint GetPositionOnCompetition(uint shooterId, uint competitionId)
+        {
+            var query = $@"WITH ranking AS (
+                            SELECT strzelec.id AS strzelec_id, 
+                                    SUM(sumowanieTarcz.suma/przebieg.czas) AS sumaPunktow, 
+                                    RANK() OVER (ORDER BY SUM(sumowanieTarcz.suma/przebieg.czas) desc) AS pozycja
+                            FROM (
+                                SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, 
+                                        (((SUM(alpha)*5 + SUM(charlie)*3 + SUM(delta))-10*(SUM(miss)+SUM(tarcza.`n-s`)+SUM(proc)+SUM(extra)))) AS suma
+                                FROM strzelec INNER JOIN tarcza ON strzelec.id=tarcza.strzelec_id
+                                INNER JOIN trasa ON tarcza.trasa_id=trasa.id
+                                WHERE trasa.id_zawody={competitionId}
+                                GROUP BY strzelec.id, trasa.id) AS sumowanieTarcz
+                            INNER JOIN przebieg ON przebieg.id_strzelec = sumowanieTarcz.strzelec_id and przebieg.id_trasa = sumowanieTarcz.trasa_id 
+                            INNER JOIN strzelec ON strzelec.id = sumowanieTarcz.strzelec_id 
+                            GROUP BY sumowanieTarcz.strzelec_id 
+                            ORDER BY sumaPunktow desc)
+                        SELECT ranking.pozycja FROM ranking WHERE strzelec_id={shooterId}";
+
+            return ExecuteSelectQuery<uint>(query).FirstOrDefault();
+        }
+
+        public static double GetGeneralPoints(uint shooterId)
         {
             var query = $@"SELECT SUM(subQuery.points/przebieg.czas) AS sumOfPoints
                             FROM (
@@ -176,25 +205,41 @@ namespace ProjektSemestrIV.DAL.Repositories
                                 FROM tarcza INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
                                 INNER JOIN trasa ON trasa.id = tarcza.trasa_id
                                 INNER JOIN zawody ON zawody.id = trasa.id_zawody
-                                WHERE strzelec.id = {id}
+                                WHERE strzelec.id = {shooterId}
                                 GROUP BY trasa.id) AS subQuery
                             INNER JOIN przebieg ON przebieg.id_trasa=subQuery.trasa_id and przebieg.id_strzelec=subQuery.strzelec_id;";
 
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
-        public static double GetShooterOnStageSumOfPointsFromDB(uint ShooterId, uint StageId)
+        public static double GetStagePoints(uint shooterId, uint stageId)
         {
             var query = $@"SELECT (SUM(alpha)*5+SUM(charlie)*3+SUM(delta)-10*(SUM(miss)+SUM(`n-s`)+SUM(proc)+SUM(extra)))
                                      /(SELECT czas FROM przebieg WHERE id_strzelec = 1 and id_trasa = 1) AS points
                             FROM tarcza
-                            WHERE tarcza.strzelec_id = {ShooterId} and tarcza.trasa_id = {StageId}
+                            WHERE tarcza.strzelec_id = {shooterId} and tarcza.trasa_id = {stageId}
                             GROUP BY tarcza.strzelec_id, tarcza.trasa_id;";
 
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
-        public static double GetShooterGeneralSumOfTimesFromDB(uint id)
+        public static double GetCompetitionPoints(uint shooterId, uint competitionId)
+        {
+            var query = $@"SELECT SUM(subQuery.points/przebieg.czas) AS sumOfPoints
+                            FROM (
+                                SELECT trasa.id AS trasa_id, strzelec.id AS strzelec_id, 
+                                        ((SUM(alpha) * 5 + SUM(charlie) * 3 + SUM(delta)) - 10 * (SUM(miss) + SUM(`n-s`) + SUM(proc) + SUM(extra))) AS points
+                                FROM tarcza INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
+                                INNER JOIN trasa ON trasa.id = tarcza.trasa_id
+                                INNER JOIN zawody ON zawody.id = trasa.id_zawody
+                                WHERE strzelec.id = {shooterId} and zawody.id = {competitionId}
+                                GROUP BY trasa.id) AS subQuery
+                            INNER JOIN przebieg ON przebieg.id_trasa = subQuery.trasa_id and przebieg.id_strzelec = subQuery.strzelec_id; ";
+
+            return ExecuteSelectQuery<double>(query).FirstOrDefault();
+        }
+
+        public static double GetGeneralSumOfTimes(uint shooterId)
         {
             var query = $@"SELECT SUM(przebieg.czas) AS sumOfTimes
                             FROM tarcza
@@ -203,12 +248,12 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN zawody ON zawody.id = trasa.id_zawody
                             INNER JOIN przebieg ON trasa.id = przebieg.id_trasa 
                                 AND strzelec.id = przebieg.id_strzelec
-                            WHERE strzelec.id = {id};";
+                            WHERE strzelec.id = {shooterId};";
 
             return ExecuteSelectQuery<double>(query).FirstOrDefault();
         }
 
-        public static double GetShooterOnStageTime(uint ShooterId, uint StageId)
+        public static double GetStageTime(uint ShooterId, uint StageId)
         {
             var query = $@"SELECT czas FROM przebieg 
                              WHERE id_strzelec = {ShooterId} and id_trasa = {StageId};";
@@ -216,7 +261,24 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<TimeSpan>(query).FirstOrDefault().TotalSeconds;
         }
 
-        public static ShooterWithPoints GetShooterWithPointsByStageIdFromDB(uint id)
+        /// <summary>Sum of stage times</summary>
+        public static double GetCompetitionTime(uint shooterId, uint competitionId)
+        {
+            var query = $@"SELECT SUM(przebieg.czas) AS sumOfTimes
+                            FROM strzelec 
+                            INNER JOIN przebieg ON strzelec.id=przebieg.id_strzelec
+                            INNER JOIN trasa ON przebieg.id_trasa=trasa.id
+                            INNER JOIN zawody ON trasa.id_zawody=zawody.id
+                            WHERE strzelec.id={shooterId} AND zawody.id={competitionId};";
+
+            return ExecuteSelectQuery<double>(query).FirstOrDefault();
+        }
+
+        /// <summary>
+        /// Best shooter on stage 
+        /// </summary>
+        /// <returns>Shooter name and surname and points</returns>
+        public static ShooterWithPoints GetBestShooter(uint stageId)
         {
             var query = $@"WITH ranking AS (
                             SELECT summing.strzelec_id AS strzelec_id, summing.strzelec_imie AS imie, 
@@ -234,24 +296,18 @@ namespace ProjektSemestrIV.DAL.Repositories
                             INNER JOIN przebieg ON przebieg.id_strzelec = summing.strzelec_id and przebieg.id_trasa = summing.trasa_id
                             INNER JOIN trasa ON trasa.id=summing.trasa_id)
                         SELECT strzelec_id AS Id, imie, nazwisko, sumaPunktow FROM ranking
-                        WHERE trasaId = {id}
+                        WHERE trasaId = {stageId}
                         LIMIT 1;";
+
             return ExecuteSelectQuery<ShooterWithPoints>(query).FirstOrDefault();
         }
 
-        public static string GetShooterOnStageCompetition(uint shooterId, uint stageId)
-        {
-            var query = $@"SELECT CONCAT(miejsce, ' ', DATE(rozpoczecie)) AS zawody
-                            FROM trasa 
-                            INNER JOIN zawody ON trasa.id_zawody=zawody.id
-                            INNER JOIN przebieg ON trasa.id=przebieg.id_trasa
-                            WHERE trasa.id = {stageId} AND przebieg.id_strzelec = {shooterId}";
-
-            return ExecuteSelectQuery<object>(query).FirstOrDefault()?.ToString();
-        }
-
-        public static IEnumerable<ShooterWithStagePointsAndCompetitionPoints>
-            GetShootersWithStagePointsAndCompetitionPointsByIdFromDB(uint id)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="stageId"></param>
+        /// <returns></returns>
+        public static IEnumerable<ShooterStageAndCompetitionPoints> GetStageAndCompetitionPoints(uint stageId)
         {
             var query = $@"WITH punktacja AS (
                             SELECT punkty.suma/przebieg.czas AS pkt ,punkty.strzelec_imie, punkty.strzelec_nazwisko, 
@@ -280,72 +336,15 @@ namespace ProjektSemestrIV.DAL.Repositories
                                     punktacja.zawody_rozpoczecie AS startDate, RANK() OVER(ORDER BY SUM(punktacja.pkt) DESC) AS position, 
                                     SUM(pkt) AS stagePoints, punktacja.trasa_id, punktacja.zawody_id
                             FROM punktacja
-                            WHERE trasa_id = {id}
+                            WHERE trasa_id = {stageId}
                             GROUP BY strzelec_id, zawody_miejsce, zawody_rozpoczecie, trasa_id, zawody_id) AS subQuery
                         WHERE compQuery.zawody_id = subQuery.zawody_id AND compQuery.strzelec_id = subQuery.strzelec_id
                         GROUP BY subQuery.zawody_id, subQuery.trasa_id, location, strzelec_id, subQuery.position, subQuery.stagePoints;";
 
-            return ExecuteSelectQuery<ShooterWithStagePointsAndCompetitionPoints>(query);
+            return ExecuteSelectQuery<ShooterStageAndCompetitionPoints>(query);
         }
 
-        public static Shooter GetShooterFromDB(uint id)
-        {
-            var query = $"SELECT * FROM strzelec WHERE strzelec.id={id}";
-
-            return ExecuteSelectQuery<Shooter>(query).FirstOrDefault();
-        }
-
-        public static double GetShooterSumOfPointsAtCompetitionFromDB(uint shooterId, uint competitionId)
-        {
-            var query = $@"SELECT SUM(subQuery.points/przebieg.czas) AS sumOfPoints
-                            FROM (
-                                SELECT trasa.id AS trasa_id, strzelec.id AS strzelec_id, 
-                                        ((SUM(alpha) * 5 + SUM(charlie) * 3 + SUM(delta)) - 10 * (SUM(miss) + SUM(`n-s`) + SUM(proc) + SUM(extra))) AS points
-                                FROM tarcza INNER JOIN strzelec ON strzelec.id = tarcza.strzelec_id
-                                INNER JOIN trasa ON trasa.id = tarcza.trasa_id
-                                INNER JOIN zawody ON zawody.id = trasa.id_zawody
-                                WHERE strzelec.id = {shooterId} and zawody.id = {competitionId}
-                                GROUP BY trasa.id) AS subQuery
-                            INNER JOIN przebieg ON przebieg.id_trasa = subQuery.trasa_id and przebieg.id_strzelec = subQuery.strzelec_id; ";
-
-            return ExecuteSelectQuery<double>(query).FirstOrDefault();
-        }
-
-        public static double GetShooterSumOfTimesAtCompetitionFromDB(uint shooterId, uint competitionId)
-        {
-            var query = $@"SELECT SUM(przebieg.czas) AS sumOfTimes
-                            FROM strzelec 
-                            INNER JOIN przebieg ON strzelec.id=przebieg.id_strzelec
-                            INNER JOIN trasa ON przebieg.id_trasa=trasa.id
-                            INNER JOIN zawody ON trasa.id_zawody=zawody.id
-                            WHERE strzelec.id={shooterId} AND zawody.id={competitionId};";
-
-            return ExecuteSelectQuery<double>(query).FirstOrDefault();
-        }
-
-        public static uint GetShooterPositionAtCompetitionFromDB(uint shooterId, uint competitionId)
-        {
-            var query = $@"WITH ranking AS (
-                            SELECT strzelec.id AS strzelec_id, 
-                                    SUM(sumowanieTarcz.suma/przebieg.czas) AS sumaPunktow, 
-                                    RANK() OVER (ORDER BY SUM(sumowanieTarcz.suma/przebieg.czas) desc) AS pozycja
-                            FROM (
-                                SELECT strzelec.id AS strzelec_id, trasa.id AS trasa_id, 
-                                        (((SUM(alpha)*5 + SUM(charlie)*3 + SUM(delta))-10*(SUM(miss)+SUM(tarcza.`n-s`)+SUM(proc)+SUM(extra)))) AS suma
-                                FROM strzelec INNER JOIN tarcza ON strzelec.id=tarcza.strzelec_id
-                                INNER JOIN trasa ON tarcza.trasa_id=trasa.id
-                                WHERE trasa.id_zawody={competitionId}
-                                GROUP BY strzelec.id, trasa.id) AS sumowanieTarcz
-                            INNER JOIN przebieg ON przebieg.id_strzelec = sumowanieTarcz.strzelec_id and przebieg.id_trasa = sumowanieTarcz.trasa_id 
-                            INNER JOIN strzelec ON strzelec.id = sumowanieTarcz.strzelec_id 
-                            GROUP BY sumowanieTarcz.strzelec_id 
-                            ORDER BY sumaPunktow desc)
-                        SELECT ranking.pozycja FROM ranking WHERE strzelec_id={shooterId}";
-
-            return ExecuteSelectQuery<uint>(query).FirstOrDefault();
-        }
-
-        public static IEnumerable<ShooterStatsOnStage> GetShooterStatsOnStages(uint shooterId, uint competitionId)
+        public static IEnumerable<ShooterStatsOnStage> GetStatsOnStages(uint shooterId, uint competitionId)
         {
             var query = $@"SELECT trasa.id AS trasaId, trasa.nazwa AS nazwaTrasy, subQuery.points AS punkty, 
                                  przebieg.czas, subQuery.points/przebieg.czas AS punktyNaTrasie

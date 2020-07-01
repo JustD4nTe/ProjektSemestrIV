@@ -26,15 +26,16 @@ namespace ProjektSemestrIV.ViewModels
 
             Name = model.GetShooterName();
             Surname = model.GetShooterSurname();
-            Competition = model.GetShooterOnStageCompetition();
-            StageName = model.GetShooterOnStageStageName();
-            SumOfPoints = model.GetShooterOnStageSumOfPoints();
-            Time = model.GetShooterOnStageTime();
-            GeneralAccuracy = model.GetShooterOnStageGeneralAccuracy();
-            AlphaAccuracy = model.GetShooterOnStageAlphaAccuracy();
-            CharlieAccuracy = model.GetShooterOnStageCharlieAccuracy();
-            DeltaAccuracy = model.GetShooterOnStageDeltaAccuracy();
-            Position = model.GetShooterOnStagePosition();
+            
+            Competition = model.GetCompetitionName();
+            StageName = model.GetStageName();
+            SumOfPoints = model.GetStagePoints();
+            Time = model.GetStageTime();
+            GeneralAccuracy = model.GetGeneralAccuracy();
+            AlphaAccuracy = model.GetAlphaAccuracy();
+            CharlieAccuracy = model.GetCharlieAccuracy();
+            DeltaAccuracy = model.GetDeltaAccuracy();
+            Position = model.GetPositionOnStage();
         }
     }
 }

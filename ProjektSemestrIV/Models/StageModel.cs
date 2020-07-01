@@ -14,16 +14,16 @@ namespace ProjektSemestrIV.Models {
         public ObservableCollection<Stage> GetAllStages()
             => StageRepository.GetAllStages().Convert();
 
+        public Boolean AddStage( Stage stage )
+            => StageRepository.AddStage(stage);
+            
         public ObservableCollection<Stage> GetCompetitionStages(uint competition_id)
             => StageRepository.GetCompetitionStages(competition_id).Convert();
 
-        public Boolean AddStageToDatabase( Stage stage )
-            => StageRepository.AddStageToDatabase(stage);
+        public Boolean EditStage( Stage stage, UInt32 id )
+            => StageRepository.EditStage(stage, id);
 
-        public Boolean EditStageInDatabase( Stage stage, UInt32 id )
-            => StageRepository.EditStageInDatabase(stage, id);
-
-        public Boolean DeleteStageFromDatabase( UInt32 id )
-            => StageRepository.DeleteStageFromDatabase(id);
+        public Boolean DeleteStage( UInt32 id )
+            => StageRepository.DeleteStage(id);
     }
 }

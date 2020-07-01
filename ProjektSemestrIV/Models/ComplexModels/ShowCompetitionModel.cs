@@ -7,13 +7,13 @@ using System.Linq;
 
 namespace ProjektSemestrIV.Models.ComplexModels
 {
-    class ShowSelectedCompetitionModel
+    class ShowCompetitionModel
     {
         private readonly Competition competition;
 
-        public ShowSelectedCompetitionModel(uint id)
+        public ShowCompetitionModel(uint id)
         {
-            competition = CompetitionRepository.GetCompetitionFromDB(id);
+            competition = CompetitionRepository.GetCompetition(id);
         }
 
         /// <summary>
@@ -28,17 +28,17 @@ namespace ProjektSemestrIV.Models.ComplexModels
         => competition.Location;
 
         public uint GetShootersCount()
-        => CompetitionRepository.GetNumberOfShootersInCompetition(competition.Id);
+        => CompetitionRepository.GetShootersCount(competition.Id);
 
         public string GetFastestShooter()
         {
-            var shooter = CompetitionRepository.GetFastestShooterOfCompetition(competition.Id);
+            var shooter = CompetitionRepository.GetFastestShooter(competition.Id);
             return $"{shooter.Name} {shooter.Surname} : {TimeSpan.FromSeconds(shooter.TimeInSeconds):g}";
         }
 
-        public string GetShootersOnPodium()
+        public string GetPodium()
         {
-            var playersOnPodium = CompetitionRepository.GetShootersWithPointsFromStage(competition.Id, true).ToList();
+            var playersOnPodium = CompetitionRepository.GetShootersWithPoints(competition.Id, true).ToList();
 
             var podium = $"I - {playersOnPodium[0].Name} {playersOnPodium[0].Surname}: {playersOnPodium[0].Points}\n"
                          + $"II - {playersOnPodium[1].Name} {playersOnPodium[1].Surname}: {playersOnPodium[1].Points}\n"
@@ -46,16 +46,16 @@ namespace ProjektSemestrIV.Models.ComplexModels
             return podium;
         }
 
-        public IEnumerable<ShooterWithPointsOverview> GetShootersFromCompetition()
-        => CompetitionRepository.GetShootersWithPointsFromStage(competition.Id)
-                                .Select(x => new ShooterWithPointsOverview(x.Id, x.Name, x.Surname, x.Points));
+        public IEnumerable<ShooterWithPointsShowModel> GetShootersWithPointsOnStage()
+        => CompetitionRepository.GetShootersWithPoints(competition.Id)
+                                .Select(x => new ShooterWithPointsShowModel(x.Id, x.Name, x.Surname, x.Points));
 
-        public IEnumerable<StageWithBestPlayerOverview> GetStageWithBestShooters()
+        public IEnumerable<StageWithBestShooterShowModel> GetStagesWithBestShooters()
         => CompetitionRepository.GetStagesWithBestShooter(competition.Id)
-                                .Select(x => new StageWithBestPlayerOverview(x.Id,
-                                                                           x.StageName,
-                                                                           x.ShooterName,
-                                                                           x.ShooterSurname,
-                                                                           x.ShooterPoints));
+                                .Select(x => new StageWithBestShooterShowModel(x.Id,
+                                                                            x.StageName,
+                                                                            x.ShooterName,
+                                                                            x.ShooterSurname,
+                                                                            x.ShooterPoints));
     }
 }

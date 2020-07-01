@@ -11,21 +11,21 @@ namespace ProjektSemestrIV.DAL.Repositories
     class CompetitionRepository : BaseRepository
     {
         #region CRUD
-        public static IEnumerable<Competition> GetAllCompetitionsFromDB()
+        public static IEnumerable<Competition> GetAllCompetitions()
         {
             var query = "SELECT * FROM zawody";
 
             return ExecuteSelectQuery<Competition>(query);
         }
 
-        public static Competition GetCompetitionFromDB(uint id)
+        public static Competition GetCompetition(uint competitionId)
         {
-            var query = $"SELECT * FROM zawody WHERE id={id}";
+            var query = $"SELECT * FROM zawody WHERE id={competitionId}";
 
             return ExecuteSelectQuery<Competition>(query).FirstOrDefault();
         }
 
-        public static bool AddCompetitionToDatabase(Competition competition)
+        public static bool AddCompetition(Competition competition)
         {
             var query = @"INSERT INTO zawody (`miejsce`, `rozpoczecie`, `zakonczenie`)
                             VALUES (@miejsce, @rozpoczecie, @zakonczenie)";
@@ -33,25 +33,25 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteModifyQuery(query, competition.GetParameters());
         }
 
-        public static bool EditCompetitionInDatabase(Competition competition, uint id)
+        public static bool EditCompetition(Competition competition, uint competitionId)
         {
             var query = $@"UPDATE zawody 
                             SET `miejsce` = @miejsce, `rozpoczecie` = @rozpoczenie, `zakonczenie` = @zakonczenie 
-                            WHERE (`id` = '{id}')";
+                            WHERE (`id` = '{competitionId}')";
 
             return ExecuteModifyQuery(query,competition.GetParameters());
         }
 
-        public static bool DeleteCompetitionFromDatabase(uint competitionID)
+        public static bool DeleteCompetition(uint competitionId)
         {
-            var query = $@"DELETE FROM zawody WHERE (`id` = '{competitionID}')";
+            var query = $@"DELETE FROM zawody WHERE (`id` = '{competitionId}')";
 
             return ExecuteModifyQuery(query);
         }
         #endregion
 
         #region Auxiliary queries
-        public static uint GetNumberOfShootersInCompetition(uint competitionId)
+        public static uint GetShootersCount(uint competitionId)
         {
             var query = $@"SELECT COUNT(distinct strzelec.id) AS count FROM strzelec 
                             INNER JOIN tarcza ON strzelec.id=tarcza.strzelec_id
@@ -61,7 +61,7 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<uint>(query).FirstOrDefault();
         }
 
-        public static ShooterWithCompetitionTime GetFastestShooterOfCompetition(uint competitionId)
+        public static ShooterWithCompetitionTime GetFastestShooter(uint competitionId)
         {
             var query = $@"SELECT imie, nazwisko, sum(czas) AS czas FROM strzelec
                             INNER JOIN przebieg ON strzelec.id=przebieg.id_strzelec
@@ -72,7 +72,11 @@ namespace ProjektSemestrIV.DAL.Repositories
             return ExecuteSelectQuery<ShooterWithCompetitionTime>(query).FirstOrDefault();
         }
 
-        public static IEnumerable<ShooterWithPoints> GetShootersWithPointsFromStage(uint competitionId, bool isPodium = false)
+        /// <summary>
+        /// Collection of shooters with their points. Order by points ascending
+        /// </summary>
+        /// <param name="isPodium">Optional value to get only three first shooters</param>
+        public static IEnumerable<ShooterWithPoints> GetShootersWithPoints(uint competitionId, bool isPodium = false)
         {
             var query = $@"SELECT strzelec.id AS id, strzelec.imie AS imie, strzelec.nazwisko AS nazwisko, 
                                     sum(sumowanieTarcz.suma/przebieg.czas) AS sumaPunktow

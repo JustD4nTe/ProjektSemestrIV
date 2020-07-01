@@ -7,46 +7,43 @@ using System.Linq;
 
 namespace ProjektSemestrIV.Models.ComplexModels
 {
-    class ShowSelectedShooterModel
+    class ShowShooterModel
     {
         private readonly Shooter shooter;
 
-        public ShowSelectedShooterModel(uint id)
-            => shooter = ShooterRepository.GetShooterByIdFromDB(id);
+        public ShowShooterModel(uint id)
+            => shooter = ShooterRepository.GetShooter(id);
 
         public string GetShooterName() => shooter.Name;
 
         public string GetShooterSurname() => shooter.Surname;
 
-        public string GetShooterCompetitionGeneralAccuracy()
+        public string GetGeneralAccuracy()
             => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.General, shooter.ID):P2}";
 
-        public string GetShooterCompetitionAlphaAccuracy()
+        public string GetAlphaAccuracy()
             => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Alpha, shooter.ID):P2}";
 
-        public string GetShooterCompetitionCharlieAccuracy()
+        public string GetCharlieAccuracy()
             => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Charlie, shooter.ID):P2}";
 
-        public string GetShooterCompetitionDeltaAccuracy()
+        public string GetDeltaAccuracy()
             => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID):P2}";
-
-        public IEnumerable<ShooterCompetitionOverview> GetShooterCompetitions()
-            => ShooterRepository.GetShooterAccomplishedCompetitionsFromDB(shooter.ID)
-                                .Select(x => new ShooterCompetitionOverview(x.CompetitionId,
+        public IEnumerable<ShooterCompetitionShowModel> GetShootersOnCompetition()
+            => ShooterRepository.GetShootersOnCompetition(shooter.ID)
+                                .Select(x => new ShooterCompetitionShowModel(x.CompetitionId,
                                                                             x.Location,
                                                                             x.StartDate,
                                                                             x.Position,
                                                                             x.Points));
 
-        public string GetShooterGeneralAveragePosition()
-            => $"{ShooterRepository.GetShooterGeneralAveragePositionFromDB(shooter.ID):N2}";
+        public string GetGeneralAvgPosition()
+            => $"{ShooterRepository.GetGeneralAvgPosition(shooter.ID):N2}";
 
-        public string GetShooterGeneralSumOfPoints()
-            => $"{ShooterRepository.GetShooterGeneralSumOfPointsFromDB(shooter.ID):N3}";
+        public string GetGeneralPoints()
+            => $"{ShooterRepository.GetGeneralPoints(shooter.ID):N3}";
 
-        public string GetShooterGeneralSumOfTimes()
-            => $"{TimeSpan.FromSeconds(ShooterRepository.GetShooterGeneralSumOfTimesFromDB(shooter.ID)):g}";
-
-
+        public string GetGeneralSumOfTimes()
+            => $"{TimeSpan.FromSeconds(ShooterRepository.GetGeneralSumOfTimes(shooter.ID)):g}";
     }
 }

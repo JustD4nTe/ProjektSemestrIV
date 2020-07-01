@@ -24,13 +24,13 @@ namespace ProjektSemestrIV.ViewModels
 
             model = new CompetitionModel();
 
-            Competitions = model.GetAllCompetitionsFromDB().Convert();
+            Competitions = model.GetAllCompetitions().Convert();
 
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), x => true);
         }
 
 
         private void OnSwitchView()
-        => navigation.Navigate(new ShowSelectedCompetitionViewModel(navigation, SelectedCompetitionId.Id));
+        => navigation.Navigate(new ShowCompetitionViewModel(navigation, SelectedCompetitionId.Id));
     }
 }

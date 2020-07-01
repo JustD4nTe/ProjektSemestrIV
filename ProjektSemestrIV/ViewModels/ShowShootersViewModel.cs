@@ -27,6 +27,6 @@ namespace ProjektSemestrIV.ViewModels
         }
 
         private void OnSwitchView()
-        => navigation.Navigate(new ShowSelectedShooterViewModel(navigation, SelectedShooter.ID));
+        => navigation.Navigate(new ShowShooterViewModel(navigation, SelectedShooter.ID));
     }
 }

@@ -26,7 +26,7 @@ namespace ProjektSemestrIV.ViewModels {
             competitionModel = new CompetitionModel();
             shooterModel = new ShooterModel();
 
-            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
+            Competitions = competitionModel.GetAllCompetitions().Convert();
             Shooters = shooterModel.GetAllShooters();
         }
 
@@ -113,9 +113,9 @@ namespace ProjektSemestrIV.ViewModels {
             set {
                 shooter_id = value;
                 onPropertyChanged(nameof(Shooter_id));
-                Targets = targetModel.GetTargetsWhere(Shooter_id, Stage_id);
-                if(runModel.GetRunWhere(Shooter_id, Stage_id) != null) {
-                    Time = runModel.GetRunWhere(Shooter_id, Stage_id).RunTime;
+                Targets = targetModel.GetTargets(Shooter_id, Stage_id);
+                if(runModel.GetRun(Shooter_id, Stage_id) != null) {
+                    Time = runModel.GetRun(Shooter_id, Stage_id).RunTime;
                 }
             }
         }
@@ -126,9 +126,9 @@ namespace ProjektSemestrIV.ViewModels {
             set {
                 stage_id = value;
                 onPropertyChanged(nameof(Stage_id));
-                Targets = targetModel.GetTargetsWhere(Shooter_id, Stage_id);
-                if(runModel.GetRunWhere(Shooter_id, Stage_id) != null) {
-                    Time = runModel.GetRunWhere(Shooter_id, Stage_id).RunTime;
+                Targets = targetModel.GetTargets(Shooter_id, Stage_id);
+                if(runModel.GetRun(Shooter_id, Stage_id) != null) {
+                    Time = runModel.GetRun(Shooter_id, Stage_id).RunTime;
                 }
             }
         }
@@ -234,11 +234,15 @@ namespace ProjektSemestrIV.ViewModels {
         private Boolean CanExecuteAddTarget( object parameter )
             => !IsEditing() && IsInputValid();
         private void ExecuteAddTarget( object parameter ) {
-            Target newTarget = new Target(shooter_id, stage_id, Byte.Parse(alpha), Byte.Parse(charlie), Byte.Parse(delta), Byte.Parse(miss), Byte.Parse(noShoot), Byte.Parse(procedure), Byte.Parse(extra));
-            targetModel.AddTargetToDatabase(newTarget);
+            Target newTarget = new Target(shooter_id, stage_id, Byte.Parse(alpha), 
+                                            Byte.Parse(charlie), Byte.Parse(delta), 
+                                            Byte.Parse(miss), Byte.Parse(noShoot), 
+                                            Byte.Parse(procedure), Byte.Parse(extra));
+                                            
+            targetModel.AddTarget(newTarget);
 
             ClearInput();
-            Targets = targetModel.GetTargetsWhere(Shooter_id, Stage_id);
+            Targets = targetModel.GetTargets(Shooter_id, Stage_id);
         }
 
 
@@ -257,14 +261,13 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteConfirmTargetEdit( object parameter ) {
             Target newTarget = new Target(shooter_id, stage_id, Byte.Parse(alpha), Byte.Parse(charlie), Byte.Parse(delta), Byte.Parse(miss), Byte.Parse(noShoot), Byte.Parse(procedure), Byte.Parse(extra));
             UInt32 id = SelectedTarget.ID;
-            targetModel.EditTargetInDatabase(newTarget, id);
-
+            targetModel.EditTarget(newTarget, id);
+            
             ClearInput();
             isDataGridEnabled = true;
             EditedTargetId = null;
-            Targets = targetModel.GetTargetsWhere(Shooter_id, Stage_id);
+            Targets = targetModel.GetTargets(Shooter_id, Stage_id);
         }
-
 
         private ICommand editTarget = null;
         public ICommand EditTarget {
@@ -306,8 +309,8 @@ namespace ProjektSemestrIV.ViewModels {
             => (SelectedTarget != null) && (SelectedTarget.ID != EditedTargetId);
         private void ExecuteDeleteTarget( object parameter ) {
             UInt32 id = SelectedTarget.ID;
-            targetModel.DeleteTargetFromDatabase(id);
-            Targets = targetModel.GetTargetsWhere(Shooter_id, Stage_id);
+            targetModel.DeleteTarget(id);
+            Targets = targetModel.GetTargets(Shooter_id, Stage_id);
         }
 
 
@@ -324,13 +327,13 @@ namespace ProjektSemestrIV.ViewModels {
         private Boolean CanExecuteSaveRun( object parameter )
             => (Stage_id != 0) && (Shooter_id != 0) && TimeSpan.TryParse(time, out _);
         private void ExecuteSaveRun( object parameter ) {
-            if(runModel.GetRunWhere(Shooter_id, Stage_id) != null) {
+            if(runModel.GetRun(Shooter_id, Stage_id) != null) {
                 Run newRun = new Run(time, Shooter_id, Stage_id);
-                runModel.EditRunInDatabase(newRun, Shooter_id, Stage_id);
+                runModel.EditRun(newRun, Shooter_id, Stage_id);
             }
             else {
                 Run newRun = new Run(time, Shooter_id, Stage_id);
-                runModel.AddRunToDatabase(newRun);
+                runModel.AddRun(newRun);
             }
         }
 

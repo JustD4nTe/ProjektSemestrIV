@@ -10,7 +10,7 @@ namespace ProjektSemestrIV.ViewModels {
         private CompetitionModel competitionModel;
         public EditCompetitionsViewModel() {
             competitionModel = new CompetitionModel();
-            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
+            Competitions = competitionModel.GetAllCompetitions().Convert();
         }
 
         private String location = "";
@@ -67,10 +67,10 @@ namespace ProjektSemestrIV.ViewModels {
             => !IsEditing() && InputIsValid();
         private void ExecuteAddCompetition( object parameter ) {
             Competition competition = new Competition(Location, StartDate.ToString(), EndDate.ToString());
-            competitionModel.AddCompetitionToDatabase(competition);
+            competitionModel.AddCompetition(competition);
 
             ClearInput();
-            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
+            Competitions = competitionModel.GetAllCompetitions().Convert();
         }
 
 
@@ -89,11 +89,11 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteConfirmCompetitionEdit( object parameter ) {
             Competition newCompetition = new Competition(Location, StartDate.ToString(), EndDate.ToString());
             UInt32 id = SelectedCompetition.Id;
-            competitionModel.EditCompetitionInDatabase(newCompetition, id);
+            competitionModel.EditCompetition(newCompetition, id);
 
             ClearInput();
             EditedCompetitionId = null;
-            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
+            Competitions = competitionModel.GetAllCompetitions().Convert();
         }
 
 
@@ -131,8 +131,8 @@ namespace ProjektSemestrIV.ViewModels {
             => (SelectedCompetition != null) && (SelectedCompetition.Id != EditedCompetitionId);
         private void ExecuteDeleteCompetition( object parameter ) {
             UInt32 id = SelectedCompetition.Id;
-            competitionModel.DeleteCompetitionFromDatabase(id);
-            Competitions = competitionModel.GetAllCompetitionsFromDB().Convert();
+            competitionModel.DeleteCompetition(id);
+            Competitions = competitionModel.GetAllCompetitions().Convert();
         }
 
 

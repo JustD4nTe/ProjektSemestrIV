@@ -8,15 +8,15 @@ using System.Linq;
 
 namespace ProjektSemestrIV.Models.ComplexModels
 {
-    class ShowSelectedShooterInCompetitionModel
+    class ShowShooterInCompetitionModel
     {
         private readonly Shooter shooter;
         private readonly Competition competition;
 
-        public ShowSelectedShooterInCompetitionModel(uint shooterId, uint competitionId)
+        public ShowShooterInCompetitionModel(uint shooterId, uint competitionId)
         {
-            shooter = ShooterRepository.GetShooterFromDB(shooterId);
-            competition = CompetitionRepository.GetCompetitionFromDB(competitionId);
+            shooter = ShooterRepository.GetShooter(shooterId);
+            competition = CompetitionRepository.GetCompetition(competitionId);
         }
 
         public string GetShooterName()
@@ -30,13 +30,13 @@ namespace ProjektSemestrIV.Models.ComplexModels
         => $"{competition.Location} , {DateTime.Parse(competition.StartDate):g}{(DateTime.TryParse(competition.EndDate, out var result) ? $" - {result:g}" : "")}";
 
         public string GetPoints()
-        => $"{ShooterRepository.GetShooterSumOfPointsAtCompetitionFromDB(shooter.ID, competition.Id):N3}";
+        => $"{ShooterRepository.GetCompetitionPoints(shooter.ID, competition.Id):N3}";
 
         public string GetTime()
-        => $"{TimeSpan.FromSeconds(ShooterRepository.GetShooterSumOfTimesAtCompetitionFromDB(shooter.ID, competition.Id)):g}";
+        => $"{TimeSpan.FromSeconds(ShooterRepository.GetCompetitionTime(shooter.ID, competition.Id)):g}";
 
         public string GetPosition()
-        => $"{ShooterRepository.GetShooterPositionAtCompetitionFromDB(shooter.ID, competition.Id):N0}";
+        => $"{ShooterRepository.GetPositionOnCompetition(shooter.ID, competition.Id):N0}";
 
         public string GetGeneralAccuracy()
         => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.General, shooter.ID, competitionId: competition.Id):P2}";
@@ -50,9 +50,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public string GetDeltaAccuracy()
         => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID, competitionId: competition.Id):P2}";
 
-        public ObservableCollection<StatsAtStageOverview> GetShooterStatsOnStages()
-        => ShooterRepository.GetShooterStatsOnStages(shooter.ID, competition.Id)
-                            .Select(x => new StatsAtStageOverview(x.StageId, x.StageName, x.Points, $"{TimeSpan.Parse(x.Time):g}", x.StagePoints))
+        public ObservableCollection<ShooterStatsOnStageShowModel> GetStatsOnStages()
+        => ShooterRepository.GetStatsOnStages(shooter.ID, competition.Id)
+                            .Select(x => new ShooterStatsOnStageShowModel(x.StageId, x.StageName, x.Points, $"{TimeSpan.Parse(x.Time):g}", x.StagePoints))
                             .Convert();
     }
 }

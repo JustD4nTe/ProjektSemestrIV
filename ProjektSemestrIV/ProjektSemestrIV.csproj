@@ -142,9 +142,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAL\DatabaseConnection.cs" />
-    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterCompetition.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterOnCompetition.cs" />
     <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterStatsOnStage.cs" />
-    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithStagePointsAndCompetitionPoints.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterStageAndCompetitionPoints.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
     <Compile Include="DAL\Entities\IBaseEntity.cs" />
     <Compile Include="DAL\Entities\Run.cs" />
@@ -156,27 +156,27 @@
     <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
     <Compile Include="DAL\Repositories\BaseRepository.cs" />
     <Compile Include="Models\AccuracyTypeEnum.cs" />
-    <Compile Include="Models\ComplexModels\ShowSelectedShooterInCompetitionModel.cs" />
-    <Compile Include="Models\ComplexModels\ShowSelectedStageModel.cs" />
+    <Compile Include="Models\ComplexModels\ShowShooterInCompetitionModel.cs" />
+    <Compile Include="Models\ComplexModels\ShowStageModel.cs" />
     <Compile Include="Models\ComplexModels\ShowShooterOnStageModel.cs" />
-    <Compile Include="Models\ShowModels\ShooterWithPointsOverview.cs" />
-    <Compile Include="Models\ShowModels\ShooterWithStagePointsAndCompetitionPointsOverview.cs" />
-    <Compile Include="Models\ShowModels\StageWithBestPlayerOverview.cs" />
+    <Compile Include="Models\ShowModels\ShooterWithPointsShowModel.cs" />
+    <Compile Include="Models\ShowModels\ShooterWithStageAndCompetitionPointsShowModel.cs" />
+    <Compile Include="Models\ShowModels\StageWithBestShooterShowModel.cs" />
     <Compile Include="Extensions\IEnumerableExtension.cs" />
     <Compile Include="DAL\Repositories\CompetitionRepository.cs" />
     <Compile Include="DAL\Repositories\RunRepository.cs" />
     <Compile Include="DAL\Repositories\ShooterRepository.cs" />
     <Compile Include="DAL\Repositories\StageRepository.cs" />
     <Compile Include="DAL\Repositories\TargetRepository.cs" />
-    <Compile Include="Models\ComplexModels\ShowSelectedShooterModel.cs" />
-    <Compile Include="Models\ShowModels\ShooterCompetitionOverview.cs" />
+    <Compile Include="Models\ComplexModels\ShowShooterModel.cs" />
+    <Compile Include="Models\ShowModels\ShooterCompetitionShowModel.cs" />
     <Compile Include="Models\CompetitionModel.cs" />
     <Compile Include="Models\RunModel.cs" />
     <Compile Include="Models\ShooterModel.cs" />
-    <Compile Include="Models\ShowModels\StatsAtStageOverview.cs" />
+    <Compile Include="Models\ShowModels\ShooterStatsOnStageShowModel.cs" />
     <Compile Include="Models\StageModel.cs" />
     <Compile Include="Models\TargetModel.cs" />
-    <Compile Include="Models\ComplexModels\ShowSelectedCompetitionModel.cs" />
+    <Compile Include="Models\ComplexModels\ShowCompetitionModel.cs" />
     <Compile Include="Models\ViewTypeEnum.cs" />
     <Compile Include="Properties\Resources.pl-PL.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -192,14 +192,14 @@
     <Compile Include="ViewModels\EditStagesViewModel.cs" />
     <Compile Include="ViewModels\EditShootersViewModel.cs" />
     <Compile Include="ViewModels\ShowCompetitionsViewModel.cs" />
-    <Compile Include="ViewModels\ShowSelectedCompetitionViewModel.cs" />
-    <Compile Include="ViewModels\ShowSelectedStageViewModel.cs" />
+    <Compile Include="ViewModels\ShowCompetitionViewModel.cs" />
+    <Compile Include="ViewModels\ShowStageViewModel.cs" />
     <Compile Include="ViewModels\ShowShooterOnStageViewModel.cs" />
-    <Compile Include="ViewModels\ShowSelectedShooterInCompetitionViewModel.cs" />
+    <Compile Include="ViewModels\ShowShooterInCompetitionViewModel.cs" />
     <Compile Include="ViewModels\ShowShootersViewModel.cs" />
-    <Compile Include="ViewModels\ShowSelectedShooterViewModel.cs" />
-    <Compile Include="Views\ShowSelectedCompetitionView.xaml.cs">
-      <DependentUpon>ShowSelectedCompetitionView.xaml</DependentUpon>
+    <Compile Include="ViewModels\ShowShooterViewModel.cs" />
+    <Compile Include="Views\ShowCompetitionView.xaml.cs">
+      <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditShootersView.xaml.cs">
       <DependentUpon>EditShootersView.xaml</DependentUpon>
@@ -207,8 +207,8 @@
     <Compile Include="Views\ConnectionView.xaml.cs">
       <DependentUpon>ConnectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShowSelectedShooterView.xaml.cs">
-      <DependentUpon>ShowSelectedShooterView.xaml</DependentUpon>
+    <Compile Include="Views\ShowShooterView.xaml.cs">
+      <DependentUpon>ShowShooterView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditCompetitionsView.xaml.cs">
       <DependentUpon>EditCompetitionsView.xaml</DependentUpon>
@@ -222,14 +222,14 @@
     <Compile Include="Views\EditStagesView.xaml.cs">
       <DependentUpon>EditStagesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShowSelectedStageView.xaml.cs">
-      <DependentUpon>ShowSelectedStageView.xaml</DependentUpon>
+    <Compile Include="Views\ShowStageView.xaml.cs">
+      <DependentUpon>ShowStageView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShowShooterOnStageView.xaml.cs">
       <DependentUpon>ShowShooterOnStageView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShowSelectedShooterInCompetition.xaml.cs">
-      <DependentUpon>ShowSelectedShooterInCompetition.xaml</DependentUpon>
+    <Compile Include="Views\ShowShooterInCompetition.xaml.cs">
+      <DependentUpon>ShowShooterInCompetition.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShowShootersView.xaml.cs">
       <DependentUpon>ShowShootersView.xaml</DependentUpon>
@@ -246,7 +246,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\ShowSelectedCompetitionView.xaml">
+    <Page Include="Views\ShowCompetitionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -262,7 +262,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ShowSelectedShooterView.xaml">
+    <Page Include="Views\ShowShooterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -278,7 +278,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ShowSelectedStageView.xaml">
+    <Page Include="Views\ShowStageView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -286,7 +286,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ShowSelectedShooterInCompetition.xaml">
+    <Page Include="Views\ShowShooterInCompetition.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

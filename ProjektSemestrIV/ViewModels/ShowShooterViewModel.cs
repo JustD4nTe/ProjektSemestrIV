@@ -8,10 +8,10 @@ using System.Windows.Navigation;
 
 namespace ProjektSemestrIV.ViewModels
 {
-    class ShowSelectedShooterViewModel
+    class ShowShooterViewModel
     {
         #region Fields and properties
-        private readonly ShowSelectedShooterModel model;
+        private readonly ShowShooterModel model;
         private readonly NavigationService navigation;
         private readonly uint id;
 
@@ -25,36 +25,36 @@ namespace ProjektSemestrIV.ViewModels
         public string DeltaAccuracy { get; }
         public string AveragePosition { get; }
 
-        public ObservableCollection<ShooterCompetitionOverview> Competitions { get; }
+        public ObservableCollection<ShooterCompetitionShowModel> Competitions { get; }
 
-        public ShooterCompetitionOverview SelectedCompetition { get; set; }
+        public ShooterCompetitionShowModel SelectedCompetition { get; set; }
 
         public ICommand SwitchViewCommand { get; }
         #endregion
 
-        public ShowSelectedShooterViewModel(NavigationService navigation, uint id)
+        public ShowShooterViewModel(NavigationService navigation, uint id)
         {
             this.navigation = navigation;
             this.id = id;
 
-            model = new ShowSelectedShooterModel(id);
+            model = new ShowShooterModel(id);
 
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), 
                                                  x => SelectedCompetition != null);
 
             Name = model.GetShooterName();
             Surname = model.GetShooterSurname();
-            SumOfPoints = model.GetShooterGeneralSumOfPoints();
-            SumOfTimes = model.GetShooterGeneralSumOfTimes();
-            GeneralAccuracy = model.GetShooterCompetitionGeneralAccuracy();
-            AlphaAccuracy = model.GetShooterCompetitionAlphaAccuracy();
-            CharlieAccuracy = model.GetShooterCompetitionCharlieAccuracy();
-            DeltaAccuracy = model.GetShooterCompetitionDeltaAccuracy();
-            AveragePosition = model.GetShooterGeneralAveragePosition();
-            Competitions = model.GetShooterCompetitions().Convert();
+            SumOfPoints = model.GetGeneralPoints();
+            SumOfTimes = model.GetGeneralSumOfTimes();
+            GeneralAccuracy = model.GetGeneralAccuracy();
+            AlphaAccuracy = model.GetAlphaAccuracy();
+            CharlieAccuracy = model.GetCharlieAccuracy();
+            DeltaAccuracy = model.GetDeltaAccuracy();
+            AveragePosition = model.GetGeneralAvgPosition();
+            Competitions = model.GetShootersOnCompetition().Convert();
         }
 
         public void OnSwitchView()
-        => navigation.Navigate(new ShowSelectedShooterInCompetitionViewModel(navigation, id, SelectedCompetition.CompetitionId));
+        => navigation.Navigate(new ShowShooterInCompetitionViewModel(navigation, id, SelectedCompetition.CompetitionId));
     }
 }

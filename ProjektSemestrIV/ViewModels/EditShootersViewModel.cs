@@ -61,7 +61,7 @@ namespace ProjektSemestrIV.ViewModels {
             => !IsEditing() && InputIsValid();
         private void ExecuteAddShooter( object parameter ) {
             Shooter newShooter = new Shooter(Name, Surname);
-            shooterModel.AddShooterToDatabase(newShooter);
+            shooterModel.AddShooter(newShooter);
 
             ClearInput();
             Shooters = shooterModel.GetAllShooters();
@@ -81,9 +81,9 @@ namespace ProjektSemestrIV.ViewModels {
         private Boolean CanExecuteConfirmShooterEdit( object parameter )
             => IsEditing() && InputIsValid();
         private void ExecuteConfirmShooterEdit( object parameter ) {
-            Shooter newShooter = new Shooter(Name, Surname);
+            Shooter newShooter = new Shooter(Name, Surname);            
             UInt32 id = SelectedShooter.ID;
-            shooterModel.EditShooterInDatabase(newShooter, id);
+            shooterModel.EditShooter(newShooter, id);
 
             ClearInput();
             EditedShooterId = null;
@@ -124,7 +124,7 @@ namespace ProjektSemestrIV.ViewModels {
             => (SelectedShooter != null) && (SelectedShooter.ID != EditedShooterId);
         private void ExecuteDeleteShooter( object parameter ) {
             UInt32 id = SelectedShooter.ID;
-            shooterModel.DeleteShooterFromDatabase(id);
+            shooterModel.DeleteShooter(id);
             Shooters = shooterModel.GetAllShooters();
         }
 

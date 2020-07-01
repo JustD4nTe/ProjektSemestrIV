@@ -27,20 +27,20 @@
         <DataTemplate DataType="{x:Type viewmodels:ShowCompetitionsViewModel}">
             <views:ShowCompetitionsView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:ShowSelectedCompetitionViewModel}">
-            <views:ShowSelectedCompetitionView/>
+        <DataTemplate DataType="{x:Type viewmodels:ShowCompetitionViewModel}">
+            <views:ShowCompetitionView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:ShowSelectedShooterViewModel}">
-            <views:SelectedShooterView/>
+        <DataTemplate DataType="{x:Type viewmodels:ShowShooterViewModel}">
+            <views:ShowShooterView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:ShowSelectedStageViewModel}">
-            <views:ShowSelectedStageView/>
+        <DataTemplate DataType="{x:Type viewmodels:ShowStageViewModel}">
+            <views:ShowStageView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:ShowShootersViewModel}">
             <views:ShowShootersView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type viewmodels:ShowSelectedShooterInCompetitionViewModel}">
-            <views:ShowSelectedShooterInCompetition/>
+        <DataTemplate DataType="{x:Type viewmodels:ShowShooterInCompetitionViewModel}">
+            <views:ShowShooterInCompetition/>
         </DataTemplate>
     </Application.Resources>
 </Application>
