@@ -1,8 +1,9 @@
-﻿<UserControl x:Class="ProjektSemestrIV.Views.ConnectionView"
+﻿<Page x:Class="ProjektSemestrIV.Views.ConnectionView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"
              xmlns:local="clr-namespace:ProjektSemestrIV.Views"
              xmlns:viewmodels="clr-namespace:ProjektSemestrIV.ViewModels"
              mc:Ignorable="d" 
@@ -25,90 +26,64 @@
             <RowDefinition Height="10"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        
-        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="Konfiguracja połączenia" FontSize="30"/>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Adres Serwera"/>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Content="{Binding Source={x:Static resx:Resources.ConnectionConfiguration}}" FontSize="30"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.ServerAdress}}"/>
         <TextBox
             x:Name="TextBoxServerAddress" x:FieldModifier="private"
             Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
             Text="{
-            Binding Path=ServerAddress,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
-        }"/>
+                Binding ServerAddress,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged
+            }"/>
 
-        <Label Grid.Row="2" Grid.Column="0" Content="Port"/>
+        <Label Grid.Row="2" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Port}}"/>
         <TextBox
             x:Name="TextBoxPort" x:FieldModifier="private"
             Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
             Text="{
-            Binding Path=Port,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
+                Binding Port,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged
         }"/>
 
-        <Label Grid.Row="3" Grid.Column="0" Content="Baza danych"/>
+        <Label Grid.Row="3" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Database}}"/>
         <TextBox
             x:Name="TextBoxDatabase" x:FieldModifier="private"
             Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
             Text="{
-            Binding Path=Database,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
+                Binding Database,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged
         }"/>
 
-        <Label Grid.Row="4" Grid.Column="0" Content="Użytkownik"/>
+        <Label Grid.Row="4" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.User}}"/>
         <TextBox
             x:Name="TextBoxUser" x:FieldModifier="private"
             Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
             Text="{
-            Binding Path=User,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
+                Binding User,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged
         }"/>
 
-        <Label Grid.Row="5" Grid.Column="0" Content="Hasło"/>
+        <Label Grid.Row="5" Grid.Column="0" Content="{Binding Source={x:Static resx:Resources.Password}}"/>
         <TextBox
             x:Name="TextBoxPassword" x:FieldModifier="private"
             Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="100"
             Text="{
-            Binding Path=Password,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
+                Binding Password,
+                Mode=TwoWay,
+                UpdateSourceTrigger=PropertyChanged
         }"/>
 
         <Button
             x:Name="ButtonOK" x:FieldModifier="private"
-            Grid.Row="7" Grid.Column="1" Content="OK" HorizontalAlignment="Left" Width="50"
-            Command="{
-            Binding Path=OK,
-            Mode=TwoWay,
-            UpdateSourceTrigger=PropertyChanged,
-            RelativeSource={
-                RelativeSource Mode=FindAncestor,
-                AncestorType={x:Type UserControl}
-                }
-        }"/>
+            Grid.Row="7" Grid.Column="1" Content="{Binding Source={x:Static resx:Resources.Ok}}" HorizontalAlignment="Left" Width="50"
+            Command="{Binding ConfirmData, Mode=OneWay}"
+        />
+        
     </Grid>
-</UserControl>
+</Page>

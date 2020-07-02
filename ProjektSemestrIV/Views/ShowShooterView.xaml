@@ -1,0 +1,67 @@
+﻿<Page x:Class="ProjektSemestrIV.Views.ShowShooterView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:resx="clr-namespace:ProjektSemestrIV.Properties"             
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <StackPanel>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5"
+               Content="{Binding Source={x:Static resx:Resources.ShooterSummary}}" FontSize="30"/>
+        
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.ShooterName}}"/>
+            <Label Content="{Binding Name}" FontStyle="Italic"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.ShooterSurname}}"/>
+            <Label Content="{Binding Surname}" FontStyle="Italic"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.SumOfPoints}}"/>
+            <Label Content="{Binding SumOfPoints}" FontStyle="Italic"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.SumOfTimes}}"/>
+            <Label Content="{Binding SumOfTimes}" FontStyle="Italic"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.GeneralAccuracy}}"/>
+            <Label Content="{Binding GeneralAccuracy}" FontStyle="Italic"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.AlphaAccuracy}}"/>
+            <Label Content="{Binding AlphaAccuracy}" FontStyle="Italic"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.CharlieAccuracy}}"/>
+            <Label Content="{Binding CharlieAccuracy}" FontStyle="Italic"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.DeltaAccuracy}}"/>
+            <Label Content="{Binding DeltaAccuracy}" FontStyle="Italic"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding Source={x:Static resx:Resources.AveragePosition}}"/>
+            <Label Content="{Binding AveragePosition}" FontStyle="Italic"/>
+        </StackPanel>
+        <DataGrid x:Name="DataGridCompetitions" ItemsSource="{Binding Competitions}"
+                  AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True" AutoGenerateColumns="False"
+                  SelectedItem="{Binding SelectedCompetition}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Location}}" Binding="{Binding Location}" Width="100"/>
+                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.StartDate}}" Binding="{Binding StartDate}" Width="150"/>
+                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Position}}" Binding="{Binding Position}" Width="150"/>
+                <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Points}}" Binding="{Binding Points}" Width="150"/>
+            </DataGrid.Columns>
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseDoubleClick">
+                    <i:InvokeCommandAction Command="{Binding SwitchViewCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+    </StackPanel>
+</Page>

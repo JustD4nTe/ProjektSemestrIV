@@ -34,7 +34,54 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Expression.Interactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\Microsoft.Expression.Interactions.dll</HintPath>
+    </Reference>
     <Reference Include="MySqlConnector, Version=0.67.0.0, Culture=neutral, PublicKeyToken=d33d3e53aa5f8c92, processorArchitecture=MSIL">
       <HintPath>..\packages\MySqlConnector.0.67.0\lib\net471\MySqlConnector.dll</HintPath>
     </Reference>
@@ -58,6 +105,9 @@
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.3.0\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="System.Transactions" />
+    <Reference Include="System.Windows.Interactivity, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Windows.Interactivity.WPF.2.0.20525\lib\net40\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,6 +120,21 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.8.1\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.8.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.8.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.8.1\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=3.8.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.3.8.1\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -77,38 +142,97 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAL\DatabaseConnection.cs" />
-    <Compile Include="DAL\Entities\Shooter.cs" />
-    <Compile Include="DAL\Repositories\ShooterRepository.cs" />
-    <Compile Include="Models\ShooterModel.cs" />
-    <Compile Include="ViewModels\EditShootersViewModel.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterOnCompetition.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterStatsOnStage.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterStageAndCompetitionPoints.cs" />
     <Compile Include="DAL\Entities\Competition.cs" />
-    <Compile Include="DAL\Repositories\CompetitionsRepository.cs" />
+    <Compile Include="DAL\Entities\IBaseEntity.cs" />
+    <Compile Include="DAL\Entities\Run.cs" />
+    <Compile Include="DAL\Entities\Shooter.cs" />
+    <Compile Include="DAL\Entities\Stage.cs" />
+    <Compile Include="DAL\Entities\Target.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithPoints.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\ShooterWithCompetitionTime.cs" />
+    <Compile Include="DAL\Entities\AuxiliaryEntities\StageWithBestShooter.cs" />
+    <Compile Include="DAL\Repositories\BaseRepository.cs" />
+    <Compile Include="Models\AccuracyTypeEnum.cs" />
+    <Compile Include="Models\ComplexModels\ShowShooterInCompetitionModel.cs" />
+    <Compile Include="Models\ComplexModels\ShowStageModel.cs" />
+    <Compile Include="Models\ComplexModels\ShowShooterOnStageModel.cs" />
+    <Compile Include="Models\ShowModels\ShooterWithPointsShowModel.cs" />
+    <Compile Include="Models\ShowModels\ShooterWithStageAndCompetitionPointsShowModel.cs" />
+    <Compile Include="Models\ShowModels\StageWithBestShooterShowModel.cs" />
+    <Compile Include="Extensions\IEnumerableExtension.cs" />
+    <Compile Include="DAL\Repositories\CompetitionRepository.cs" />
+    <Compile Include="DAL\Repositories\RunRepository.cs" />
+    <Compile Include="DAL\Repositories\ShooterRepository.cs" />
+    <Compile Include="DAL\Repositories\StageRepository.cs" />
+    <Compile Include="DAL\Repositories\TargetRepository.cs" />
+    <Compile Include="Models\ComplexModels\ShowShooterModel.cs" />
+    <Compile Include="Models\ShowModels\ShooterCompetitionShowModel.cs" />
     <Compile Include="Models\CompetitionModel.cs" />
-    <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />
-    <Compile Include="ViewModels\CompetitionsViewModel.cs" />
+    <Compile Include="Models\RunModel.cs" />
+    <Compile Include="Models\ShooterModel.cs" />
+    <Compile Include="Models\ShowModels\ShooterStatsOnStageShowModel.cs" />
+    <Compile Include="Models\StageModel.cs" />
+    <Compile Include="Models\TargetModel.cs" />
+    <Compile Include="Models\ComplexModels\ShowCompetitionModel.cs" />
+    <Compile Include="Models\ViewTypeEnum.cs" />
+    <Compile Include="Properties\Resources.pl-PL.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.pl-PL.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\BaseClass\BaseViewModel.cs" />
     <Compile Include="ViewModels\BaseClass\RelayCommand.cs" />
-    <Compile Include="ViewModels\ScoreViewModel.cs" />
-    <Compile Include="ViewModels\ShootersViewModel.cs" />
-    <Compile Include="ViewModels\StagesViewModel.cs" />
+    <Compile Include="ViewModels\EditCompetitionsViewModel.cs" />
+    <Compile Include="ViewModels\EditScoreViewModel.cs" />
+    <Compile Include="ViewModels\EditStagesViewModel.cs" />
+    <Compile Include="ViewModels\EditShootersViewModel.cs" />
+    <Compile Include="ViewModels\ShowCompetitionsViewModel.cs" />
+    <Compile Include="ViewModels\ShowCompetitionViewModel.cs" />
+    <Compile Include="ViewModels\ShowStageViewModel.cs" />
+    <Compile Include="ViewModels\ShowShooterOnStageViewModel.cs" />
+    <Compile Include="ViewModels\ShowShooterInCompetitionViewModel.cs" />
+    <Compile Include="ViewModels\ShowShootersViewModel.cs" />
+    <Compile Include="ViewModels\ShowShooterViewModel.cs" />
+    <Compile Include="Views\ShowCompetitionView.xaml.cs">
+      <DependentUpon>ShowCompetitionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\EditShootersView.xaml.cs">
       <DependentUpon>EditShootersView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\CompetitionsView.xaml.cs">
-      <DependentUpon>CompetitionsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConnectionView.xaml.cs">
       <DependentUpon>ConnectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ScoreView.xaml.cs">
-      <DependentUpon>ScoreView.xaml</DependentUpon>
+    <Compile Include="Views\ShowShooterView.xaml.cs">
+      <DependentUpon>ShowShooterView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShootersView.xaml.cs">
-      <DependentUpon>ShootersView.xaml</DependentUpon>
+    <Compile Include="Views\EditCompetitionsView.xaml.cs">
+      <DependentUpon>EditCompetitionsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\StagesView.xaml.cs">
-      <DependentUpon>StagesView.xaml</DependentUpon>
+    <Compile Include="Views\EditScoreView.xaml.cs">
+      <DependentUpon>EditScoreView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowCompetitionsView.xaml.cs">
+      <DependentUpon>ShowCompetitionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\EditStagesView.xaml.cs">
+      <DependentUpon>EditStagesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowStageView.xaml.cs">
+      <DependentUpon>ShowStageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowShooterOnStageView.xaml.cs">
+      <DependentUpon>ShowShooterOnStageView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowShooterInCompetition.xaml.cs">
+      <DependentUpon>ShowShooterInCompetition.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ShowShootersView.xaml.cs">
+      <DependentUpon>ShowShootersView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -122,11 +246,15 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ShowCompetitionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\EditShootersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\CompetitionsView.xaml">
+    <Page Include="Views\EditCompetitionsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -134,15 +262,35 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ScoreView.xaml">
+    <Page Include="Views\ShowShooterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\ShootersView.xaml">
+    <Page Include="Views\EditScoreView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\StagesView.xaml">
+    <Page Include="Views\ShowCompetitionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EditStagesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowStageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowShooterOnStageView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowShooterInCompetition.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ShowShootersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -161,8 +309,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Properties\Resources.pl-PL.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.pl-PL.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />

@@ -7,44 +7,40 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
         <DataTemplate DataType="{x:Type viewmodels:ConnectionViewModel}">
-            <views:ConnectionView
-                ServerAddress="{Binding Path=ServerAddress, Mode=TwoWay}"
-                Port="{Binding Path=Port, Mode=TwoWay}"
-                Database="{Binding Path=Database, Mode=TwoWay}"
-                User="{Binding Path=User, Mode=TwoWay}"
-                Password="{Binding Path=Password, Mode=TwoWay}"
-                OK="{Binding ConfirmData}"
-                />
+            <views:ConnectionView />
         </DataTemplate>
-
+        <DataTemplate DataType="{x:Type viewmodels:EditCompetitionsViewModel}">
+            <views:EditCompetitionsView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:EditScoreViewModel}">
+            <views:EditScoreView/>
+        </DataTemplate>
         <DataTemplate DataType="{x:Type viewmodels:EditShootersViewModel}">
-            <views:EditShootersView
-                ShooterName="{Binding Path=Name, Mode=TwoWay}"
-                ShooterSurname="{Binding Path=Surname, Mode=TwoWay}"
-                Add="{Binding AddShooter}"
-                OK="{Binding ConfirmShooterEdit}"
-                ItemsSource="{Binding Path=Shooters, Mode=OneWay}"
-                SelectedItem="{Binding SelectedItem, Mode=OneWayToSource}"
-                SelectedIndex="{Binding SelectedIndex, Mode=OneWayToSource}"
-                Edit="{Binding EditShooter}"
-                Delete="{Binding DeleteShooter}"
-                />
+            <views:EditShootersView/>
         </DataTemplate>
-
-        <DataTemplate DataType="{x:Type viewmodels:CompetitionsViewModel}">
-            <views:CompetitionsView/>
+        <DataTemplate DataType="{x:Type viewmodels:EditStagesViewModel}">
+            <views:EditStagesView/>
         </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type viewmodels:ScoreViewModel}">
-            <views:ScoreView/>
+        <DataTemplate DataType="{x:Type viewmodels:ShowShooterOnStageViewModel}">
+            <views:ShowShooterOnStageView/>
         </DataTemplate>
-        
-        <DataTemplate DataType="{x:Type viewmodels:ShootersViewModel}">
-            <views:ShootersView/>
+        <DataTemplate DataType="{x:Type viewmodels:ShowCompetitionsViewModel}">
+            <views:ShowCompetitionsView/>
         </DataTemplate>
-
-        <DataTemplate DataType="{x:Type viewmodels:StagesViewModel}">
-            <views:StagesView/>
+        <DataTemplate DataType="{x:Type viewmodels:ShowCompetitionViewModel}">
+            <views:ShowCompetitionView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ShowShooterViewModel}">
+            <views:ShowShooterView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ShowStageViewModel}">
+            <views:ShowStageView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ShowShootersViewModel}">
+            <views:ShowShootersView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ShowShooterInCompetitionViewModel}">
+            <views:ShowShooterInCompetition/>
         </DataTemplate>
     </Application.Resources>
 </Application>

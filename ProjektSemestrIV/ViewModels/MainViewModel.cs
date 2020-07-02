@@ -1,47 +1,56 @@
 ﻿using ProjektSemestrIV.Models;
-using System;
 using System.Windows.Input;
+using System.Windows.Navigation;
 
-namespace ProjektSemestrIV.ViewModels {
-    class MainViewModel : BaseViewModel {
-		private BaseViewModel selectedViewModel;
-		public BaseViewModel SelectedViewModel {
-			get { return selectedViewModel; }
-			set {
-				selectedViewModel = value;
-				onPropertyChanged(nameof(SelectedViewModel));
-			}
-		}
+namespace ProjektSemestrIV.ViewModels
+{
+    class MainViewModel : BaseViewModel 
+    {
+        private readonly NavigationService navigation;
 
-		private ICommand updateFormView = null;
-		public ICommand UpdateFormView {
-            get {
-                if(updateFormView == null) {
-                    updateFormView = new RelayCommand(ExecuteUpdateFormView, null);
-                }
+        public ICommand UpdateFormView { get; }
+        public ICommand NavigateBackward { get; }
+        public ICommand NavigateForward { get; }
 
-                return updateFormView;
+        public MainViewModel(NavigationService navigation)
+        {
+            this.navigation = navigation;
+
+            UpdateFormView = new RelayCommand(ChooseGeneralView, null);
+            NavigateBackward = new RelayCommand(arg=>this.navigation.GoBack(), arg=>this.navigation.CanGoBack);
+            NavigateForward = new RelayCommand(arg => this.navigation.GoForward(), arg => this.navigation.CanGoForward);
+        }
+
+        public void ChooseGeneralView(object parameter)
+        {
+            switch ((ViewTypeEnum)parameter)
+            {
+                case ViewTypeEnum.Connection:
+                    navigation.Navigate(new ConnectionViewModel());
+                    break;
+                case ViewTypeEnum.EditCompetitions:
+                    navigation.Navigate(new EditCompetitionsViewModel());
+                    break;
+                case ViewTypeEnum.EditShooters:
+                    navigation.Navigate(new EditShootersViewModel());
+                    break;
+                case ViewTypeEnum.EditStages:
+                    navigation.Navigate(new EditStagesViewModel());
+                    break;
+                case ViewTypeEnum.EditScore:
+                    navigation.Navigate(new EditScoreViewModel());
+                    break;
+                case ViewTypeEnum.ShowCompetitions:
+                    navigation.Navigate( new ShowCompetitionsViewModel(navigation));
+                    break;
+                case ViewTypeEnum.ShowShooters:
+                    navigation.Navigate(new ShowShootersViewModel(navigation));
+                    break;
+                default:
+                    break;
             }
         }
-        public void ExecuteUpdateFormView( object parameter ) {
-            if(parameter.ToString() == "Connection") {
-                SelectedViewModel = new ConnectionViewModel();
-            }
-            else if(parameter.ToString() == "EditShooters") {
-                SelectedViewModel = new EditShootersViewModel();
-            }
-            else if(parameter.ToString() == "Competitions") {
-                SelectedViewModel = new CompetitionsViewModel();
-            }
-            else if(parameter.ToString() == "Stages") {
-                SelectedViewModel = new StagesViewModel();
-            }
-            else if(parameter.ToString() == "Shooters") {
-                SelectedViewModel = new ShootersViewModel();
-            }
-            else if(parameter.ToString() == "Score") {
-                SelectedViewModel = new ScoreViewModel();
-            }
-        }
+
+
     }
 }

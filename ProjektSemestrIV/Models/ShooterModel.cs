@@ -1,5 +1,6 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Repositories;
+using ProjektSemestrIV.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,18 +10,16 @@ using System.Threading.Tasks;
 
 namespace ProjektSemestrIV.Models {
     class ShooterModel {
-        public Boolean AddShooterToDatabase( Shooter shooter )
-            => ShooterRepository.AddShooterToDatabase(shooter);
+        public Boolean AddShooter( Shooter shooter )
+            => ShooterRepository.AddShooter(shooter);
 
-        public Boolean DeleteShooterFromDatabase( UInt32 shooterID )
-            => ShooterRepository.DeleteShooterFromDatabase(shooterID);
+        public Boolean DeleteShooter( UInt32 shooterID )
+            => ShooterRepository.DeleteShooter(shooterID);
 
-        public Boolean EditShooterInDatabase( Shooter shooter, UInt32 id )
-            => ShooterRepository.EditShooterInDatabase(shooter, id);
+        public Boolean EditShooter( Shooter shooter, UInt32 id )
+            => ShooterRepository.EditShooter(shooter, id);
 
-        public ObservableCollection<Shooter> GetAllShooters() {
-            List<Shooter> shooters = ShooterRepository.GetAllShooters();
-            return new ObservableCollection<Shooter>(shooters);
-        }
+        public IEnumerable<Shooter> GetAllShooters()
+            => ShooterRepository.GetAllShooters();
     }
 }

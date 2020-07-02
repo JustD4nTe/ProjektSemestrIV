@@ -13,12 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjektSemestrIV.Views {
+namespace ProjektSemestrIV.Views
+{
     /// <summary>
-    /// Interaction logic for StagesView.xaml
+    /// Interaction logic for ShowShooterView.xaml
     /// </summary>
-    public partial class StagesView : UserControl {
-        public StagesView() {
+    public partial class ShowShooterView : Page
+    {
+        public ShowShooterView()
+        {
             InitializeComponent();
         }
     }

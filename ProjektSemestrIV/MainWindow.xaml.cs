@@ -2,10 +2,11 @@
 using System.Windows;
 
 namespace ProjektSemestrIV {
-    public partial class MainWindow : Window {
+    public partial class MainWindow : Window 
+    {
         public MainWindow() {
             InitializeComponent();
-            DataContext = new MainViewModel();
+            DataContext = new MainViewModel(MainFrame.NavigationService);
         }
     }
 }

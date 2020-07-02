@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -109,9 +112,246 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Accuracy" xml:space="preserve">
+    <value>Accuracy</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AddCompetition" xml:space="preserve">
+    <value>Add Competition</value>
+  </data>
+  <data name="AddStage" xml:space="preserve">
+    <value>Add Stage</value>
+  </data>
+  <data name="AlphaAccuracy" xml:space="preserve">
+    <value>Alpha Accuracy</value>
+  </data>
+  <data name="AveragePosition" xml:space="preserve">
+    <value>Average Position</value>
+  </data>
+  <data name="AverageTime" xml:space="preserve">
+    <value>Average time</value>
+  </data>
+  <data name="BestShooter" xml:space="preserve">
+    <value>Best shooter</value>
+  </data>
+  <data name="CharlieAccuracy" xml:space="preserve">
+    <value>Charlie Accuracy</value>
+  </data>
+  <data name="Competition" xml:space="preserve">
+    <value>Competition</value>
+  </data>
+  <data name="CompetitionPoints" xml:space="preserve">
+    <value>Competition points</value>
+  </data>
+  <data name="Competitions" xml:space="preserve">
+    <value>Competitions</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="ConnectionConfiguration" xml:space="preserve">
+    <value>Connection Configuration</value>
+  </data>
+  <data name="Database" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="DeltaAccuracy" xml:space="preserve">
+    <value>Delta Accuracy</value>
+  </data>
+  <data name="DurationDate" xml:space="preserve">
+    <value>Duration date</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditShooter" xml:space="preserve">
+    <value>Edit shooter</value>
+  </data>
+  <data name="EditStage" xml:space="preserve">
+    <value>Edit Stage</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End Date</value>
+  </data>
+  <data name="FastestRun" xml:space="preserve">
+    <value>Fastest run</value>
+  </data>
+  <data name="GeneralAccuracy" xml:space="preserve">
+    <value>General Accuracy</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>Id</value>
+  </data>
+  <data name="IdCompetition" xml:space="preserve">
+    <value>Competition Id</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="ListCompetition" xml:space="preserve">
+    <value>Competition List</value>
+  </data>
+  <data name="ListShooters" xml:space="preserve">
+    <value>Shooters List</value>
+  </data>
+  <data name="ListStages" xml:space="preserve">
+    <value>Stages list</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NumberOfParticipants" xml:space="preserve">
+    <value>Number of participatns</value>
+  </data>
+  <data name="NumberOfTargets" xml:space="preserve">
+    <value>Number of targets</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="Podium" xml:space="preserve">
+    <value>Podium</value>
+  </data>
+  <data name="Points" xml:space="preserve">
+    <value>Points</value>
+  </data>
+  <data name="Port" xml:space="preserve">
+    <value>Port</value>
+  </data>
+  <data name="Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Rules" xml:space="preserve">
+    <value>Rules</value>
+  </data>
+  <data name="ServerAdress" xml:space="preserve">
+    <value>Server Adress</value>
+  </data>
+  <data name="ShooterEditing" xml:space="preserve">
+    <value>Shooter Editing</value>
+  </data>
+  <data name="ShooterName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ShooterSurname" xml:space="preserve">
+    <value>Surname</value>
+  </data>
+  <data name="StageName" xml:space="preserve">
+    <value>Stage name</value>
+  </data>
+  <data name="StagePoints" xml:space="preserve">
+    <value>Stage points</value>
+  </data>
+  <data name="StageRanking" xml:space="preserve">
+    <value>Stage ranking</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start Date</value>
+  </data>
+  <data name="Time" xml:space="preserve">
+    <value>Time</value>
+  </data>
+  <data name="SumOfPoints" xml:space="preserve">
+    <value>Sum of points</value>
+  </data>
+  <data name="SumOfTimes" xml:space="preserve">
+    <value>Sum of times</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="View" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="Alpha" xml:space="preserve">
+    <value>A</value>
+  </data>
+  <data name="Charlie" xml:space="preserve">
+    <value>C</value>
+  </data>
+  <data name="CompetitionSummary" xml:space="preserve">
+    <value>Competition Summary</value>
+  </data>
+  <data name="Delta" xml:space="preserve">
+    <value>D</value>
+  </data>
+  <data name="EditCompetition" xml:space="preserve">
+    <value>Edit Competition</value>
+  </data>
+  <data name="EditRun" xml:space="preserve">
+    <value>Edit Run</value>
+  </data>
+  <data name="Extra" xml:space="preserve">
+    <value>Xtra</value>
+  </data>
+  <data name="GeneralInformation" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="Miss" xml:space="preserve">
+    <value>MISS</value>
+  </data>
+  <data name="NoShoot" xml:space="preserve">
+    <value>N-S</value>
+  </data>
+  <data name="Procedure" xml:space="preserve">
+    <value>Proc</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="ShooterID" xml:space="preserve">
+    <value>ShooterID</value>
+  </data>
+  <data name="ShooterOnCompetitionSummary" xml:space="preserve">
+    <value>Shooter on competition summary</value>
+  </data>
+  <data name="ShooterOnStageSummary" xml:space="preserve">
+    <value>Shooter on stage summary</value>
+  </data>
+  <data name="ShooterSummary" xml:space="preserve">
+    <value>Shooter summary</value>
+  </data>
+  <data name="StageID" xml:space="preserve">
+    <value>StageID</value>
+  </data>
+  <data name="StageSummary" xml:space="preserve">
+    <value>Stage Summary</value>
+  </data>
+  <data name="Navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
+  <data name="Shooter" xml:space="preserve">
+    <value>Shooter</value>
+  </data>
+  <data name="CompetitionEditing" xml:space="preserve">
+    <value>Competition Editing</value>
+  </data>
+  <data name="RunEditing" xml:space="preserve">
+    <value>Run Editing</value>
+  </data>
+  <data name="StageEditing" xml:space="preserve">
+    <value>Stage Editing</value>
+  </data>
+  <data name="CompetitionsAndStages" xml:space="preserve">
+    <value>Competitions and Stages</value>
+  </data>
+  <data name="ShootersAndTargets" xml:space="preserve">
+    <value>Shooters and Targets</value>
+  </data>
 </root>

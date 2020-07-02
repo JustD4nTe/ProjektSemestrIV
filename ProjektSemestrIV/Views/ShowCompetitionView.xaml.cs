@@ -13,12 +13,15 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ProjektSemestrIV.Views {
+namespace ProjektSemestrIV.Views
+{
     /// <summary>
-    /// Interaction logic for ScoreView.xaml
+    /// Interaction logic for ShowCompetitionView.xaml
     /// </summary>
-    public partial class ScoreView : UserControl {
-        public ScoreView() {
+    public partial class ShowCompetitionView : Page
+    {
+        public ShowCompetitionView()
+        {
             InitializeComponent();
         }
     }
