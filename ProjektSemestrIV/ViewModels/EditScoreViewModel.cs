@@ -13,11 +13,11 @@ using ProjektSemestrIV.Models;
 
 namespace ProjektSemestrIV.ViewModels {
     class EditScoreViewModel : BaseViewModel {
-        private TargetModel targetModel;
-        private RunModel runModel;
-        private StageModel stageModel;
-        private CompetitionModel competitionModel;
-        private ShooterModel shooterModel;
+        private readonly TargetModel targetModel;
+        private readonly RunModel runModel;
+        private readonly StageModel stageModel;
+        private readonly CompetitionModel competitionModel;
+        private readonly ShooterModel shooterModel;
 
         public EditScoreViewModel() {
             targetModel = new TargetModel();
@@ -27,7 +27,7 @@ namespace ProjektSemestrIV.ViewModels {
             shooterModel = new ShooterModel();
 
             Competitions = competitionModel.GetAllCompetitions().Convert();
-            Shooters = shooterModel.GetAllShooters();
+            Shooters = shooterModel.GetAllShooters().Convert();
         }
 
 
@@ -46,7 +46,7 @@ namespace ProjektSemestrIV.ViewModels {
             set {
                 selectedCompetition = value;
                 if(value != null) {
-                    Stages = stageModel.GetCompetitionStages(value.Id);
+                    Stages = stageModel.GetCompetitionStages(value.Id).Convert();
                 }
                 SelectedStage = null;
                 onPropertyChanged(nameof(SelectedCompetition));
@@ -113,7 +113,7 @@ namespace ProjektSemestrIV.ViewModels {
             set {
                 shooter_id = value;
                 onPropertyChanged(nameof(Shooter_id));
-                Targets = targetModel.GetTargets(Shooter_id, Stage_id);
+                Targets = targetModel.GetTargets(Shooter_id, Stage_id).Convert();
                 if(runModel.GetRun(Shooter_id, Stage_id) != null) {
                     Time = runModel.GetRun(Shooter_id, Stage_id).RunTime;
                 }
@@ -126,7 +126,7 @@ namespace ProjektSemestrIV.ViewModels {
             set {
                 stage_id = value;
                 onPropertyChanged(nameof(Stage_id));
-                Targets = targetModel.GetTargets(Shooter_id, Stage_id);
+                Targets = targetModel.GetTargets(Shooter_id, Stage_id).Convert();
                 if(runModel.GetRun(Shooter_id, Stage_id) != null) {
                     Time = runModel.GetRun(Shooter_id, Stage_id).RunTime;
                 }
@@ -242,7 +242,7 @@ namespace ProjektSemestrIV.ViewModels {
             targetModel.AddTarget(newTarget);
 
             ClearInput();
-            Targets = targetModel.GetTargets(Shooter_id, Stage_id);
+            Targets = targetModel.GetTargets(Shooter_id, Stage_id).Convert();
         }
 
 
@@ -266,7 +266,7 @@ namespace ProjektSemestrIV.ViewModels {
             ClearInput();
             isDataGridEnabled = true;
             EditedTargetId = null;
-            Targets = targetModel.GetTargets(Shooter_id, Stage_id);
+            Targets = targetModel.GetTargets(Shooter_id, Stage_id).Convert();
         }
 
         private ICommand editTarget = null;
@@ -310,7 +310,7 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteDeleteTarget( object parameter ) {
             UInt32 id = SelectedTarget.ID;
             targetModel.DeleteTarget(id);
-            Targets = targetModel.GetTargets(Shooter_id, Stage_id);
+            Targets = targetModel.GetTargets(Shooter_id, Stage_id).Convert();
         }
 
 

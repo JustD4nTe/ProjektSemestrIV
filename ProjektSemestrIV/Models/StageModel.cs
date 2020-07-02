@@ -11,14 +11,14 @@ using System.Windows.Documents;
 
 namespace ProjektSemestrIV.Models {
     class StageModel {
-        public ObservableCollection<Stage> GetAllStages()
-            => StageRepository.GetAllStages().Convert();
+        public IEnumerable<Stage> GetAllStages()
+            => StageRepository.GetAllStages();
 
         public Boolean AddStage( Stage stage )
             => StageRepository.AddStage(stage);
             
-        public ObservableCollection<Stage> GetCompetitionStages(uint competition_id)
-            => StageRepository.GetCompetitionStages(competition_id).Convert();
+        public IEnumerable<Stage> GetCompetitionStages(uint competition_id)
+            => StageRepository.GetCompetitionStages(competition_id);
 
         public Boolean EditStage( Stage stage, UInt32 id )
             => StageRepository.EditStage(stage, id);

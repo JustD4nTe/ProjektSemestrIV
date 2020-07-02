@@ -3,6 +3,8 @@ using ProjektSemestrIV.DAL.Repositories;
 using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models.ShowModels;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -50,9 +52,8 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public string GetDeltaAccuracy()
         => $"{ShooterRepository.GetAccuracy(AccuracyTypeEnum.Delta, shooter.ID, competitionId: competition.Id):P2}";
 
-        public ObservableCollection<ShooterStatsOnStageShowModel> GetStatsOnStages()
+        public IEnumerable<ShooterStatsOnStageShowModel> GetStatsOnStages()
         => ShooterRepository.GetStatsOnStages(shooter.ID, competition.Id)
-                            .Select(x => new ShooterStatsOnStageShowModel(x.StageId, x.StageName, x.Points, $"{TimeSpan.Parse(x.Time):g}", x.StagePoints))
-                            .Convert();
+                            .Select(x => new ShooterStatsOnStageShowModel(x.StageId, x.StageName, x.Points, $"{TimeSpan.Parse(x.Time):g}", x.StagePoints));
     }
 }

@@ -1,4 +1,5 @@
-﻿using ProjektSemestrIV.Models.ComplexModels;
+﻿using ProjektSemestrIV.Extensions;
+using ProjektSemestrIV.Models.ComplexModels;
 using ProjektSemestrIV.Models.ShowModels;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
@@ -48,7 +49,7 @@ namespace ProjektSemestrIV.ViewModels
             CharlieAccuracy = model.GetCharlieAccuracy();
             DeltaAccuracy = model.GetDeltaAccuracy();
 
-            StageStats = model.GetStatsOnStages();
+            StageStats = model.GetStatsOnStages().Convert();
 
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), 
                                                  x => SelectedStage != null);

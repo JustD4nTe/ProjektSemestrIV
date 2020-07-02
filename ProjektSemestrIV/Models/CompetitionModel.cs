@@ -9,8 +9,8 @@ namespace ProjektSemestrIV.Models
 {
     class CompetitionModel
     {
-        public ObservableCollection<Competition> GetAllCompetitions()
-            => CompetitionRepository.GetAllCompetitions().Convert();
+        public IEnumerable<Competition> GetAllCompetitions()
+            => CompetitionRepository.GetAllCompetitions();
 
         public Boolean AddCompetition( Competition competition )
             => CompetitionRepository.AddCompetition(competition);
