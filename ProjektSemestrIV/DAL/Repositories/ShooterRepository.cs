@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+using MySql.Data.MySqlClient;
 using ProjektSemestrIV.DAL.Entities;
 using ProjektSemestrIV.DAL.Entities.AuxiliaryEntities;
 using ProjektSemestrIV.Models;
@@ -215,7 +215,7 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static double GetStagePoints(uint shooterId, uint stageId)
         {
             var query = $@"SELECT (SUM(alpha)*5+SUM(charlie)*3+SUM(delta)-10*(SUM(miss)+SUM(`n-s`)+SUM(proc)+SUM(extra)))
-                                     /(SELECT czas FROM przebieg WHERE id_strzelec = 1 and id_trasa = 1) AS points
+                                     /(SELECT czas FROM przebieg WHERE id_strzelec = {shooterId} and id_trasa = {stageId}) AS points
                             FROM tarcza
                             WHERE tarcza.strzelec_id = {shooterId} and tarcza.trasa_id = {stageId}
                             GROUP BY tarcza.strzelec_id, tarcza.trasa_id;";
