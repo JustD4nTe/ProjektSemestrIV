@@ -162,6 +162,9 @@
   <data name="Competitions" xml:space="preserve">
     <value>Zawody</value>
   </data>
+  <data name="CompetitionsAndStages" xml:space="preserve">
+    <value>Zawody i Trasy</value>
+  </data>
   <data name="CompetitionSummary" xml:space="preserve">
     <value>Podsumowanie zawodów</value>
   </data>
@@ -305,6 +308,9 @@
   </data>
   <data name="ShooterOnStageSummary" xml:space="preserve">
     <value>Podsumowanie strzelca na trasie</value>
+  </data>
+  <data name="ShootersAndTargets" xml:space="preserve">
+    <value>Strzelcy i Tarcze</value>
   </data>
   <data name="ShooterSummary" xml:space="preserve">
     <value>Podsumowanie strzelca</value>

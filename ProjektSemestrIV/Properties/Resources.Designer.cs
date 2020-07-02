@@ -196,6 +196,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Competitions and Stages.
+        /// </summary>
+        public static string CompetitionsAndStages {
+            get {
+                return ResourceManager.GetString("CompetitionsAndStages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Competition Summary.
         /// </summary>
         public static string CompetitionSummary {
@@ -624,6 +633,15 @@ namespace ProjektSemestrIV.Properties {
         public static string ShooterOnStageSummary {
             get {
                 return ResourceManager.GetString("ShooterOnStageSummary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shooters and Targets.
+        /// </summary>
+        public static string ShootersAndTargets {
+            get {
+                return ResourceManager.GetString("ShootersAndTargets", resourceCulture);
             }
         }
         
