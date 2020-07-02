@@ -33,16 +33,24 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public string GetFastestShooter()
         {
             var shooter = CompetitionRepository.GetFastestShooter(competition.Id);
+            if (shooter is null)
+                return null;
+
             return $"{shooter.Name} {shooter.Surname} : {TimeSpan.FromSeconds(shooter.TimeInSeconds):g}";
         }
 
         public string GetPodium()
         {
             var playersOnPodium = CompetitionRepository.GetShootersWithPoints(competition.Id, true).ToList();
+            string podium = "";
 
-            var podium = $"I - {playersOnPodium[0].Name} {playersOnPodium[0].Surname}: {playersOnPodium[0].Points}\n"
-                         + $"II - {playersOnPodium[1].Name} {playersOnPodium[1].Surname}: {playersOnPodium[1].Points}\n"
-                         + $"III - {playersOnPodium[2].Name} {playersOnPodium[2].Surname}: {playersOnPodium[2].Points}";
+            if (playersOnPodium.Count > 0)
+                podium += $"I - {playersOnPodium[0].Name} {playersOnPodium[0].Surname}: {playersOnPodium[0].Points}";
+            if (playersOnPodium.Count > 1)
+                podium += $"\nII - {playersOnPodium[1].Name} {playersOnPodium[1].Surname}: {playersOnPodium[1].Points}";
+            if (playersOnPodium.Count > 2)
+                podium += $"\nIII - {playersOnPodium[2].Name} {playersOnPodium[2].Surname}: {playersOnPodium[2].Points}";
+
             return podium;
         }
 
