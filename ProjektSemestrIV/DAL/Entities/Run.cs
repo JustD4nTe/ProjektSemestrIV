@@ -36,7 +36,7 @@ namespace ProjektSemestrIV.DAL.Entities
         public void SetData(IDataReader dataReader)
         {
             ID = uint.Parse(dataReader["id"].ToString());
-            RunTime = dataReader["czas"].ToString();
+            RunTime = ((TimeSpan)dataReader["czas"]).ToString(@"hh\:mm\:ss\:fff");
             Shooter_ID = uint.Parse(dataReader["id_strzelec"].ToString());
             Stage_ID = uint.Parse(dataReader["id_trasa"].ToString());
         }
