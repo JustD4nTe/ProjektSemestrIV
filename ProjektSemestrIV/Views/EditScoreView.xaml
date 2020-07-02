@@ -136,8 +136,7 @@
                     GridLinesVisibility="None" IsReadOnly="True"
                     IsEnabled="{Binding IsDataGridEnabled, Mode=OneWay}"
                     ItemsSource="{Binding Stages, Mode=OneWay}"
-                    SelectedItem="{Binding SelectedStage, Mode=OneWayToSource}"
-                    SelectedIndex="{Binding SelectedStageIndex, Mode=OneWayToSource}">
+                    SelectedItem="{Binding SelectedStage, Mode=OneWayToSource}">
 
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Id}}" Binding="{Binding ID}"/>
@@ -186,8 +185,7 @@
                         x:Name="DataGridTargets" x:FieldModifier="private"
                         AutoGenerateColumns="False" AlternatingRowBackground="Lavender" GridLinesVisibility="None" IsReadOnly="True"                
                         ItemsSource="{Binding Targets, Mode=OneWay}"
-                        SelectedItem="{Binding SelectedTarget, Mode=OneWayToSource}"
-                        SelectedIndex="{Binding SelectedTargetIndex, Mode=OneWayToSource}">
+                        SelectedItem="{Binding SelectedTarget, Mode=OneWayToSource}">
 
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="{Binding Source={x:Static resx:Resources.Alpha}}" Binding="{Binding Alpha}"/>
