@@ -28,6 +28,9 @@ namespace ProjektSemestrIV.Models.ComplexModels
         public string GetBestShooter()
         {
             var shooter = ShooterRepository.GetBestShooter(stage.ID);
+            if (shooter is null)
+                return null;
+
             return $"{shooter.Name} {shooter.Surname} : {shooter.Points}pkt";
         }
 
