@@ -17,27 +17,27 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{Binding Source={x:Static resx:Resources.Competitions}}"/>
-                        <Label Content="{Binding CompetitionLocation}"/>
+                        <Label Content="{Binding CompetitionLocation}" FontStyle="Italic"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{Binding Source={x:Static resx:Resources.StageName}}"/>
-                        <Label Content="{Binding StageName}"/>
+                        <Label Content="{Binding StageName}" FontStyle="Italic"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{Binding Source={x:Static resx:Resources.NumberOfTargets}}"/>
-                        <Label Content="{Binding NumOfTargets}"/>
+                        <Label Content="{Binding NumOfTargets}" FontStyle="Italic"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{Binding Source={x:Static resx:Resources.BestShooter}}"/>
-                        <Label Content="{Binding BestShooter}"/>
+                        <Label Content="{Binding BestShooter}" FontStyle="Italic"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <Label Content="{Binding Source={x:Static resx:Resources.AverageTime}}"/>
-                        <Label Content="{Binding AverageTime}"/>
+                        <Label Content="{Binding AverageTime}" FontStyle="Italic"/>
                     </StackPanel>
                     <StackPanel>
                         <Label Content="{Binding Source={x:Static resx:Resources.Rules}}"/>
-                        <Label Content="{Binding StageRules, Mode=OneWay}"/>
+                        <Label Content="{Binding StageRules, Mode=OneWay}" FontStyle="Italic"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>

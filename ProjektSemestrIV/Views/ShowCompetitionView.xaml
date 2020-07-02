@@ -31,27 +31,27 @@
                     <Label Grid.Row="0" Grid.Column="0"
                            Content="{Binding Source={x:Static resx:Resources.DurationDate}}"/>
                     <Label Grid.Row="0" Grid.Column="1"
-                           Content="{Binding DurationDate, Mode=OneWay}"/>
+                           Content="{Binding DurationDate, Mode=OneWay}" FontStyle="Italic"/>
 
                     <Label Grid.Row="1" Grid.Column="0"
                            Content="{Binding Source={x:Static resx:Resources.Location}}"/>
                     <Label Grid.Row="1" Grid.Column="1"
-                           Content="{Binding Location, Mode=OneWay}"/>
+                           Content="{Binding Location, Mode=OneWay}" FontStyle="Italic"/>
 
                     <Label Grid.Row="2" Grid.Column="0"
                            Content="{Binding Source={x:Static resx:Resources.NumberOfParticipants}}"/>
                     <Label Grid.Row="2" Grid.Column="1"
-                           Content="{Binding ShootersCount, Mode=OneWay}"/>
+                           Content="{Binding ShootersCount, Mode=OneWay}" FontStyle="Italic"/>
 
                     <Label Grid.Row="3" Grid.Column="0"
                            Content="{Binding Source={x:Static resx:Resources.FastestRun}}"/>
                     <Label Grid.Row="3" Grid.Column="1"
-                           Content="{Binding FastestShooter, Mode=OneWay}"/>
+                           Content="{Binding FastestShooter, Mode=OneWay}" FontStyle="Italic"/>
 
                     <Label Grid.Row="4" Grid.Column="0"
                            Content="{Binding Source={x:Static resx:Resources.Podium}}"/>
                     <Label Grid.Row="4" Grid.Column="1"
-                           Content="{Binding Podium, Mode=OneWay}"/>
+                           Content="{Binding Podium, Mode=OneWay}" FontStyle="Italic"/>
                 </Grid>
             </TabItem>
             <TabItem Header="{Binding Source={x:Static resx:Resources.ListStages}}">

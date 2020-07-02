@@ -14,47 +14,47 @@
         
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.ShooterName}}"/>
-            <Label Content="{Binding Name}"/>
+            <Label Content="{Binding Name}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.ShooterSurname}}"/>
-            <Label Content="{Binding Surname}"/>
+            <Label Content="{Binding Surname}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.Competition}}"/>
-            <Label Content="{Binding Competition}"/>
+            <Label Content="{Binding Competition}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.StageName}}"/>
-            <Label Content="{Binding StageName}"/>
+            <Label Content="{Binding StageName}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.SumOfPoints}}"/>
-            <Label Content="{Binding SumOfPoints}"/>
+            <Label Content="{Binding SumOfPoints}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.Time}}"/>
-            <Label Content="{Binding Time}"/>
+            <Label Content="{Binding Time}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.GeneralAccuracy}}"/>
-            <Label Content="{Binding GeneralAccuracy}"/>
+            <Label Content="{Binding GeneralAccuracy}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.AlphaAccuracy}}"/>
-            <Label Content="{Binding AlphaAccuracy}"/>
+            <Label Content="{Binding AlphaAccuracy}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.CharlieAccuracy}}"/>
-            <Label Content="{Binding CharlieAccuracy}"/>
+            <Label Content="{Binding CharlieAccuracy}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.DeltaAccuracy}}"/>
-            <Label Content="{Binding DeltaAccuracy}"/>
+            <Label Content="{Binding DeltaAccuracy}" FontStyle="Italic"/>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <Label Content="{Binding Source={x:Static resx:Resources.Position}}"/>
-            <Label Content="{Binding Position}"/>
+            <Label Content="{Binding Position}" FontStyle="Italic"/>
         </StackPanel>
     </StackPanel>
 </UserControl>
