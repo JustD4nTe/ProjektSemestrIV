@@ -134,7 +134,7 @@ namespace ProjektSemestrIV.ViewModels {
         }
 
         private Boolean isDataGridEnabled = true;
-        private Boolean IsDataGridEnabled {
+        public Boolean IsDataGridEnabled {
             get { return isDataGridEnabled; }
             set {
                 isDataGridEnabled = value;
@@ -264,7 +264,7 @@ namespace ProjektSemestrIV.ViewModels {
             targetModel.EditTarget(newTarget, id);
             
             ClearInput();
-            isDataGridEnabled = true;
+            IsDataGridEnabled = true;
             EditedTargetId = null;
             Targets = targetModel.GetTargets(Shooter_id, Stage_id);
         }
@@ -290,7 +290,7 @@ namespace ProjektSemestrIV.ViewModels {
             Procedure = SelectedTarget.Procedure.ToString();
             Extra = SelectedTarget.Extra.ToString();
 
-            isDataGridEnabled = false;
+            IsDataGridEnabled = false;
             EditedTargetId = SelectedTarget.ID;
         }
 
@@ -352,6 +352,8 @@ namespace ProjektSemestrIV.ViewModels {
             => EditedTargetId != null;
 
         private bool IsInputValid() {
+            if(Stage_id == 0) return false;
+            if(Shooter_id == 0) return false;
             if(!Byte.TryParse(Alpha, out _)) return false;
             if(!Byte.TryParse(Charlie, out _)) return false;
             if(!Byte.TryParse(Delta, out _)) return false;
