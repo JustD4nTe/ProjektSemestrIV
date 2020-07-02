@@ -63,7 +63,7 @@ namespace ProjektSemestrIV.ViewModels {
                 selectedCompetition = value;
                 if(selectedCompetition != null) {
                     CompetitionID = value.Id;
-                    Stages = stageModel.GetCompetitionStages(value.Id);
+                    Stages = stageModel.GetCompetitionStages(value.Id).Convert();
                 }
                 SelectedStage = null;
                 onPropertyChanged(nameof(SelectedCompetition));
@@ -109,7 +109,7 @@ namespace ProjektSemestrIV.ViewModels {
             stageModel.AddStage(newStage);
 
             ClearInput();
-            Stages = stageModel.GetCompetitionStages(SelectedCompetition.Id);
+            Stages = stageModel.GetCompetitionStages(SelectedCompetition.Id).Convert();
         }
 
 
@@ -133,7 +133,7 @@ namespace ProjektSemestrIV.ViewModels {
             ClearInput();
             EditedStageId = null;
             IsCompetitionsEnabled = true;
-            Stages = stageModel.GetCompetitionStages(SelectedCompetition.Id);
+            Stages = stageModel.GetCompetitionStages(SelectedCompetition.Id).Convert();
         }
 
 
@@ -172,7 +172,7 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteDeleteStage( object parameter ) {
             UInt32 id = SelectedStage.ID;
             stageModel.DeleteStage(id);
-            Stages = stageModel.GetCompetitionStages(SelectedCompetition.Id);
+            Stages = stageModel.GetCompetitionStages(SelectedCompetition.Id).Convert();
         }
 
 

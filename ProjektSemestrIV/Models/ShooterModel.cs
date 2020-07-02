@@ -19,7 +19,7 @@ namespace ProjektSemestrIV.Models {
         public Boolean EditShooter( Shooter shooter, UInt32 id )
             => ShooterRepository.EditShooter(shooter, id);
 
-        public ObservableCollection<Shooter> GetAllShooters()
-            => ShooterRepository.GetAllShooters().Convert();
+        public IEnumerable<Shooter> GetAllShooters()
+            => ShooterRepository.GetAllShooters();
     }
 }

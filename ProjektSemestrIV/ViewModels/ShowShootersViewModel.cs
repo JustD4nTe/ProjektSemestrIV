@@ -1,4 +1,5 @@
 ﻿using ProjektSemestrIV.DAL.Entities;
+using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -20,7 +21,7 @@ namespace ProjektSemestrIV.ViewModels
             this.navigation = navigation;
 
             model = new ShooterModel();
-            Shooters = model.GetAllShooters();
+            Shooters = model.GetAllShooters().Convert();
 
             SwitchViewCommand = new RelayCommand(x => OnSwitchView(), 
                                                  x => SelectedShooter != null);

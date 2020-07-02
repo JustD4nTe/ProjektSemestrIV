@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ProjektSemestrIV.DAL.Entities;
+using ProjektSemestrIV.Extensions;
 using ProjektSemestrIV.Models;
 
 namespace ProjektSemestrIV.ViewModels {
@@ -13,7 +14,7 @@ namespace ProjektSemestrIV.ViewModels {
         private ShooterModel shooterModel;
         public EditShootersViewModel() {
             shooterModel = new ShooterModel();
-            Shooters = shooterModel.GetAllShooters();
+            Shooters = shooterModel.GetAllShooters().Convert();
         }
 
         private String name = "";
@@ -64,7 +65,7 @@ namespace ProjektSemestrIV.ViewModels {
             shooterModel.AddShooter(newShooter);
 
             ClearInput();
-            Shooters = shooterModel.GetAllShooters();
+            Shooters = shooterModel.GetAllShooters().Convert();
         }
 
 
@@ -87,7 +88,7 @@ namespace ProjektSemestrIV.ViewModels {
 
             ClearInput();
             EditedShooterId = null;
-            Shooters = shooterModel.GetAllShooters();
+            Shooters = shooterModel.GetAllShooters().Convert();
         }
 
 
@@ -125,7 +126,7 @@ namespace ProjektSemestrIV.ViewModels {
         private void ExecuteDeleteShooter( object parameter ) {
             UInt32 id = SelectedShooter.ID;
             shooterModel.DeleteShooter(id);
-            Shooters = shooterModel.GetAllShooters();
+            Shooters = shooterModel.GetAllShooters().Convert();
         }
 
 
