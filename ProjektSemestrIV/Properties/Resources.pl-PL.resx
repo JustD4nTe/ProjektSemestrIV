@@ -361,7 +361,7 @@
     <value>Błąd połączenia</value>
   </data>
   <data name="ConnectionError1042" xml:space="preserve">
-    <value>Nie można połączyć się z żadnym z określonych hostów MySQL (sprawdź serwer, port)!</value>
+    <value>Nie można połączyć się z żadnym z określonych hostów MySQL (sprawdź serwer, port)</value>
   </data>
   <data name="ConnectionError1045" xml:space="preserve">
     <value>Sprawdź nazwę DB, nazwę użytkownika, hasło</value>
@@ -373,12 +373,15 @@
     <value>Wiadomość</value>
   </data>
   <data name="Number" xml:space="preserve">
-    <value>Numer </value>
+    <value>Numer</value>
   </data>
   <data name="Source" xml:space="preserve">
     <value>Ścieżka</value>
   </data>
   <data name="MySqlError" xml:space="preserve">
     <value>Błąd MySql</value>
+  </data>
+  <data name="InvalidCasting" xml:space="preserve">
+    <value>jest niepoprawny w przypadku zmiany typu danych. Powinna być klasą dziedziczoną przez IBaseEntity lub dowolnym typem wartości (np. Int, double).</value>
   </data>
 </root>

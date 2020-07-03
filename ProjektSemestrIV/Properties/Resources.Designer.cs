@@ -439,6 +439,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  is invalid for data casting. It should be class inherited by IBaseEntity or any value type (like int, double)..
+        /// </summary>
+        public static string InvalidCasting {
+            get {
+                return ResourceManager.GetString("InvalidCasting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Competition List.
         /// </summary>
         public static string ListCompetition {

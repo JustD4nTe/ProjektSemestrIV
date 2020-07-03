@@ -381,4 +381,7 @@
   <data name="MySqlError" xml:space="preserve">
     <value>MySql error</value>
   </data>
+  <data name="InvalidCasting" xml:space="preserve">
+    <value> is invalid for data casting. It should be class inherited by IBaseEntity or any value type (like int, double).</value>
+  </data>
 </root>

@@ -115,7 +115,7 @@ namespace ProjektSemestrIV.DAL.Repositories
                     // but for all other types, just throw exception about unhandled type T
                     catch
                     {
-                        throw new Exception($"{typeof(T).Name} is invalid for data casting. It should be class inherited by IBaseEntity or any value type (like int, double).");
+                        throw new Exception($"{typeof(T).Name} {Properties.Resources.InvalidCasting}");
                     }
 
                 }
