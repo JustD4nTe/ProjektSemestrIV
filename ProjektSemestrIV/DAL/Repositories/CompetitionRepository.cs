@@ -36,7 +36,7 @@ namespace ProjektSemestrIV.DAL.Repositories
         public static bool EditCompetition(Competition competition, uint competitionId)
         {
             var query = $@"UPDATE zawody 
-                            SET `miejsce` = @miejsce, `rozpoczecie` = @rozpoczenie, `zakonczenie` = @zakonczenie 
+                            SET `miejsce` = @miejsce, `rozpoczecie` = @rozpoczecie, `zakonczenie` = @zakonczenie 
                             WHERE (`id` = '{competitionId}')";
 
             return ExecuteModifyQuery(query,competition.GetParameters());
