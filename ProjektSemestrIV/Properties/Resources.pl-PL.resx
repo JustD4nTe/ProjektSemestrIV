@@ -354,4 +354,31 @@
   <data name="View" xml:space="preserve">
     <value>Widok</value>
   </data>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Odmowa dostępu</value>
+  </data>
+  <data name="ConnectionError" xml:space="preserve">
+    <value>Błąd połączenia</value>
+  </data>
+  <data name="ConnectionError1042" xml:space="preserve">
+    <value>Nie można połączyć się z żadnym z określonych hostów MySQL (sprawdź serwer, port)!</value>
+  </data>
+  <data name="ConnectionError1045" xml:space="preserve">
+    <value>Sprawdź nazwę DB, nazwę użytkownika, hasło</value>
+  </data>
+  <data name="ConnectionErrorText" xml:space="preserve">
+    <value>Sprawdź parametry połączenia.</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Wiadomość</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Numer </value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Ścieżka</value>
+  </data>
+  <data name="MySqlError" xml:space="preserve">
+    <value>Błąd MySql</value>
+  </data>
 </root>

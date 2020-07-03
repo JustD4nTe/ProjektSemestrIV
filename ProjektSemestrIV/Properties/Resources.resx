@@ -354,4 +354,31 @@
   <data name="ShootersAndTargets" xml:space="preserve">
     <value>Shooters and Targets</value>
   </data>
+  <data name="AccessDenied" xml:space="preserve">
+    <value>Access denied</value>
+  </data>
+  <data name="ConnectionError" xml:space="preserve">
+    <value>Connection error</value>
+  </data>
+  <data name="ConnectionError1042" xml:space="preserve">
+    <value>Unable to connect to any of the specified MySQL hosts(Check Server, Port)</value>
+  </data>
+  <data name="ConnectionError1045" xml:space="preserve">
+    <value>Check DB name, username, password</value>
+  </data>
+  <data name="ConnectionErrorText" xml:space="preserve">
+    <value>Check the Connection parameters.</value>
+  </data>
+  <data name="Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Number" xml:space="preserve">
+    <value>Number</value>
+  </data>
+  <data name="Source" xml:space="preserve">
+    <value>Source</value>
+  </data>
+  <data name="MySqlError" xml:space="preserve">
+    <value>MySql error</value>
+  </data>
 </root>

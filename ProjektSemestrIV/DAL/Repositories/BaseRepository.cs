@@ -27,6 +27,9 @@ namespace ProjektSemestrIV.DAL.Repositories
 
             using (MySqlConnection connection = DatabaseConnection.Instance.Connection)
             {
+                if (connection == null)
+                    return false;
+
                 MySqlCommand command = new MySqlCommand(query, connection);
 
                 // replace parameters with values
@@ -61,6 +64,9 @@ namespace ProjektSemestrIV.DAL.Repositories
 
             using (var connection = DatabaseConnection.Instance.Connection)
             {
+                if (connection == null)
+                    return default;
+
                 var command = new MySqlCommand(query, connection);
                 connection.Open();
 

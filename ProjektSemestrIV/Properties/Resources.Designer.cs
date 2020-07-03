@@ -61,6 +61,15 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access denied.
+        /// </summary>
+        public static string AccessDenied {
+            get {
+                return ResourceManager.GetString("AccessDenied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Accuracy.
         /// </summary>
         public static string Accuracy {
@@ -228,6 +237,42 @@ namespace ProjektSemestrIV.Properties {
         public static string ConnectionConfiguration {
             get {
                 return ResourceManager.GetString("ConnectionConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection error.
+        /// </summary>
+        public static string ConnectionError {
+            get {
+                return ResourceManager.GetString("ConnectionError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to connect to any of the specified MySQL hosts(Check Server, Port).
+        /// </summary>
+        public static string ConnectionError1042 {
+            get {
+                return ResourceManager.GetString("ConnectionError1042", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check DB name, username, password.
+        /// </summary>
+        public static string ConnectionError1045 {
+            get {
+                return ResourceManager.GetString("ConnectionError1045", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check the Connection parameters..
+        /// </summary>
+        public static string ConnectionErrorText {
+            get {
+                return ResourceManager.GetString("ConnectionErrorText", resourceCulture);
             }
         }
         
@@ -430,11 +475,29 @@ namespace ProjektSemestrIV.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Message.
+        /// </summary>
+        public static string Message {
+            get {
+                return ResourceManager.GetString("Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MISS.
         /// </summary>
         public static string Miss {
             get {
                 return ResourceManager.GetString("Miss", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MySql error.
+        /// </summary>
+        public static string MySqlError {
+            get {
+                return ResourceManager.GetString("MySqlError", resourceCulture);
             }
         }
         
@@ -462,6 +525,15 @@ namespace ProjektSemestrIV.Properties {
         public static string NoShoot {
             get {
                 return ResourceManager.GetString("NoShoot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number.
+        /// </summary>
+        public static string Number {
+            get {
+                return ResourceManager.GetString("Number", resourceCulture);
             }
         }
         
@@ -660,6 +732,15 @@ namespace ProjektSemestrIV.Properties {
         public static string ShooterSurname {
             get {
                 return ResourceManager.GetString("ShooterSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source.
+        /// </summary>
+        public static string Source {
+            get {
+                return ResourceManager.GetString("Source", resourceCulture);
             }
         }
         
