@@ -149,6 +149,7 @@ namespace ProjektSemestrIV.ViewModels {
             if(Location.Length == 0) return false;
             if(Location.Length > 45) return false;
             if(StartDate == null) return false;
+            if (StartDate > EndDate) return false;
             return true;
         }
     }
